@@ -73,10 +73,10 @@ const MainCard = ({ listdata, stateInfo }) => {
     rankFilterBased();
   }, [filterChange, filterData]);
 
-  console.log("setCourseList", courseList);
+  // console.log("setCourseList", courseList);
   return (
     <>
-      {courseList?.length !== 0 && (
+      {courseList.length !== 0 && (
         <div className="main_card">
           <div className="main_card_head d-flex align-items-center">
             <div className="m-logo_bx">

@@ -24,6 +24,7 @@ const MainSection = ({ getValueData }) => {
   const [menuShow, setMenuShow] = useState(false);
   const [searchShow, setSearchShow] = useState(false);
   const [error, setError] = useState(null);
+  const [searchTerm, setSearchTerm] = useState("");
   const [filterByCollege, setFilterByCollege] = useState({
     rankId: getValueData?.rankId,
     casteId: getValueData?.casteId,
@@ -37,7 +38,6 @@ const MainSection = ({ getValueData }) => {
     orderBy: "",
   });
 
-  // console.log("filterByCollege", filterByCollege.filterStateId);
   //findValues && selectedValues
   const findFormState = _.find(stateList, {
     stateId: parseInt(getValueData?.stateId),
@@ -72,6 +72,7 @@ const MainSection = ({ getValueData }) => {
         return e.cs_collegename === college[i].cs_collegename;
       });
       for (let department of collegeData) {
+        // console.log("department", department);
         if (
           !filterCourse.includes(department.j_course) &&
           !Array.isArray(department.j_course)
@@ -85,6 +86,7 @@ const MainSection = ({ getValueData }) => {
               return parseInt(e.j_closing_rank);
             })
             .value();
+
           courseList.push({
             [`${course.j_closing_rank}`]: {
               j_course_name: course.j_course,
@@ -113,6 +115,7 @@ const MainSection = ({ getValueData }) => {
       const response = await predictorList.formSubmitData(getValueData);
       fetchDataFilter(response.data.predictorResList);
       setLoading(false);
+      setSearchTerm("");
     } catch (error) {
       console.log(error);
       setLoading(false);
@@ -172,9 +175,7 @@ const MainSection = ({ getValueData }) => {
   };
 
   const handleFilter = (name, value) => {
-    // console.log(name, value);
     setFilterByCollege({ ...filterByCollege, [name]: value });
-    console.log(name, value);
   };
 
   //mobileShow footer
@@ -195,13 +196,13 @@ const MainSection = ({ getValueData }) => {
       filterByCollege.orderBy.length > 0 ||
       filterByCollege.cityId.length > 0
     ) {
-      // alert("working");
       filterResData();
     } else {
       responseSubmitData();
     }
   }, [filterByCollege]);
 
+  // console.log("collegeList", collegeList);
   return (
     <section className="main_sec">
       <div className="container ">
@@ -343,7 +344,7 @@ const MainSection = ({ getValueData }) => {
                           <div className="ticktext">Clear All</div>
                         </div>
 
-                        {/* {filterByCollege.orderBy && (
+                        {filterByCollege.orderBy && (
                           <div className="catticked" id="FTorderasc">
                             <span
                               className="material-icons cnlbutton"
@@ -362,8 +363,8 @@ const MainSection = ({ getValueData }) => {
                                 : "Decending"}
                             </div>
                           </div>
-                        )} */}
-                        {/* {filterByCollege.sortBy && (
+                        )}
+                        {filterByCollege.sortBy && (
                           <div className="catticked" id="FTSortnirfRank">
                             <span
                               className="material-icons cnlbutton"
@@ -380,7 +381,7 @@ const MainSection = ({ getValueData }) => {
                               {filterByCollege?.sortBy}
                             </div>
                           </div>
-                        )} */}
+                        )}
 
                         {selectedCourseValue?.courseName && (
                           <div className="catticked" id="FTorderasc">
@@ -447,7 +448,7 @@ const MainSection = ({ getValueData }) => {
                     className="course-accordion accordion"
                     id="accordionCourse3"
                   >
-                    {/* <div className="accordion-item">
+                    <div className="accordion-item">
                       <button
                         data-bs-toggle="collapse"
                         data-bs-target="#collapseOne1"
@@ -465,28 +466,32 @@ const MainSection = ({ getValueData }) => {
                         <div className="accordion-body" id="stateFilter">
                           <div className="acc_heightbx">
                             <ul className="acc-list " id="state_list">
-                              <li>
+                              <li
+                                onClick={() => handleFilter("orderBy", "asc")}
+                              >
                                 <label htmlFor="r1" className="customradio">
                                   <input
                                     type="radio"
-                                    id="r1"
                                     className="customradioinput"
-                                    name="orderBy"
-                                    value="asc"
+                                    // name="orderBy"
+                                    // value="asc"
                                     checked={filterByCollege.orderBy == "asc"}
+                                    readOnly
                                   />
                                   <div className="radiobx">Ascending </div>
                                 </label>
                               </li>
-                              <li>
+                              <li
+                                onClick={() => handleFilter("orderBy", "desc")}
+                              >
                                 <label htmlFor="r2" className="customradio">
                                   <input
                                     type="radio"
-                                    id="r2"
                                     className="customradioinput"
-                                    name="orderBy"
-                                    value="desc"
+                                    // name="orderBy"
+                                    // value="desc"
                                     checked={filterByCollege.orderBy == "desc"}
+                                    readOnly
                                   />
                                   <div className="radiobx">Descending</div>
                                 </label>
@@ -514,75 +519,91 @@ const MainSection = ({ getValueData }) => {
                         <div className="accordion-body" id="stateFilter">
                           <div className="acc_heightbx">
                             <ul className="acc-list " id="state_list">
-                              <li>
+                              <li
+                                onClick={() =>
+                                  handleFilter("sortBy", "closingRank")
+                                }
+                              >
                                 <label htmlFor="r12" className="customradio">
                                   <input
                                     type="radio"
-                                    id="r12"
                                     className="customradioinput"
-                                    name="sortBy"
-                                    value="closingRank"
                                     checked={
                                       filterByCollege.sortBy === "closingRank"
                                     }
+                                    readOnly
                                   />
                                   <div className="radiobx">Closing Rank</div>
                                 </label>
                               </li>
-                              <li>
+                              <li
+                                onClick={() =>
+                                  handleFilter("sortBy", "nirfRank")
+                                }
+                              >
                                 <label htmlFor="r13" className="customradio">
                                   <input
                                     type="radio"
-                                    id="r13"
                                     className="customradioinput"
-                                    name="sortBy"
-                                    value="nirfRank"
+                                    // name="sortBy"
+                                    // value="nirfRank"
                                     checked={
                                       filterByCollege.sortBy === "nirfRank"
                                     }
+                                    readOnly
                                   />
                                   <div className="radiobx">NIRF Rank </div>
                                 </label>
                               </li>
-                              <li>
+                              <li
+                                onClick={() =>
+                                  handleFilter("sortBy", "medianSalary")
+                                }
+                              >
                                 <label htmlFor="r22" className="customradio">
                                   <input
                                     type="radio"
-                                    id="r22"
                                     className="customradioinput"
-                                    name="sortBy"
-                                    value="medianSalary"
+                                    // name="sortBy"
+                                    // value="medianSalary"
                                     checked={
                                       filterByCollege.sortBy === "medianSalary"
                                     }
+                                    readOnly
                                   />
                                   <div className="radiobx">Median Salary</div>
                                 </label>
                               </li>
-                              <li>
+                              <li
+                                onClick={() =>
+                                  handleFilter("sortBy", "placement")
+                                }
+                              >
                                 <label htmlFor="r24" className="customradio">
                                   <input
                                     type="radio"
-                                    id="r24"
                                     className="customradioinput"
-                                    name="sortBy"
-                                    value="placement"
+                                    // name="sortBy"
+                                    // value="placement"
                                     checked={
                                       filterByCollege.sortBy == "placement"
                                     }
+                                    readOnly
                                   />
                                   <div className="radiobx">Placement</div>
                                 </label>
                               </li>
-                              <li>
+                              <li
+                                onClick={() => handleFilter("sortBy", "fees")}
+                              >
                                 <label htmlFor="r25" className="customradio">
                                   <input
                                     type="radio"
-                                    id="r25"
                                     className="customradioinput"
-                                    name="sortBy"
-                                    value="fees"
+                                    // name="sortBy"
+                                    // value="fees"
                                     checked={filterByCollege.sortBy == "fees"}
+                                    readOnly
                                   />
                                   <div className="radiobx">Fees</div>
                                 </label>
@@ -591,7 +612,7 @@ const MainSection = ({ getValueData }) => {
                           </div>
                         </div>
                       </div>
-                    </div> */}
+                    </div>
 
                     <div className="accordion-item">
                       <button
@@ -617,6 +638,11 @@ const MainSection = ({ getValueData }) => {
                                   <input
                                     type="text"
                                     placeholder="Find Your Course"
+                                    name="searchTerm"
+                                    value={searchTerm}
+                                    onChange={(e) =>
+                                      setSearchTerm(e.target.value)
+                                    }
                                   />
                                 </div>
                               </form>
@@ -625,38 +651,52 @@ const MainSection = ({ getValueData }) => {
 
                           <div className="acc_heightbx">
                             <ul className="acc-list " id="ownershipnew">
-                              {courseList &&
-                                courseList.map((courseItem) => {
-                                  return (
-                                    <li
-                                      key={courseItem.courseId}
-                                      onClick={() =>
-                                        handleFilter(
-                                          "courseList",
-                                          courseItem.courseId.toString()
-                                        )
-                                      }
-                                    >
-                                      <label
-                                        htmlFor={courseItem.courseId}
-                                        className="customradio"
-                                      >
-                                        <input
-                                          type="radio"
-                                          className="customradioinput"
-                                          checked={
-                                            filterByCollege.courseList ===
+                              {courseList.length !== 0 ? (
+                                courseList
+                                  .filter((courseItem) =>
+                                    courseItem.courseName
+                                      .toLowerCase()
+                                      .includes(searchTerm.toLowerCase())
+                                  )
+                                  .map((courseItem) => {
+                                    return (
+                                      <li
+                                        key={courseItem.courseId}
+                                        onClick={() =>
+                                          handleFilter(
+                                            "courseList",
                                             courseItem.courseId.toString()
-                                          }
-                                          readOnly
-                                        />
-                                        <div className="radiobx">
-                                          {courseItem.courseName}
-                                        </div>
-                                      </label>
-                                    </li>
-                                  );
-                                })}
+                                          )
+                                        }
+                                      >
+                                        <label
+                                          htmlFor={courseItem.courseId}
+                                          className="customradio"
+                                        >
+                                          <input
+                                            type="radio"
+                                            className="customradioinput"
+                                            checked={
+                                              filterByCollege.courseList ===
+                                              courseItem.courseId.toString()
+                                            }
+                                            readOnly
+                                          />
+                                          <div className="radiobx">
+                                            {
+                                              courseItem.courseName
+                                              // .split(
+                                              //   "("
+                                              // )[0]
+                                            }
+                                          </div>
+                                        </label>
+                                      </li>
+                                    );
+                                  })
+                              ) : (
+                                <div>No course</div>
+                              )}
                             </ul>
                           </div>
                         </div>
@@ -699,7 +739,6 @@ const MainSection = ({ getValueData }) => {
                                       >
                                         <input
                                           type="radio"
-                                          id={stateItem.stateName}
                                           className="customradioinput"
                                           checked={
                                             filterByCollege.filterStateId ===
@@ -707,6 +746,15 @@ const MainSection = ({ getValueData }) => {
                                           }
                                           readOnly
                                         />
+                                        {/* <input
+                                        type="radio"
+                                        id={stateItem.stateName}
+                                        className="customradioinput"
+                                        checked={
+                                          filterByCollege.filterStateId ===
+                                          stateItem.stateId.toString()
+                                        }
+                                      /> */}
                                         <div className="radiobx">
                                           {stateItem.stateName}
                                         </div>
@@ -740,11 +788,11 @@ const MainSection = ({ getValueData }) => {
                             <div className="acc_heightbx">
                               <ul className="acc-list " id="ownershipnew">
                                 {collegeList &&
-                                  collegeList.map((city, i) => {
+                                  collegeList.map((city) => {
                                     // console.log(city?.cityId.toString());
                                     return (
                                       <li
-                                        key={i}
+                                        key={city.cityId}
                                         onClick={() =>
                                           handleFilter(
                                             "cityId",
@@ -758,12 +806,15 @@ const MainSection = ({ getValueData }) => {
                                         >
                                           <input
                                             type="radio"
-                                            id={city.cityId}
+                                            // id={city.cityId}
                                             className="customradioinput"
-                                            // checked={
-                                            //   filterByCollege.cityId ===
-                                            //   city.cityId.toString()
-                                            // }
+                                            checked={
+                                              filterByCollege.cityId ==
+                                              city.cityId
+                                            }
+                                            // filterByCollege.cityId ===
+                                            // city.cityId.toString()
+
                                             readOnly
                                           />
                                           <div className="radiobx">
@@ -828,7 +879,7 @@ const MainSection = ({ getValueData }) => {
                     aria-expanded="false"
                     fdprocessedid="sxwxf"
                   >
-                    Sort by{" "}
+                    Sort by
                   </button>
                   <div
                     id="collapseOne1m"
@@ -1368,7 +1419,7 @@ const MainSection = ({ getValueData }) => {
                                     data-bs-toggle="collapse"
                                     data-bs-target="#collapsemedical"
                                   >
-                                    <a>medical</a>
+                                    <a href="#">medical</a>
                                   </button>
                                   <div
                                     id="collapsemedical"
@@ -1408,7 +1459,7 @@ const MainSection = ({ getValueData }) => {
                                     data-bs-toggle="collapse"
                                     data-bs-target="#collapsedental"
                                   >
-                                    <a>dental</a>
+                                    <a href="#">dental</a>
                                   </button>
                                   <div
                                     id="collapsedental"
@@ -1448,7 +1499,7 @@ const MainSection = ({ getValueData }) => {
                                     data-bs-toggle="collapse"
                                     data-bs-target="#collapsearchitecture"
                                   >
-                                    <a>architecture</a>
+                                    <a href="#">architecture</a>
                                   </button>
                                   <div
                                     id="collapsearchitecture"
@@ -1506,7 +1557,7 @@ const MainSection = ({ getValueData }) => {
                                     data-bs-toggle="collapse"
                                     data-bs-target="#collapsepharmacy"
                                   >
-                                    <a>pharmacy</a>
+                                    <a href="#">pharmacy</a>
                                   </button>
                                   <div
                                     id="collapsepharmacy"
@@ -1546,7 +1597,7 @@ const MainSection = ({ getValueData }) => {
                                     data-bs-toggle="collapse"
                                     data-bs-target="#collapseexam"
                                   >
-                                    <a>Exams</a>
+                                    <a href="#">Exams</a>
                                   </button>
                                   <div
                                     id="collapseexam"
