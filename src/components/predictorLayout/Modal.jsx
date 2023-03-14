@@ -23,13 +23,6 @@ const Modal = () => {
             data-bs-dismiss="modal"
             aria-label="Close"
           />
-          {/* <i
-            className="material-icons u_cls fancybox-close"
-            data-bs-dismiss="modal"
-            aria-label="Close"
-          >
-            close
-          </i> */}
           <div className="modal-body p-4">
             <div className="embed-container u-blocklg">
               <iframe

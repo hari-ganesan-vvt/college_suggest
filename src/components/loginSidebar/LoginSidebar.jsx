@@ -129,7 +129,15 @@ const LoginSidebar = () => {
                       placeholder="Enter Your OTP Here.."
                       value={otp}
                       name="otp"
-                      onChange={(e) => setOtp(e.target.value)}
+                      onChange={(e) =>
+                        setOtp(
+                          e.target.value
+                            .replace(/[^0-9.]/g, "")
+                            .replace(/(\..*)\./g, "$1")
+                        )
+                      }
+                      maxLength="6"
+                      minLength="6"
                     />
                   </div>
 
@@ -160,7 +168,15 @@ const LoginSidebar = () => {
                         placeholder="Enter phone number"
                         value={phoneNumber}
                         name="phoneNumber"
-                        onChange={(e) => setPhoneNumber(e.target.value)}
+                        onChange={(e) =>
+                          setPhoneNumber(
+                            e.target.value
+                              .replace(/[^0-9.]/g, "")
+                              .replace(/(\..*)\./g, "$1")
+                          )
+                        }
+                        maxLength="10"
+                        minLength="10"
                       />
                     </div>
                     <button

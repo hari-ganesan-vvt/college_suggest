@@ -42,6 +42,8 @@ const CourseForm = ({ courseList, casteList, stateList }) => {
     },
   });
 
+  console.log("values", values);
+
   return (
     <div
       className="tab-pane fade"
@@ -107,8 +109,6 @@ const CourseForm = ({ courseList, casteList, stateList }) => {
                 }
                 onChange={handleChange}
                 value={values.rankId}
-                maxLength="10"
-                minLength="10"
               />
               <div className="invalid-feedback">
                 {errors.rankId && touched.rankId ? errors.rankId : null}

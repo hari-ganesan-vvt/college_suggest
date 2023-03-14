@@ -51,8 +51,8 @@ const TabForm = () => {
   //stateList
   const predictorStateList = async () => {
     try {
-      const { data } = await predictorList.stateList();
-      let resultData = data.stateList.sort((a, b) => {
+      const response = await predictorList.stateList();
+      let resultData = response.data.stateList.sort((a, b) => {
         if (a.stateName < b.stateName) {
           return -1;
         }
@@ -70,8 +70,8 @@ const TabForm = () => {
   //CasteList
   const predictorCasteList = async () => {
     try {
-      const { data } = await predictorList.casteList();
-      setCasteList(data.predictorCasteList);
+      const response = await predictorList.casteList();
+      setCasteList(response.data.predictorCasteList);
     } catch (err) {
       console.log(err);
     }
@@ -80,8 +80,8 @@ const TabForm = () => {
   //courseList
   const predictorCourseList = async () => {
     try {
-      const { data } = await predictorList.courseList();
-      setCourseList(data.predictorCourseList);
+      const response = await predictorList.courseList();
+      setCourseList(response.data.predictorCourseList);
     } catch (err) {
       console.log(err);
     }
@@ -128,10 +128,10 @@ const TabForm = () => {
               </button>
             </li>
           </ul>
-          {/* <!-- tab-content-here --> */}
+
           <div className="tabblock">
             <h3>Enter JEE Main Paper 1 Exam Details</h3>
-            {/* <!-- tabcontent1-here --> */}
+
             <div className="tab-content" id="pills-tabContent">
               <div
                 className="tab-pane fade show active"
@@ -140,7 +140,6 @@ const TabForm = () => {
                 aria-labelledby="pills-home-tab"
               >
                 <div className="tab_warp">
-                  {/* <!-- checkbox-sec-here-ends --> */}
                   <div className="fromblock d-block">
                     <form
                       method="POST"
@@ -149,12 +148,8 @@ const TabForm = () => {
                       className="needs-validation"
                       noValidate
                     >
-                      {/* <!-- checkbox-sec-here --> */}
                       <div className="form-row">
-                        <div
-                          className="chectop is-invalid"
-                          // style={{ marginBottom: "25px" }}
-                        >
+                        <div className="chectop is-invalid">
                           <label htmlFor="r1" className="customradio">
                             <input
                               type="radio"
@@ -295,7 +290,6 @@ const TabForm = () => {
                               id="r4"
                               className="customradioinput"
                               name="genderId"
-                              // onChange={handleChange}
                               value="2"
                             />
                             <div className="radiobx">Female</div>
@@ -306,7 +300,6 @@ const TabForm = () => {
                               id="r5"
                               className="customradioinput"
                               name="genderId"
-                              // onChange={handleChange}
                               value="1"
                             />
                             <div className="radiobx">Male</div>
@@ -359,7 +352,6 @@ const TabForm = () => {
                       {userInfo ? (
                         <input
                           type="submit"
-                          // disabled={isSubmitting}
                           className="clg-sug-primebtn submitbtn"
                           value="Submit"
                         />

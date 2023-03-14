@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import LoginSidebar from "../../components/loginSidebar/LoginSidebar";
 import Modal from "../../components/predictorLayout/Modal";
-import Form from "../../components/predictorLayout/Form";
 import Assets from "../../imports/assets.imports";
+import TabForm from "../../components/predictorLayout/TabForm";
 
 const Predictor = () => {
   useEffect(() => {
@@ -99,7 +99,7 @@ const Predictor = () => {
         </div>
         <Modal />
       </section>
-      <Form />
+      <TabForm />
       <LoginSidebar />
     </div>
   );
