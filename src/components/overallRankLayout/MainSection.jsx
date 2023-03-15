@@ -51,22 +51,12 @@ const MainSection = ({ getValueData }) => {
     courseId: parseInt(filterByCollege.courseList),
   });
 
-  const handleSelectedAllClear = () => {
-    setFilterByCollege({
-      ...filterByCollege,
-      filterStateId: "",
-      cityId: "",
-      courseList: "",
-      sortBy: "",
-      orderBy: "",
-    });
-  };
-
   //responseData
   const fetchDataFilter = (data) => {
     let college = _.uniqBy(data, "cs_collegename");
+
     for (let i = 0; i < college.length; i++) {
-      let courseList = [];
+      let allCourseBasedList = [];
       let filterCourse = [];
       let collegeData = _.filter(data, (e) => {
         return e.cs_collegename === college[i].cs_collegename;
@@ -83,11 +73,14 @@ const MainSection = ({ getValueData }) => {
               return e.j_course === department.j_course;
             })
             .maxBy((e) => {
-              return parseInt(e.j_closing_rank);
+              return (
+                Number(e.j_closing_rank) &&
+                (e.jFees.length > 0 ? Number(e.jFees) : 0)
+              );
             })
             .value();
 
-          courseList.push({
+          allCourseBasedList.push({
             [`${course.j_closing_rank}`]: {
               j_course_name: course.j_course,
               jFees: course.jFees,
@@ -98,11 +91,11 @@ const MainSection = ({ getValueData }) => {
           });
         }
       }
-      college[i].j_course = _.sortBy(courseList, (obj) =>
+      college[i].j_course = _.sortBy(allCourseBasedList, (obj) =>
         parseInt(_.keys(obj)[0])
       ).reverse();
     }
-
+    console.log("course", college);
     setCollegeList(college);
   };
 
@@ -174,6 +167,18 @@ const MainSection = ({ getValueData }) => {
     }
   };
 
+  //handlerFunctions
+  const handleSelectedAllClear = () => {
+    setFilterByCollege({
+      ...filterByCollege,
+      filterStateId: "",
+      cityId: "",
+      courseList: "",
+      sortBy: "",
+      orderBy: "",
+    });
+  };
+
   const handleFilter = (name, value) => {
     setFilterByCollege({ ...filterByCollege, [name]: value });
   };
@@ -202,7 +207,6 @@ const MainSection = ({ getValueData }) => {
     }
   }, [filterByCollege]);
 
-  // console.log("collegeList", collegeList);
   return (
     <section className="main_sec">
       <div className="container ">

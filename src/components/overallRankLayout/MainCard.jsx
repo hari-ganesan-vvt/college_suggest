@@ -6,10 +6,10 @@ import Assets from "../../imports/assets.imports";
 import Carousel from "./Carousel";
 
 const MainCard = ({ listdata, stateInfo }) => {
-  // redux
   const getValueData = sessionStorage.getItem("_values")
     ? JSON.parse(sessionStorage.getItem("_values"))
     : null;
+
   const filterChange = useSelector(
     (state) => state.filterChange.predictorChangeData
   );
@@ -49,7 +49,6 @@ const MainCard = ({ listdata, stateInfo }) => {
   };
 
   const rankBasedChange = (college) => {
-    // console.log("college", college);
     const rank_Id = Number(getValueData?.rankId);
     const closing_rankId = Number(college);
     let percentCalc = (rank_Id / 100) * 10;
@@ -65,6 +64,7 @@ const MainCard = ({ listdata, stateInfo }) => {
       return Assets.lowEmoji;
     }
   };
+
   useEffect(() => {
     setCourseList(listdata.j_course);
     setFilterData(listdata.j_course);
@@ -73,7 +73,6 @@ const MainCard = ({ listdata, stateInfo }) => {
     rankFilterBased();
   }, [filterChange, filterData]);
 
-  // console.log("setCourseList", courseList);
   return (
     <>
       {courseList.length !== 0 && (
@@ -134,8 +133,8 @@ const MainCard = ({ listdata, stateInfo }) => {
                       </div>
                     </a>
                   </li>
-                  {listdata &&
-                    listdata.j_course.map((course, i) => {
+                  {courseList &&
+                    courseList.map((course, i) => {
                       return (
                         <li key={i}>
                           <a href="#">
@@ -163,8 +162,13 @@ const MainCard = ({ listdata, stateInfo }) => {
             <div className="row hint-row">
               <div className="col-md-9 col-sm-12">
                 <p className="hintpara">
-                  Your Chances are Good in {listdata.j_course.length} out of
-                  &nbsp;
+                  Your Chances are&nbsp;
+                  {(filterChange === "ALL" && "Good") ||
+                    (filterChange === "LOW_UPDATED" && "Low") ||
+                    (filterChange === "MEDIUM_UPDATED" && "Medium") ||
+                    (filterChange === "HIGH_UPDATED" && "High")}
+                  &nbsp;in&nbsp;
+                  {courseList?.length} out of &nbsp;
                   {listdata.j_course.length} Courses
                 </p>
               </div>

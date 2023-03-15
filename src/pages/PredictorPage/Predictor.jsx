@@ -1,13 +1,10 @@
-import React, { useEffect } from "react";
+import React from "react";
 import LoginSidebar from "../../components/loginSidebar/LoginSidebar";
 import Modal from "../../components/predictorLayout/Modal";
 import Assets from "../../imports/assets.imports";
 import TabForm from "../../components/predictorLayout/TabForm";
 
 const Predictor = () => {
-  useEffect(() => {
-    sessionStorage.removeItem("_values");
-  }, []);
   return (
     <div className="predictor">
       <section className="hero_sec clg-sugg_green">

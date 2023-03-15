@@ -42,20 +42,19 @@ const LoginSidebar = () => {
     }
   };
 
-  const handleverifyOTP = async (e) => {
+  const handleverifyOTP = (e) => {
     e.preventDefault();
     const { userOTP } = verifyUser.user;
     if (otp === "") {
       toast.error("Enter the OTP");
-    } else {
-      setShowSidebar(!showSidebar);
+    } else if (parseInt(otp) === userOTP) {
       dispatch(userVerifyOtp(otp));
-      setOtp("");
-    }
-
-    setTimeout(() => {
+      setShowSidebar(!showSidebar);
       setShowOtp(false);
-    }, 3000);
+      setOtp("");
+    } else {
+      toast.error("Invalid OTP");
+    }
   };
 
   return (

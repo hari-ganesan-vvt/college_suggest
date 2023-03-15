@@ -23,7 +23,7 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/predictor" element={<Predictor />} />
-        <Route path="/overallrank" element={<OverallRank />} />
+        <Route path="/predictor/overallrank" element={<OverallRank />} />
         <Route path="/profile" element={<Profile />} />
       </Routes>
       <Footer />

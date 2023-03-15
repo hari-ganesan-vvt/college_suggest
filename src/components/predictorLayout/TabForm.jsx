@@ -42,9 +42,8 @@ const TabForm = () => {
         toast.warn("Login First");
       } else {
         sessionStorage.setItem("_values", JSON.stringify(values));
-        navigate("/overallrank");
+        navigate("/predictor/overallrank");
       }
-      // actions.resetForm();
     },
   });
 

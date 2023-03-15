@@ -37,12 +37,10 @@ const CourseForm = ({ courseList, casteList, stateList }) => {
         toast.warn("Login First");
       } else {
         sessionStorage.setItem("_values", JSON.stringify(values));
-        navigate("/overallrank");
+        navigate("/predictor/overallrank");
       }
     },
   });
-
-  console.log("values", values);
 
   return (
     <div
