@@ -931,7 +931,7 @@ input.customradioinput {
 
 .form-row input {
   background: rgba(220, 220, 220, 0.2) !important;
-  border: 0.5px solid #b0b4bd;
+  border: 0.5px solid #b0b4bd !important;
   border-radius: 4px !important;
   display: block;
   width: 100% !important;
@@ -944,7 +944,8 @@ input.customradioinput {
 }
 
 .form-row input:focus {
-  outline: none;
+  outline: none !important;
+  box-shadow: none !important;
 }
 
 .form-row input::-webkit-input-placeholder {
@@ -999,7 +1000,7 @@ input.customradioinput {
 
 .form-row select {
   background: rgba(220, 220, 220, 0.2) !important;
-  border: 0.5px solid #b0b4bd;
+  border: 0.5px solid #b0b4bd !important;
   border-radius: 4px !important;
   display: block !important;
   width: 100% !important;
@@ -1113,10 +1114,14 @@ input.customradioinput {
   color: rgba(255, 255, 255, 0.8) !important;
 }
 
-.paratitle span {
-  font-weight: 500 !important;
+.paratitle .rankId {
+  margin: 0 5px;
+}
+
+.paratitle .rankType {
   color: #fff !important;
   margin-left: 5px;
+  font-weight: 500 !important;
 }
 
 /* overall-page-css-start-here */
@@ -1810,6 +1815,16 @@ input.customradioinput {
   color: #b7b7b7 !important;
 }
 
+/* cutoff modal */
+
+.modal-content {
+  position: relative;
+  background-color: #fefefe;
+  margin: auto;
+  padding: 0;
+  width: 90%;
+  max-width: 1200px;
+}
 .graylinktxt {
   font-family: "Poppins";
   font-style: normal;
@@ -2276,7 +2291,7 @@ li .con input {
 .modal-content-custom {
   max-width: 699px !important;
   margin: auto;
-  width: 100%;
+  width: 90%;
 }
 
 /* custom modal css ends here */
@@ -2639,6 +2654,10 @@ i.material-icons.s_cur {
   color: #18d1a4;
 }
 
+.material-icons.close {
+  font-size: 24px;
+  color: #fff;
+}
 .material-icons_close {
   font-family: "Material Icons";
   font-weight: normal;

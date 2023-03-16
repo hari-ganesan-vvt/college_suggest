@@ -78,6 +78,27 @@ const predictorList = {
 
     return promise;
   },
+  cutOffSelect: (courseItemValues) => {
+    let promise = new Promise((resolve, reject) => {
+      let url = "/predictor/predictorCutoffList";
+      instance()
+        .post(url, {
+          courseID: courseItemValues.courseID,
+          collegeId: courseItemValues.collegeId,
+          seatType: courseItemValues.seatId,
+          quota: courseItemValues.quotaId,
+          gender: courseItemValues.genderId,
+        })
+        .then((res) => {
+          resolve(res);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+
+    return promise;
+  },
 };
 
 export default predictorList;

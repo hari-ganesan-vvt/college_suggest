@@ -9,6 +9,7 @@ import noLogoImg from "../assets/images/no_logo.webp";
 import dummyThumb from "../assets/images/dummythumb.png";
 import downArrow from "../assets/icons/downarrow.svg";
 import allArrow from "../assets/icons/allArrow.svg";
+import addChartIcon from "../assets/icons/add_chart.svg";
 
 const Assets = {
   googleIcon,
@@ -22,6 +23,7 @@ const Assets = {
   downArrow,
   dummyThumb,
   allArrow,
+  addChartIcon,
 };
 
 export default Assets;

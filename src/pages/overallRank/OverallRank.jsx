@@ -30,9 +30,10 @@ const OverallRank = () => {
                     Select JEE Main 2023 College Admission Counseling
                   </h1>
                   <p className="paratitle">
-                    College Predictor Results Shown for {getValueData?.rankId}
-                    &nbsp; JEE Paper-1
-                    <span>{getValueData?.rankType}</span>
+                    College Predictor Results Shown for
+                    <span className="rankId">{getValueData?.rankId}</span>
+                    JEE Paper-1
+                    <span className="rankType">{getValueData?.rankType}</span>
                   </p>
                 </div>
               </div>
@@ -80,8 +81,21 @@ const OverallRank = () => {
                   All
                 </a>
               </li>
-              <li>
-                <a className="typbx">
+              <li
+                onClick={() =>
+                  dispatch({
+                    type: "FILTER_CHANGE_DATA",
+                    payload: "RECOMMENDED_UPDATED",
+                  })
+                }
+              >
+                <a
+                  className={
+                    filterChange === "RECOMMENDED_UPDATED"
+                      ? "typbx active "
+                      : "typbx"
+                  }
+                >
                   <div className="minicons">
                     <img src={Assets.favicg} alt="" />
                   </div>
