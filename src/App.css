@@ -770,6 +770,15 @@ header {
   margin: auto;
 }
 
+tab-content .tab-pane.active {
+  height: auto;
+  visibility: visible;
+  opacity: 1;
+  overflow: visible;
+  -webkit-animation: up 0.7s ease-out;
+  animation: up 0.7s ease-out;
+}
+
 .tabbxhead {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -2381,16 +2390,15 @@ li .con input {
 }
 
 .ticktext {
-  font-family: "Poppins";
+  font-family: "Poppins", sans-serif !important;
   font-style: normal;
-  font-weight: 300;
+  font-weight: 400;
   text-transform: capitalize;
-  font-size: 13px;
+  font-size: 12px;
   line-height: 20px;
   letter-spacing: 0.005em;
-  color: #757575;
+  color: #666666;
   display: block;
-  -o-text-overflow: ellipsis;
   text-overflow: ellipsis;
   white-space: nowrap;
   max-width: 80%;

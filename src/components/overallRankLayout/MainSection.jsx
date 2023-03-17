@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import predictorList from "../../models/predictorList.model";
+import { useSelector } from "react-redux";
+import { useFormik } from "formik";
 import {
   MdHouse,
   MdMale,
@@ -12,9 +13,10 @@ import {
   MdFilterList,
 } from "react-icons/md";
 import _ from "lodash";
+import predictorList from "../../models/predictorList.model";
 import Loading from "../Loading/Loading";
 import MainCard from "./MainCard";
-import { useSelector } from "react-redux";
+import * as Yup from "yup";
 
 const MainSection = ({ getValueData }) => {
   const selectRecommended = useSelector(
@@ -23,6 +25,7 @@ const MainSection = ({ getValueData }) => {
   //state
   const [courseList, setCourseList] = useState([]);
   const [stateList, setStateList] = useState([]);
+  const [casteList, setCasteList] = useState([]);
   const [collegeList, setCollegeList] = useState([]);
   const [loading, setLoading] = useState(false);
   const [menuShow, setMenuShow] = useState(false);
@@ -153,6 +156,16 @@ const MainSection = ({ getValueData }) => {
     }
   };
 
+  //CasteList
+  const predictorCasteList = async () => {
+    try {
+      const response = await predictorList.casteList();
+      setCasteList(response.data.predictorCasteList);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   //courseList
   const predictorcourseList = async () => {
     try {
@@ -197,14 +210,43 @@ const MainSection = ({ getValueData }) => {
       orderBy: "asc",
     });
   };
+
   //mobileShow footer
   const handleMenu = () => {
     setMenuShow(!menuShow);
   };
 
+  //validation
+  const validationSchema = Yup.object().shape({
+    rankType: Yup.string().required("Rank Type is required!"),
+    rankId: Yup.string().required("Rank is required!"),
+    stateId: Yup.string().required("State is required!"),
+    casteId: Yup.string().required("Caste is required!"),
+    genderId: Yup.string().required("Gender is required!"),
+  });
+
+  //formik
+  const { values, handleChange, errors, touched, handleSubmit } = useFormik({
+    initialValues: {
+      rankType: getValueData.rankType,
+      rankId: getValueData.rankId,
+      stateId: getValueData.stateId,
+      casteId: getValueData.casteId,
+      genderId: getValueData.genderId,
+      abled: getValueData.abled,
+    },
+    validationSchema,
+    onSubmit: (values) => {
+      sessionStorage.setItem("_values", JSON.stringify(values));
+      responseSubmitData();
+    },
+  });
+
+  //component updated
   useEffect(() => {
     predictorStateList();
     predictorcourseList();
+    predictorCasteList();
   }, []);
 
   useEffect(() => {
@@ -263,27 +305,11 @@ const MainSection = ({ getValueData }) => {
                   <div className="sticybx">
                     <div className="d-block">
                       <div className="cat-show-box" id="formValues">
-                        {/* <div
-                    className="catticked dark"
-                    data-bs-toggle="modal"
-                    data-bs-target="#exampleModalFullscreenMd"
-                    id=""
-                  >
-                    <span
-                      className="material-icons cnlbutton"
-                      style={{ color: "#000" }}
-                    >
-                      edit
-                    </span>
-                    <div className="ticktext" style={{ maxWidth: "100%" }}>
-                      Edit
-                    </div>
-                  </div> */}
                         <button
                           className="e_btn"
                           data-bs-toggle="modal"
                           data-bs-target="#exampleModalFullscreenMd"
-                          onClick={updateRecommended}
+                          // onClick={updateRecommended}
                         >
                           <MdModeEdit className="m-edit-icon" />
                           Edit
@@ -590,8 +616,6 @@ const MainSection = ({ getValueData }) => {
                                     <input
                                       type="radio"
                                       className="customradioinput"
-                                      // name="sortBy"
-                                      // value="nirfRank"
                                       checked={
                                         filterByCollege.sortBy === "nirfRank"
                                       }
@@ -609,8 +633,6 @@ const MainSection = ({ getValueData }) => {
                                     <input
                                       type="radio"
                                       className="customradioinput"
-                                      // name="sortBy"
-                                      // value="medianSalary"
                                       checked={
                                         filterByCollege.sortBy ===
                                         "medianSalary"
@@ -629,8 +651,6 @@ const MainSection = ({ getValueData }) => {
                                     <input
                                       type="radio"
                                       className="customradioinput"
-                                      // name="sortBy"
-                                      // value="placement"
                                       checked={
                                         filterByCollege.sortBy == "placement"
                                       }
@@ -646,8 +666,6 @@ const MainSection = ({ getValueData }) => {
                                     <input
                                       type="radio"
                                       className="customradioinput"
-                                      // name="sortBy"
-                                      // value="fees"
                                       checked={filterByCollege.sortBy == "fees"}
                                       readOnly
                                     />
@@ -791,15 +809,7 @@ const MainSection = ({ getValueData }) => {
                                             }
                                             readOnly
                                           />
-                                          {/* <input
-                                        type="radio"
-                                        id={stateItem.stateName}
-                                        className="customradioinput"
-                                        checked={
-                                          filterByCollege.filterStateId ===
-                                          stateItem.stateId.toString()
-                                        }
-                                      /> */}
+
                                           <div className="radiobx">
                                             {stateItem.stateName}
                                           </div>
@@ -851,15 +861,11 @@ const MainSection = ({ getValueData }) => {
                                           >
                                             <input
                                               type="radio"
-                                              // id={city.cityId}
                                               className="customradioinput"
                                               checked={
                                                 filterByCollege.cityId ==
                                                 city.cityId
                                               }
-                                              // filterByCollege.cityId ===
-                                              // city.cityId.toString()
-
                                               readOnly
                                             />
                                             <div className="radiobx">
@@ -1155,7 +1161,7 @@ const MainSection = ({ getValueData }) => {
                                   name="test134m"
                                 />
                                 <div className="radiobx">
-                                  Computer Science Engineering{" "}
+                                  Computer Science Engineering
                                 </div>
                               </label>
                             </li>
@@ -1675,13 +1681,11 @@ const MainSection = ({ getValueData }) => {
                           </li>
 
                           <li>
-                            {" "}
                             <a href="https://collegesuggest.com/rankPredictor.html">
                               Predictions
                             </a>
                           </li>
                           <li>
-                            {" "}
                             <a href="https://collegesuggest.com/contact.html">
                               Contact
                             </a>
@@ -1759,6 +1763,447 @@ const MainSection = ({ getValueData }) => {
           </div>
         </div>
       </section>
+
+      {/* Edit Modal */}
+      <div
+        className="modal fade p-0"
+        id="exampleModalFullscreenMd"
+        tabIndex="-1"
+        aria-labelledby="exampleModalFullscreenMdLabel"
+        aria-hidden="true"
+      >
+        <div className="modal-dialog modal-fullscreen-md-down">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h5
+                className="modal-title edittitle h4 text-dark"
+                id="exampleModalFullscreenMdLabel"
+              >
+                <MdModeEdit className="m-edit-icon cnlbutton vm text-dark me-1" />
+                Edit
+              </h5>
+              <button
+                type="button"
+                className="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div className="modal-body">
+              <div className="tabbx">
+                <ul
+                  className="tabbxhead nav nav-pills"
+                  id="pills-tab"
+                  role="tablist"
+                >
+                  <li className="nav-item" role="presentation">
+                    <button
+                      className="nav-link active"
+                      id="pills-home-tab"
+                      data-bs-toggle="pill"
+                      data-bs-target="#pills-home"
+                      type="button"
+                      role="tab"
+                      aria-controls="pills-home"
+                      aria-selected=""
+                    >
+                      Value Based
+                    </button>
+                  </li>
+                  <li className="nav-item" role="presentation">
+                    <button
+                      className="nav-link "
+                      id="pills-profile-tab"
+                      data-bs-toggle="pill"
+                      data-bs-target="#pills-profile"
+                      type="button"
+                      role="tab"
+                      aria-controls="pills-profile"
+                      aria-selected=""
+                    >
+                      Course Based
+                    </button>
+                  </li>
+                </ul>
+
+                <div className="tabblock p-4">
+                  <h3>Enter JEE Main Paper 1 Exam Details</h3>
+
+                  <div className="tab-content" id="pills-tabContent">
+                    <div
+                      className="tab-pane fade show active"
+                      id="pills-home"
+                      role="tabpanel"
+                      aria-labelledby="pills-home-tab"
+                    >
+                      <div className="tab_warp">
+                        <div className="fromblock d-block">
+                          <form
+                            method="POST"
+                            id="valueForm"
+                            onSubmit={handleSubmit}
+                            className="needs-validation"
+                            noValidate
+                          >
+                            <div className="chectop mt-2 mb-2">
+                              <label htmlFor="r1" className="customradio">
+                                <input
+                                  type="radio"
+                                  id="r1"
+                                  className="customradioinput"
+                                  name="rankType"
+                                  value="Category Rank"
+                                  checked={values.rankType === "Category Rank"}
+                                  onChange={handleChange}
+                                />
+                                <div className="radiobx">Category Rank</div>
+                              </label>
+                              <label htmlFor="r2" className="customradio">
+                                <input
+                                  type="radio"
+                                  id="r2"
+                                  className="customradioinput"
+                                  name="rankType"
+                                  value="General Rank"
+                                  checked={values.rankType === "General Rank"}
+                                  onChange={handleChange}
+                                />
+                                <div className="radiobx">General Rank</div>
+                              </label>
+                            </div>
+                            <div className="form-row">
+                              <label htmlFor="#">
+                                JEE Main Paper 1 &nbsp;
+                                <span id="rankType" name="rankType">
+                                  {values?.rankType}
+                                </span>
+                              </label>
+                              <input
+                                type="text"
+                                id="rank"
+                                name="rankId"
+                                placeholder="Enter Your Rank"
+                                onChange={handleChange}
+                                value={values.rankId}
+                                // onkeypress="return onlyNumberKey(event)"
+                              />
+                            </div>
+                            <div className="form-row">
+                              <label htmlFor="#">Select your Home State</label>
+                              <select
+                                id="stateName"
+                                name="stateId"
+                                className="form-select"
+                                aria-label="Default select example"
+                                onChange={handleChange}
+                                value={values.stateId}
+                                // onchange="hiddenState()"
+                              >
+                                <option value={"DEFAULT"}>
+                                  Select your Home State
+                                </option>
+                                {stateList &&
+                                  stateList.map((state) => (
+                                    <option
+                                      value={state.stateId}
+                                      key={state.stateId}
+                                    >
+                                      {state.stateName}
+                                    </option>
+                                  ))}
+                              </select>
+                            </div>
+                            <div className="form-row">
+                              <label htmlFor="#">Caste Group</label>
+                              <select
+                                id="casteName"
+                                name="casteId"
+                                className="form-select"
+                                aria-label="Default select example"
+                                onChange={handleChange}
+                                value={values.casteId}
+                              >
+                                <option value={"DEFAULT"}>Select Caste</option>
+                                {casteList &&
+                                  casteList.map((caste, i) => (
+                                    <option value={caste.casteName} key={i}>
+                                      {caste.casteName}
+                                    </option>
+                                  ))}
+                              </select>
+                            </div>
+                            <div className="form-row">
+                              <label htmlFor="#">Gender</label>
+                              <div
+                                className="chectop m-0"
+                                onChange={handleChange}
+                              >
+                                <label htmlFor="r4" className="customradio">
+                                  <input
+                                    type="radio"
+                                    id="r4"
+                                    className="customradioinput"
+                                    name="genderId"
+                                    value="2"
+                                    checked={values.genderId === "2"}
+                                  />
+                                  <div className="radiobx">Female</div>
+                                </label>
+                                <label htmlFor="r5" className="customradio">
+                                  <input
+                                    type="radio"
+                                    id="r5"
+                                    className="customradioinput"
+                                    name="genderId"
+                                    value="1"
+                                    checked={values.genderId === "1"}
+                                  />
+                                  <div className="radiobx">Male</div>
+                                </label>
+                              </div>
+                            </div>
+                            <div className="form-row">
+                              <label htmlFor="#">
+                                Are You Specially Abled?
+                              </label>
+                              <div
+                                className="chectop m-0"
+                                onChange={handleChange}
+                              >
+                                <label htmlFor="r6" className="customradio">
+                                  <input
+                                    type="radio"
+                                    id="r6"
+                                    className="customradioinput"
+                                    name="abled"
+                                    value="1"
+                                    checked={values.abled === "1"}
+                                  />
+                                  <div className="radiobx">Yes</div>
+                                </label>
+                                <label htmlFor="r7" className="customradio">
+                                  <input
+                                    type="radio"
+                                    id="r7"
+                                    className="customradioinput"
+                                    name="abled"
+                                    value="0"
+                                    checked={values.abled === "0"}
+                                  />
+                                  <div className="radiobx">No</div>
+                                </label>
+                              </div>
+                            </div>
+
+                            <input
+                              type="submit"
+                              data-bs-dismiss="modal"
+                              className="clg-sug-primebtn mt-2 submitbtn"
+                              // onclick="rankScorePercentage()"
+                              value="Submit"
+                            />
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      className="tab-pane fade "
+                      id="pills-profile"
+                      role="tabpanel"
+                      aria-labelledby="pills-profile-tab"
+                    >
+                      <div className="tab_warp">
+                        <div className="fromblock d-block">
+                          <form method="POST" id="courseForm">
+                            <div
+                              className="chectop"
+                              style={{ marginBottom: "25px" }}
+                            >
+                              <label htmlFor="r11" className="customradio">
+                                <input
+                                  type="radio"
+                                  id="r11"
+                                  className="customradioinput"
+                                  name="rankType"
+                                  value="Category Rank"
+                                  checked={values.rankType === "Category Rank"}
+                                  onChange={handleChange}
+                                />
+                                <div className="radiobx">Category Rank</div>
+                              </label>
+                              <label htmlFor="r12" className="customradio">
+                                <input
+                                  type="radio"
+                                  id="r12"
+                                  className="customradioinput"
+                                  name="rankType"
+                                  value="Genaral Rank"
+                                  checked={values.rankType === "Genaral Rank"}
+                                  onChange={handleChange}
+                                />
+                                <div className="radiobx">General Rank</div>
+                              </label>
+                            </div>
+                            <div className="form-row">
+                              <label htmlFor="#">
+                                JEE Main Paper 1&nbsp;
+                                <span id="csrankType" name="rankType">
+                                  Category Rank
+                                </span>
+                              </label>
+                              <input
+                                type="text"
+                                id="courseRank"
+                                name="rank"
+                                placeholder="Enter Your Rank"
+                                // onkeypress="return onlyNumberKey(event)"
+                                value="15000"
+                              />
+                            </div>
+                            <div className="form-row">
+                              <label htmlFor="#">Course</label>
+                              <select
+                                id="courseList"
+                                name="courseList"
+                                className="form-select"
+                                aria-label="Default select example"
+                              >
+                                <option value={"DEFAULT"}>Select course</option>
+                                {courseList &&
+                                  courseList.map((course) => (
+                                    <option
+                                      value={course.courseId}
+                                      key={course.courseId}
+                                    >
+                                      {course.courseName}
+                                    </option>
+                                  ))}
+                              </select>
+                            </div>
+                            <div className="form-row">
+                              <label htmlFor="#">Select your Home State</label>
+                              <select
+                                id="courseStateName"
+                                name="stateName"
+                                className="form-select"
+                                aria-label="Default select example"
+                                onChange={handleChange}
+                                value={values.stateId}
+                                // onchange="hiddenState()"
+                              >
+                                <option>Select your Home State</option>
+                                {stateList &&
+                                  stateList.map((state) => (
+                                    <option
+                                      value={state.stateId}
+                                      key={state.stateId}
+                                    >
+                                      {state.stateName}
+                                    </option>
+                                  ))}
+                              </select>
+                            </div>
+                            <div className="form-row">
+                              <label htmlFor="#">Caste Group</label>
+                              <select
+                                id="courseCasteName"
+                                name="casteId"
+                                className="form-select"
+                                aria-label="Default select example"
+                                onChange={handleChange}
+                                value={values.casteId}
+                              >
+                                <option value={"DEFAULT"}>Select Caste</option>
+                                {casteList &&
+                                  casteList.map((caste, i) => (
+                                    <option value={caste.casteName} key={i}>
+                                      {caste.casteName}
+                                    </option>
+                                  ))}
+                              </select>
+                            </div>
+                            <div className="form-row">
+                              <label htmlFor="#">Gender</label>
+                              <div
+                                className="chectop m-0"
+                                onChange={handleChange}
+                              >
+                                <label htmlFor="r41" className="customradio">
+                                  <input
+                                    type="radio"
+                                    id="r41"
+                                    className="customradioinput"
+                                    name="genderId"
+                                    value="2"
+                                    checked={values.genderId === "2"}
+                                  />
+                                  <div className="radiobx">Female</div>
+                                </label>
+                                <label htmlFor="r51" className="customradio">
+                                  <input
+                                    type="radio"
+                                    id="r51"
+                                    className="customradioinput"
+                                    name="genderId"
+                                    value="1"
+                                    checked={values.genderId === "1"}
+                                  />
+                                  <div className="radiobx">Male</div>
+                                </label>
+                              </div>
+                            </div>
+                            <div className="form-row">
+                              <label htmlFor="#">
+                                Are You Specially Abled?
+                              </label>
+                              <div
+                                className="chectop m-0"
+                                onChange={handleChange}
+                              >
+                                <label htmlFor="r61" className="customradio">
+                                  <input
+                                    type="radio"
+                                    id="r61"
+                                    className="customradioinput"
+                                    name="abled"
+                                    value="1"
+                                    checked={values.abled === "1"}
+                                  />
+                                  <div className="radiobx">Yes</div>
+                                </label>
+                                <label htmlFor="r71" className="customradio">
+                                  <input
+                                    type="radio"
+                                    id="r71"
+                                    className="customradioinput"
+                                    name="abled"
+                                    value="0"
+                                    checked={values.abled === "0"}
+                                  />
+                                  <div className="radiobx">No</div>
+                                </label>
+                              </div>
+                            </div>
+
+                            <input
+                              type="button"
+                              className="clg-sug-primebtn submitbtn close"
+                              data-bs-dismiss="modal"
+                              // onclick="courseBased()"
+                              name="course"
+                              value="Submit"
+                            />
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </>
   );
 };

@@ -29,8 +29,8 @@ const Navbar = () => {
   //getUserDetails
   const getUserDetails = async () => {
     try {
-      const { data } = await user.userDetails(userInfo?.userId);
-      setUserDetails(data.userDetails);
+      const response = await user.userDetails(userInfo?.userId);
+      setUserDetails(response.data.userDetails);
     } catch (error) {
       console.log(error);
     }
@@ -44,7 +44,9 @@ const Navbar = () => {
   };
 
   useEffect(() => {
-    getUserDetails();
+    if (userInfo !== null) {
+      getUserDetails();
+    }
   }, [userInfo]);
 
   useEffect(() => {

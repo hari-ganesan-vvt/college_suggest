@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import Assets from "../../imports/assets.imports";
 import Carousel from "./Carousel";
 
-const MainCard = ({ listdata, stateInfo, updateRecommended }) => {
+const MainCard = ({ listdata, stateInfo }) => {
   const getValueData = sessionStorage.getItem("_values")
     ? JSON.parse(sessionStorage.getItem("_values"))
     : null;
@@ -42,11 +42,6 @@ const MainCard = ({ listdata, stateInfo, updateRecommended }) => {
         });
         setCourseList(lowChanged);
         break;
-
-      // case "RECOMMENDED_UPDATED":
-      //   // updateRecommended();
-      //   break;
-
       case "ALL":
         setCourseList(listdata.j_course);
         break;
@@ -74,10 +69,12 @@ const MainCard = ({ listdata, stateInfo, updateRecommended }) => {
     setCourseList(listdata.j_course);
     setFilterData(listdata.j_course);
   }, [listdata]);
+
   useEffect(() => {
     rankFilterBased();
   }, [filterChange, filterData]);
 
+  // console.log(courseList);
   return (
     <>
       {courseList.length !== 0 && (
