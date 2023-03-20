@@ -221,7 +221,7 @@ const TabForm = () => {
                           onChange={handleChange}
                           value={values.stateId}
                         >
-                          <option hidden value="DEFAULT">
+                          <option hidden value="DEFAULT ">
                             Select your Home State
                           </option>
                           {stateList.length !== 0 ? (
@@ -231,7 +231,7 @@ const TabForm = () => {
                               </option>
                             ))
                           ) : (
-                            <option>No Data Found!</option>
+                            <option disabled>No Data Found!</option>
                           )}
                         </select>
                         <div className="invalid-feedback">
@@ -268,7 +268,7 @@ const TabForm = () => {
                               </option>
                             ))
                           ) : (
-                            <option>No Data found</option>
+                            <option disabled>No Data found</option>
                           )}
                         </select>
                         <div className="invalid-feedback">

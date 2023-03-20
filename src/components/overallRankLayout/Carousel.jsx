@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper";
 import { BiCloudDownload } from "react-icons/bi";
@@ -33,9 +33,9 @@ const Carousel = ({ listdata }) => {
   };
 
   const handleCutOffSelect = async (courseItemValues) => {
+    console.log("courseItemValues", courseItemValues);
     try {
       const response = await predictorList.cutOffSelect(courseItemValues);
-      // console.log(response.data.predictorCutoffList);
       setCutOffList(response.data.predictorCutoffList);
     } catch (error) {
       console.log(error);
@@ -218,6 +218,7 @@ const Carousel = ({ listdata }) => {
                       // onchange="cutoffSelect(this)"
                     >
                       {listdata.map((courseItem, index) => {
+                        console.log("courseItem", courseItem);
                         return (
                           <option key={index}>
                             {
@@ -254,7 +255,7 @@ const Carousel = ({ listdata }) => {
                   </div>
                   <div className="dynamicCuttOff" id="dynamicCuttOff">
                     {cutOffList.map((cutOffItem, indexValue) => {
-                      console.log(cutOffItem);
+                      // console.log(cutOffItem);
                       return (
                         <div className="row tabledata" key={indexValue}>
                           <div

@@ -5,6 +5,7 @@ import highEmoji from "../assets/icons/high_emoji.svg";
 import mediumEmoji from "../assets/icons/medium_emoji.svg";
 import favicg from "../assets/images/favicg.png";
 import Logo from "../assets/images/logo.png";
+import userProfile from "../assets/images/user-profile.png";
 import noLogoImg from "../assets/images/no_logo.webp";
 import dummyThumb from "../assets/images/dummythumb.png";
 import downArrow from "../assets/icons/downarrow.svg";
@@ -19,6 +20,7 @@ const Assets = {
   mediumEmoji,
   favicg,
   Logo,
+  userProfile,
   noLogoImg,
   downArrow,
   dummyThumb,

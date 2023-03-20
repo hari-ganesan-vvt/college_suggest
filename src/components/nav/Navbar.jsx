@@ -380,10 +380,7 @@ const Navbar = () => {
               >
                 <div className="rio-ulogin">
                   <div className="us_img hid">
-                    <img
-                      src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=687&amp;q=80"
-                      alt=""
-                    />
+                    <img src={Assets.userProfile} alt="user-profile" />
                   </div>
                   <div className="pname user-profile hiddenname">
                     <div className="d-flex align-items-center">

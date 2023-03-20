@@ -9,6 +9,7 @@ const OverallRank = () => {
   const filterChange = useSelector(
     (state) => state.filterChange.predictorChangeData
   );
+
   //getValues session Storage
   const getValueData = sessionStorage.getItem("_values")
     ? JSON.parse(sessionStorage.getItem("_values"))

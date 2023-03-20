@@ -22,6 +22,7 @@ const MainSection = ({ getValueData }) => {
   const selectRecommended = useSelector(
     (state) => state.filterChange.predictorChangeData
   );
+  console.log("selectRecommended", selectRecommended);
   //state
   const [courseList, setCourseList] = useState([]);
   const [stateList, setStateList] = useState([]);
@@ -29,6 +30,7 @@ const MainSection = ({ getValueData }) => {
   const [collegeList, setCollegeList] = useState([]);
   const [loading, setLoading] = useState(false);
   const [menuShow, setMenuShow] = useState(false);
+  const [initialValues, setInitialValues] = useState(getValueData);
   const [searchShow, setSearchShow] = useState(false);
   const [error, setError] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
@@ -47,7 +49,7 @@ const MainSection = ({ getValueData }) => {
 
   //findValues && selectedValues
   const findFormState = _.find(stateList, {
-    stateId: parseInt(getValueData?.stateId),
+    stateId: parseInt(initialValues?.stateId),
   });
 
   const selectedStateValue = _.find(stateList, {
@@ -115,7 +117,7 @@ const MainSection = ({ getValueData }) => {
       setLoading(true);
     }
     try {
-      const response = await predictorList.formSubmitData(getValueData);
+      const response = await predictorList.formSubmitData(initialValues);
       fetchDataFilter(response.data.predictorResList);
       setLoading(false);
       setSearchTerm("");
@@ -228,27 +230,20 @@ const MainSection = ({ getValueData }) => {
   //formik
   const { values, handleChange, errors, touched, handleSubmit } = useFormik({
     initialValues: {
-      rankType: getValueData.rankType,
-      rankId: getValueData.rankId,
-      stateId: getValueData.stateId,
-      casteId: getValueData.casteId,
-      genderId: getValueData.genderId,
-      abled: getValueData.abled,
+      rankType: initialValues?.rankType,
+      rankId: initialValues?.rankId,
+      stateId: initialValues?.stateId,
+      casteId: initialValues?.casteId,
+      genderId: initialValues?.genderId,
+      abled: initialValues?.abled,
     },
     validationSchema,
     onSubmit: (values) => {
-      sessionStorage.setItem("_values", JSON.stringify(values));
-      responseSubmitData();
+      setInitialValues(values);
     },
   });
 
   //component updated
-  useEffect(() => {
-    predictorStateList();
-    predictorcourseList();
-    predictorCasteList();
-  }, []);
-
   useEffect(() => {
     if (
       filterByCollege.filterStateId.length > 0 ||
@@ -259,17 +254,26 @@ const MainSection = ({ getValueData }) => {
     ) {
       filterResData();
     } else {
+      alert("call");
       responseSubmitData();
     }
-  }, [filterByCollege]);
+  }, [filterByCollege, initialValues]);
+
+  // useEffect(() => {
+  //   if (selectRecommended === "RECOMMENDED_UPDATED") {
+  //     updateRecommended();
+  //   }
+  // }, []);
 
   useEffect(() => {
-    if (selectRecommended === "RECOMMENDED_UPDATED") {
-      updateRecommended();
-    } else {
-      setFilterByCollege({ ...filterByCollege, sortBy: "", orderBy: "" });
-    }
-  }, [selectRecommended]);
+    window.sessionStorage.setItem("_values", JSON.stringify(initialValues));
+  }, [initialValues]);
+
+  useEffect(() => {
+    predictorStateList();
+    predictorcourseList();
+    predictorCasteList();
+  }, []);
 
   return (
     <>
@@ -325,7 +329,7 @@ const MainSection = ({ getValueData }) => {
                             className="ticktext"
                             style={{ maxWidth: "100%" }}
                           >
-                            {getValueData?.rankId}
+                            {initialValues.rankId}
                           </div>
                         </div>
                         <div className="catticked" id="">
@@ -347,9 +351,9 @@ const MainSection = ({ getValueData }) => {
                             className="material-icons cnlbutton"
                             style={{ color: "#119d78" }}
                           >
-                            {getValueData?.genderId === "1" ? (
+                            {initialValues?.genderId === "1" ? (
                               <MdMale />
-                            ) : getValueData?.genderId === "2" ? (
+                            ) : initialValues?.genderId === "2" ? (
                               <MdFemale />
                             ) : null}
                           </span>
@@ -358,7 +362,9 @@ const MainSection = ({ getValueData }) => {
                             className="ticktext"
                             style={{ maxWidth: "100%" }}
                           >
-                            {getValueData?.genderId === "1" ? "Male" : "Female"}
+                            {initialValues?.genderId === "1"
+                              ? "Male"
+                              : "Female"}
                           </div>
                         </div>
                         <div className="catticked" id="">
@@ -384,7 +390,7 @@ const MainSection = ({ getValueData }) => {
                             className="ticktext"
                             style={{ maxWidth: "100%" }}
                           >
-                            {getValueData?.casteId}
+                            {initialValues?.casteId}
                           </div>
                         </div>
                       </div>
@@ -1262,7 +1268,7 @@ const MainSection = ({ getValueData }) => {
                                   name="test1345m"
                                 />
                                 <div className="radiobx">
-                                  Computer Science Engineering{" "}
+                                  Computer Science Engineering
                                 </div>
                               </label>
                             </li>
@@ -1934,10 +1940,7 @@ const MainSection = ({ getValueData }) => {
                             </div>
                             <div className="form-row">
                               <label htmlFor="#">Gender</label>
-                              <div
-                                className="chectop m-0"
-                                onChange={handleChange}
-                              >
+                              <div className="chectop m-0">
                                 <label htmlFor="r4" className="customradio">
                                   <input
                                     type="radio"
@@ -1946,6 +1949,7 @@ const MainSection = ({ getValueData }) => {
                                     name="genderId"
                                     value="2"
                                     checked={values.genderId === "2"}
+                                    onChange={handleChange}
                                   />
                                   <div className="radiobx">Female</div>
                                 </label>
@@ -1957,6 +1961,7 @@ const MainSection = ({ getValueData }) => {
                                     name="genderId"
                                     value="1"
                                     checked={values.genderId === "1"}
+                                    onChange={handleChange}
                                   />
                                   <div className="radiobx">Male</div>
                                 </label>
@@ -1966,10 +1971,7 @@ const MainSection = ({ getValueData }) => {
                               <label htmlFor="#">
                                 Are You Specially Abled?
                               </label>
-                              <div
-                                className="chectop m-0"
-                                onChange={handleChange}
-                              >
+                              <div className="chectop m-0">
                                 <label htmlFor="r6" className="customradio">
                                   <input
                                     type="radio"
@@ -1978,6 +1980,7 @@ const MainSection = ({ getValueData }) => {
                                     name="abled"
                                     value="1"
                                     checked={values.abled === "1"}
+                                    onChange={handleChange}
                                   />
                                   <div className="radiobx">Yes</div>
                                 </label>
@@ -1989,6 +1992,7 @@ const MainSection = ({ getValueData }) => {
                                     name="abled"
                                     value="0"
                                     checked={values.abled === "0"}
+                                    onChange={handleChange}
                                   />
                                   <div className="radiobx">No</div>
                                 </label>
@@ -2057,7 +2061,6 @@ const MainSection = ({ getValueData }) => {
                                 name="rank"
                                 placeholder="Enter Your Rank"
                                 // onkeypress="return onlyNumberKey(event)"
-                                value="15000"
                               />
                             </div>
                             <div className="form-row">
@@ -2124,10 +2127,7 @@ const MainSection = ({ getValueData }) => {
                             </div>
                             <div className="form-row">
                               <label htmlFor="#">Gender</label>
-                              <div
-                                className="chectop m-0"
-                                onChange={handleChange}
-                              >
+                              <div className="chectop m-0">
                                 <label htmlFor="r41" className="customradio">
                                   <input
                                     type="radio"
@@ -2136,6 +2136,7 @@ const MainSection = ({ getValueData }) => {
                                     name="genderId"
                                     value="2"
                                     checked={values.genderId === "2"}
+                                    onChange={handleChange}
                                   />
                                   <div className="radiobx">Female</div>
                                 </label>
@@ -2147,6 +2148,7 @@ const MainSection = ({ getValueData }) => {
                                     name="genderId"
                                     value="1"
                                     checked={values.genderId === "1"}
+                                    onChange={handleChange}
                                   />
                                   <div className="radiobx">Male</div>
                                 </label>
@@ -2156,10 +2158,7 @@ const MainSection = ({ getValueData }) => {
                               <label htmlFor="#">
                                 Are You Specially Abled?
                               </label>
-                              <div
-                                className="chectop m-0"
-                                onChange={handleChange}
-                              >
+                              <div className="chectop m-0">
                                 <label htmlFor="r61" className="customradio">
                                   <input
                                     type="radio"
@@ -2168,6 +2167,7 @@ const MainSection = ({ getValueData }) => {
                                     name="abled"
                                     value="1"
                                     checked={values.abled === "1"}
+                                    onChange={handleChange}
                                   />
                                   <div className="radiobx">Yes</div>
                                 </label>
@@ -2179,6 +2179,7 @@ const MainSection = ({ getValueData }) => {
                                     name="abled"
                                     value="0"
                                     checked={values.abled === "0"}
+                                    onChange={handleChange}
                                   />
                                   <div className="radiobx">No</div>
                                 </label>
