@@ -735,7 +735,7 @@ const Footer = () => {
             </div>
             <div className="col-lg-4 col-md-6 col-12">
               <p className="l_sm-text">
-                2023 ©
+                {new Date().getFullYear()} &copy;
                 <a href="https://cs.collegesuggest.com/">CollegeSuggest,</a> All
                 Rights Reserved.
               </p>

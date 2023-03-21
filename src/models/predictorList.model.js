@@ -99,6 +99,26 @@ const predictorList = {
 
     return promise;
   },
+
+  compareAddCollege: () => {
+    let promise = new Promise((resolve, reject) => {
+      let url = "/predictor/compare/compareAddCollege";
+      instance()
+        .post(url, {
+          collegeId: 272,
+          studId: 315,
+          deviceType: 1,
+        })
+        .then((res) => {
+          resolve(res);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+
+    return promise;
+  },
 };
 
 export default predictorList;

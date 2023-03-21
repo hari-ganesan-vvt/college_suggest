@@ -1,23 +1,43 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import MainSection from "../../components/overallRankLayout/MainSection";
 import Assets from "../../imports/assets.imports";
 
 const OverallRank = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const filterChange = useSelector(
     (state) => state.filterChange.predictorChangeData
   );
 
-  //getValues session Storage
-  const getValueData = sessionStorage.getItem("_values")
-    ? JSON.parse(sessionStorage.getItem("_values"))
-    : null;
+  const [getValueData, setGetValueData] = useState(
+    JSON.parse(sessionStorage.getItem("_values"))
+  );
+  const [emptyState, setEmptyState] = useState(false);
 
+  const handleChange = () => {
+    setEmptyState(!emptyState);
+  };
+
+  //getValues session Storage
   useEffect(() => {
     window.scroll(0, 0);
   }, []);
+
+  useEffect(() => {
+    setGetValueData(
+      sessionStorage.getItem("_values")
+        ? JSON.parse(sessionStorage.getItem("_values"))
+        : null
+    );
+  }, [emptyState]);
+
+  useEffect(() => {
+    if (getValueData === null) {
+      navigate("/");
+    }
+  }, [getValueData]);
 
   return (
     <>
@@ -162,7 +182,7 @@ const OverallRank = () => {
             </ul>
           </div>
         </section>
-        <MainSection getValueData={getValueData} />
+        <MainSection getValueData={getValueData} onChange={handleChange} />
       </div>
     </>
   );

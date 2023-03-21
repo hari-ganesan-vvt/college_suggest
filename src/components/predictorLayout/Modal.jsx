@@ -1,7 +1,8 @@
 import React from "react";
 import { MdOutlineClose } from "react-icons/md";
 
-const Modal = () => {
+const Modal = ({ show, close }) => {
+  let url = show ? "https://www.youtube.com/embed/o-n7I6fQ2lE" : " ";
   return (
     <div
       className="modal fade pt-0"
@@ -22,11 +23,12 @@ const Modal = () => {
             className="material-icons_close u_cls fancybox-close"
             data-bs-dismiss="modal"
             aria-label="Close"
+            onClick={close}
           />
           <div className="modal-body p-4">
             <div className="embed-container u-blocklg">
               <iframe
-                src="https://www.youtube.com/embed/o-n7I6fQ2lE"
+                src={url}
                 title="YouTube video player"
                 frameBorder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"

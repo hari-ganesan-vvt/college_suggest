@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   MdPerson,
   MdDashboard,
@@ -18,6 +18,7 @@ import user from "../../models/user.model";
 import Assets from "../../imports/assets.imports";
 
 const Navbar = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const menuRef = useRef();
 
@@ -41,6 +42,7 @@ const Navbar = () => {
     const { userId } = userInfo;
     dispatch(userLogout(userId));
     toast.success("Logout Successfull");
+    navigate("/");
   };
 
   useEffect(() => {
@@ -53,7 +55,6 @@ const Navbar = () => {
     let handler = (e) => {
       if (!menuRef.current?.contains(e.target)) {
         setProfileShow(false);
-        console.log();
       }
     };
 

@@ -1,10 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import LoginSidebar from "../../components/loginSidebar/LoginSidebar";
 import Modal from "../../components/predictorLayout/Modal";
 import Assets from "../../imports/assets.imports";
 import TabForm from "../../components/predictorLayout/TabForm";
 
 const Predictor = () => {
+  const [isShowing, setIsShowing] = useState(false);
+
+  const openModalHander = () => {
+    setIsShowing(true);
+  };
+  const closeModalHandler = () => {
+    setIsShowing(false);
+  };
   return (
     <div className="predictor">
       <section className="hero_sec clg-sugg_green">
@@ -88,13 +96,14 @@ const Predictor = () => {
                 data-bs-toggle="modal"
                 href="#exampleModalToggleutube"
                 role="button"
+                onClick={openModalHander}
               >
                 <img src={Assets.dummyThumb} alt="thumb" />
               </div>
             </div>
           </div>
         </div>
-        <Modal />
+        <Modal show={isShowing} close={closeModalHandler} />
       </section>
       <TabForm />
       <LoginSidebar />

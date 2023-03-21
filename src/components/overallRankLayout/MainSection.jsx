@@ -18,11 +18,11 @@ import Loading from "../Loading/Loading";
 import MainCard from "./MainCard";
 import * as Yup from "yup";
 
-const MainSection = ({ getValueData }) => {
+const MainSection = ({ getValueData, onChange }) => {
   const selectRecommended = useSelector(
     (state) => state.filterChange.predictorChangeData
   );
-  console.log("selectRecommended", selectRecommended);
+
   //state
   const [courseList, setCourseList] = useState([]);
   const [stateList, setStateList] = useState([]);
@@ -240,6 +240,7 @@ const MainSection = ({ getValueData }) => {
     validationSchema,
     onSubmit: (values) => {
       setInitialValues(values);
+      onChange();
     },
   });
 
@@ -254,7 +255,6 @@ const MainSection = ({ getValueData }) => {
     ) {
       filterResData();
     } else {
-      alert("call");
       responseSubmitData();
     }
   }, [filterByCollege, initialValues]);
@@ -262,8 +262,18 @@ const MainSection = ({ getValueData }) => {
   // useEffect(() => {
   //   if (selectRecommended === "RECOMMENDED_UPDATED") {
   //     updateRecommended();
+  //   } else if (
+  //     (selectRecommended === "MEDIUM_UPDATED" &&
+  //       filterByCollege.sortBy.length > 0) ||
+  //     filterByCollege.orderBy.length > 0
+  //   ) {
+  //     setFilterByCollege({
+  //       ...filterByCollege,
+  //       sortBy: "",
+  //       orderBy: "",
+  //     });
   //   }
-  // }, []);
+  // }, [selectRecommended]);
 
   useEffect(() => {
     window.sessionStorage.setItem("_values", JSON.stringify(initialValues));
@@ -329,7 +339,7 @@ const MainSection = ({ getValueData }) => {
                             className="ticktext"
                             style={{ maxWidth: "100%" }}
                           >
-                            {initialValues.rankId}
+                            {initialValues?.rankId}
                           </div>
                         </div>
                         <div className="catticked" id="">

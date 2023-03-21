@@ -1,19 +1,24 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper";
 import { BiCloudDownload } from "react-icons/bi";
-import { MdClose, MdOutlineBookmarkAdd } from "react-icons/md";
+import { MdOutlineBookmarkAdd } from "react-icons/md";
 import Assets from "../../imports/assets.imports";
 import predictorList from "../../models/predictorList.model";
+import Modal from "./Modal";
+import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
 
 const Carousel = ({ listdata }) => {
   const swiperRef = useRef();
+  const user = useSelector((state) => state.userLogin.userInfo);
 
   const getValueData = sessionStorage.getItem("_values")
     ? JSON.parse(sessionStorage.getItem("_values"))
     : null;
 
   const [cutOffList, setCutOffList] = useState([]);
+  const [isActiveCompare, setIsActiveCompare] = useState(false);
 
   const rankBasedChange = (college) => {
     const rank_Id = Number(getValueData?.rankId);
@@ -33,13 +38,40 @@ const Carousel = ({ listdata }) => {
   };
 
   const handleCutOffSelect = async (courseItemValues) => {
-    console.log("courseItemValues", courseItemValues);
+    // console.log("courseItemValues", courseItemValues);
     try {
       const response = await predictorList.cutOffSelect(courseItemValues);
       setCutOffList(response.data.predictorCutoffList);
     } catch (error) {
       console.log(error);
     }
+  };
+
+  // compareAddCollege
+  const compareAddCollege = async () => {
+    setIsActiveCompare(!isActiveCompare);
+
+    if (!isActiveCompare === true) {
+      alert("added");
+      const response = await predictorList.compareAddCollege();
+      console.log(response);
+    }
+    if (!isActiveCompare === false) {
+      alert("remove");
+    }
+    // try {
+    //   if (isActiveCompare === true) {
+    //     console.log("compare", isActiveCompare);
+    //     const response = await predictorList.compareAddCollege();
+    //     console.log(response);
+    //     toast.success("Adding Success");
+    //   } else if (isActiveCompare === false) {
+    //     console.log("compare", isActiveCompare);
+    //     toast.success("Removed Success");
+    //   }
+    // } catch (error) {
+    //   console.log(error);
+    // }
   };
 
   return (
@@ -107,9 +139,9 @@ const Carousel = ({ listdata }) => {
                   </div>
                 </div>
 
-                <a
-                  data-bs-target="#exampleModalToggle"
+                <div
                   data-bs-toggle="modal"
+                  data-bs-target="#exampleModalToggle"
                   className="prebtn"
                   onClick={() =>
                     handleCutOffSelect(courseList[Object.keys(courseList)[0]])
@@ -128,7 +160,7 @@ const Carousel = ({ listdata }) => {
                     />
                   </svg>
                   Cutoff
-                </a>
+                </div>
               </div>
             </SwiperSlide>
           );
@@ -145,7 +177,12 @@ const Carousel = ({ listdata }) => {
           <div className="d-flex align-items-center justify-content-end">
             <div className="d-block">
               <div className="d-flex">
-                <button className="prebtn1 bg-gray me-2">
+                <button
+                  className={`prebtn1 bg-gray me-2 compare_Btn ${
+                    isActiveCompare ? "active" : " "
+                  }`}
+                  onClick={compareAddCollege}
+                >
                   <svg
                     className="me-2 m-svg"
                     xmlns="http://www.w3.org/2000/svg"
@@ -186,100 +223,7 @@ const Carousel = ({ listdata }) => {
           </div>
         </div>
       </div>
-      <div
-        className="modal fade"
-        id="exampleModalToggle"
-        aria-labelledby="exampleModalToggleLabel"
-        tabIndex="-1"
-        aria-hidden="true"
-      >
-        <div className="modal-dialog modal-dialog-centered">
-          <div className="modal-content modal-content-custom">
-            <div className="modal-header modal-header-custom">
-              <h1 className="modal-title fs-5" id="exampleModalToggleLabel">
-                Round wise Cutoffs
-              </h1>
-              <MdClose
-                className="material-icons close"
-                type="button"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              />
-            </div>
-            <div className="modal-body p-0">
-              <div className="newmodal">
-                <div className="modal-dropdown">
-                  <div className="form-row">
-                    <select
-                      className="form-select"
-                      id="cutOffOptions"
-                      aria-label="Default select example"
-                      fdprocessedid="ysxx7d"
-                      // onchange="cutoffSelect(this)"
-                    >
-                      {listdata.map((courseItem, index) => {
-                        console.log("courseItem", courseItem);
-                        return (
-                          <option key={index}>
-                            {
-                              courseItem[Object.keys(courseItem)[0]]
-                                .j_course_name
-                            }
-                          </option>
-                        );
-                      })}
-                    </select>
-                  </div>
-                  <div
-                    // data-bs-target="#exampleModalToggle2"
-                    // data-bs-toggle="modal"
-                    className="modalicon"
-                  >
-                    <img src={Assets.addChartIcon} />
-                  </div>
-                </div>
-                <p className="hintpara">
-                  Our AI tool predicts the following results
-                </p>
-                <div className="newtable">
-                  <div className=" row tablehead">
-                    <div className=" col-md-4 col-4 tableheadtxt">
-                      <span>Rounds</span>
-                    </div>
-                    <div className=" col-md-4 col-4 tableheadtxt">
-                      <span>Opening Rank</span>
-                    </div>
-                    <div className=" col-md-4 col-4 tableheadtxt">
-                      <span>Closing Rank</span>
-                    </div>
-                  </div>
-                  <div className="dynamicCuttOff" id="dynamicCuttOff">
-                    {cutOffList.map((cutOffItem, indexValue) => {
-                      // console.log(cutOffItem);
-                      return (
-                        <div className="row tabledata" key={indexValue}>
-                          <div
-                            className=" col-md-4 col-4  tabledatatxt"
-                            id="RoundValue"
-                          >
-                            <span>{cutOffItem.round}</span>
-                          </div>
-                          <div className=" col-md-4 col-4  tabledatatxt">
-                            {cutOffItem.openingRank}
-                          </div>
-                          <div className=" col-md-4 col-4  tabledatatxt">
-                            <span>{cutOffItem.closingRank}</span>
-                          </div>
-                        </div>
-                      );
-                    })}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <Modal data={cutOffList} />
     </div>
   );
 };
