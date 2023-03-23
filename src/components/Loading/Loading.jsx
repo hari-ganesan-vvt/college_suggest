@@ -1,9 +1,10 @@
 import React from "react";
+import { SyncLoader } from "react-spinners";
 
 const Loading = () => {
   return (
     <div className="loader_container">
-      <span className="loader"></span>
+      <SyncLoader color="#129875" size={14} />
     </div>
   );
 };

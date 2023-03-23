@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
+import { MdModeEdit } from "react-icons/md";
 import MainSection from "../../components/overallRankLayout/MainSection";
 import Assets from "../../imports/assets.imports";
 
@@ -74,6 +75,13 @@ const OverallRank = () => {
             <li className="n_breadcrumbs_items active">
               <a className="n_breadcrumbs_items_links">Overall</a>
             </li>
+            <button
+              class="e_btn "
+              data-bs-toggle="modal"
+              data-bs-target="#exampleModalFullscreenMd"
+            >
+              <MdModeEdit className="md_edit" /> Edit
+            </button>
             {/* <button
               className="e_btn "
               data-bs-toggle="modal"

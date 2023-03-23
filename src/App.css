@@ -2280,8 +2280,10 @@ li .con input {
   margin-bottom: 0px !important;
 }
 
-.modal-header-custom .btn-close {
+.modal-header-custom .md_close {
   color: #fff !important;
+  font-size: 24px;
+  cursor: pointer;
 }
 
 .nkicn {
@@ -2483,6 +2485,9 @@ li .con input {
 .mb_warp_bx .material-icons {
   font-size: 24px;
 }
+.mb_warp_bx li {
+  cursor: pointer;
+}
 .elements.active i {
   color: #2ab38f !important;
 }
@@ -2582,7 +2587,8 @@ li .con input {
 
 .cls_mobilenav {
   display: block;
-  /*  margin-left: auto;*/
+  cursor: pointer;
+  font-size: 24px;
   color: #616161;
 }
 
@@ -4051,6 +4057,7 @@ i.material-icons.closefiltermodal {
   padding: 5px;
   font-size: 28px !important;
   color: #0a2f5e;
+  cursor: pointer;
 }
 
 .mail_span_hint {
@@ -4214,13 +4221,14 @@ i.material-icons.closefiltermodal {
     font-size: 13px;
     border: 1px solid #dddddd96;
     padding: 5px 6px;
+    background: transparent;
   }
 
   .n_breadcrumbs.witheditpad .e_btn:hover {
     background-color: transparent !important;
   }
 
-  .n_breadcrumbs.witheditpad .e_btn i {
+  .n_breadcrumbs.witheditpad .e_btn .md_edit {
     color: #fff !important;
     font-size: 22px !important;
   }

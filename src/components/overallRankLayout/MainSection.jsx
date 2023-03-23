@@ -28,12 +28,15 @@ const MainSection = ({ getValueData, onChange }) => {
   const [stateList, setStateList] = useState([]);
   const [casteList, setCasteList] = useState([]);
   const [collegeList, setCollegeList] = useState([]);
+
+  const [initialValues, setInitialValues] = useState(getValueData);
   const [loading, setLoading] = useState(false);
   const [menuShow, setMenuShow] = useState(false);
-  const [initialValues, setInitialValues] = useState(getValueData);
   const [searchShow, setSearchShow] = useState(false);
+  const [filterMobileShow, setFilterMobileShow] = useState(false);
   const [error, setError] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
+
   const [filterByCollege, setFilterByCollege] = useState({
     rankId: getValueData?.rankId,
     casteId: getValueData?.casteId,
@@ -213,11 +216,6 @@ const MainSection = ({ getValueData, onChange }) => {
     });
   };
 
-  //mobileShow footer
-  const handleMenu = () => {
-    setMenuShow(!menuShow);
-  };
-
   //validation
   const validationSchema = Yup.object().shape({
     rankType: Yup.string().required("Rank Type is required!"),
@@ -285,6 +283,7 @@ const MainSection = ({ getValueData, onChange }) => {
     predictorCasteList();
   }, []);
 
+  useEffect(() => {}, []);
   return (
     <>
       <section className="main_sec">
@@ -907,15 +906,77 @@ const MainSection = ({ getValueData, onChange }) => {
 
         {/* mobile filter modal */}
         <div>
-          <div className="fiter_Modal">
+          <div className={`fiter_Modal ${filterMobileShow ? "active" : " "}`}>
             <div className="fiter_Modal_body">
               <div className="fiter_Modal_head d-flex justify-content-between align-items-center">
                 <h5>Filters</h5>
-                <i className="material-icons closefiltermodal">
+                <i
+                  className="material-icons closefiltermodal"
+                  onClick={() => setFilterMobileShow(false)}
+                >
                   <MdClose />
                 </i>
               </div>
 
+              <div className="d-block" style={{ padding: "0px 20px" }}>
+                <div className="cat-show-box" id="formValues">
+                  <div className="catticked" id="">
+                    <span
+                      className="material-icons cnlbutton"
+                      style={{ color: "#119d78" }}
+                    >
+                      <MdVerified />
+                    </span>
+                    <div className="ticktext" style={{ maxWidth: "100%" }}>
+                      15000
+                    </div>
+                  </div>
+                  <div className="catticked" id="">
+                    <span
+                      className="material-icons cnlbutton"
+                      style={{ color: "#119d78" }}
+                    >
+                      <MdHouse />
+                    </span>
+                    <div className="ticktext" style={{ maxWidth: "100%" }}>
+                      TamilNadu
+                    </div>
+                  </div>
+                  <div className="catticked" id="">
+                    <span
+                      className="material-icons cnlbutton"
+                      style={{ color: "#119d78" }}
+                    >
+                      <MdMale />
+                    </span>
+                    <div className="ticktext" style={{ maxWidth: "100%" }}>
+                      Male
+                    </div>
+                  </div>
+                  <div className="catticked" id="">
+                    <span
+                      className="material-icons cnlbutton"
+                      style={{ color: "#119d78" }}
+                    >
+                      <svg
+                        stroke="currentColor"
+                        fill="currentColor"
+                        strokeWidth="0"
+                        viewBox="0 0 24 24"
+                        height="1em"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path fill="none" d="M0 0h24v24H0z"></path>
+                        <path d="M21 3v2h-2V3h-2v2h-2V3h-2v4l2 2v1H9V9l2-2V3H9v2H7V3H5v2H3V3H1v4l2 2v6l-2 2v4h9v-3c0-1.1.9-2 2-2s2 .9 2 2v3h9v-4l-2-2V9l2-2V3h-2z"></path>
+                      </svg>
+                    </span>
+                    <div className="ticktext" style={{ maxWidth: "100%" }}>
+                      OPEN
+                    </div>
+                  </div>
+                </div>
+              </div>
               <div className="f-body-warp">
                 <div className="cat-blocks">
                   <div className="cat_contents">
@@ -1360,10 +1421,16 @@ const MainSection = ({ getValueData, onChange }) => {
           <div className="mb_container">
             <div
               className="mobile_tab_overlay"
-              style={{ display: menuShow ? "block" : "none" }}
+              style={{
+                display: searchShow ? "block" : "none",
+              }}
             ></div>
 
-            <div className={`tab_con ${menuShow ? "active" : ""}`}>
+            <div
+              className={`tab_con ${
+                menuShow ? "active" : "" || searchShow ? "active" : ""
+              }`}
+            >
               <div className="px-3 py-2">
                 <div className="d-flex align-items-center mb-2">
                   <div className="header-logo" style={{ margin: "auto" }}>
@@ -1375,7 +1442,13 @@ const MainSection = ({ getValueData, onChange }) => {
                       />
                     </a>
                   </div>
-                  <MdClose className="material-icons cls_mobilenav" />
+                  <MdClose
+                    className="material-icons cls_mobilenav"
+                    onClick={() => {
+                      setMenuShow(false);
+                      setSearchShow(false);
+                    }}
+                  />
                 </div>
                 <div
                   id="London"
@@ -1717,11 +1790,7 @@ const MainSection = ({ getValueData, onChange }) => {
                   className="tab"
                   value="1"
                   style={{
-                    display: menuShow
-                      ? "block"
-                      : "none" || searchShow
-                      ? "block"
-                      : "none",
+                    display: searchShow ? "block" : "none",
                   }}
                 >
                   <div className="d-flex border-bottom border-light mb-2">
@@ -1750,7 +1819,10 @@ const MainSection = ({ getValueData, onChange }) => {
               <li
                 className="block m_block_list d-flex align-items-center justify-content-center tab-control elements"
                 value="0"
-                onClick={handleMenu}
+                onClick={() => {
+                  setMenuShow(true);
+                  setSearchShow(false);
+                }}
               >
                 <i className="material-icons m_nav_icn me-1">
                   <MdMenu />
@@ -1758,9 +1830,11 @@ const MainSection = ({ getValueData, onChange }) => {
                 <p className="text-center m_nav_txt">Menu</p>
               </li>
               <li
-                className="block m_block_list d-flex align-items-center justify-content-center tab-control elements"
+                className={`block m_block_list d-flex align-items-center justify-content-center tab-control elements ${
+                  searchShow ? "active" : " "
+                }`}
                 value="1"
-                onClick={() => setSearchShow(!searchShow)}
+                onClick={() => setSearchShow(true)}
               >
                 <i className="material-icons  m_nav_icn me-1">
                   <MdSearch />
@@ -1768,7 +1842,10 @@ const MainSection = ({ getValueData, onChange }) => {
                 <p className="text-center m_nav_txt">search</p>
               </li>
               <li className="block d-flex align-items-center justify-content-center">
-                <button className="openpop">
+                <button
+                  className="openpop"
+                  onClick={() => setFilterMobileShow(true)}
+                >
                   <i className="material-icons vm me-2">
                     <MdFilterList />
                   </i>
@@ -2068,8 +2145,10 @@ const MainSection = ({ getValueData, onChange }) => {
                               <input
                                 type="text"
                                 id="courseRank"
-                                name="rank"
+                                name="rankId"
                                 placeholder="Enter Your Rank"
+                                onChange={handleChange}
+                                value={values.rankId}
                                 // onkeypress="return onlyNumberKey(event)"
                               />
                             </div>

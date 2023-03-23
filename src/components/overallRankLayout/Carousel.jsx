@@ -5,12 +5,13 @@ import { BiCloudDownload } from "react-icons/bi";
 import { MdOutlineBookmarkAdd } from "react-icons/md";
 import Assets from "../../imports/assets.imports";
 import predictorList from "../../models/predictorList.model";
-import Modal from "./Modal";
+import ModalComponent from "./ModalComponent";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 
 const Carousel = ({ listdata }) => {
   const swiperRef = useRef();
+  const modalRef = useRef();
   const user = useSelector((state) => state.userLogin.userInfo);
 
   const getValueData = sessionStorage.getItem("_values")
@@ -42,6 +43,7 @@ const Carousel = ({ listdata }) => {
     try {
       const response = await predictorList.cutOffSelect(courseItemValues);
       setCutOffList(response.data.predictorCutoffList);
+      modalRef.current.openModal();
     } catch (error) {
       console.log(error);
     }
@@ -141,7 +143,7 @@ const Carousel = ({ listdata }) => {
 
                 <div
                   data-bs-toggle="modal"
-                  data-bs-target="#exampleModalToggle"
+                  // data-bs-target="#exampleModalToggle"
                   className="prebtn"
                   onClick={() =>
                     handleCutOffSelect(courseList[Object.keys(courseList)[0]])
@@ -223,7 +225,11 @@ const Carousel = ({ listdata }) => {
           </div>
         </div>
       </div>
-      <Modal data={cutOffList} />
+      <ModalComponent
+        data={cutOffList}
+        ref={modalRef}
+        courseDataList={listdata}
+      />
     </div>
   );
 };
