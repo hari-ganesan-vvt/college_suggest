@@ -100,13 +100,13 @@ const predictorList = {
     return promise;
   },
 
-  compareAddCollege: () => {
+  compareAddCollege: (userId, collegeId) => {
     let promise = new Promise((resolve, reject) => {
       let url = "/predictor/compare/compareAddCollege";
       instance()
         .post(url, {
-          collegeId: 272,
-          studId: 315,
+          collegeId: collegeId,
+          studId: userId,
           deviceType: 1,
         })
         .then((res) => {

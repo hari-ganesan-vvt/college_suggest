@@ -56,7 +56,7 @@ function ModalComponent(data, ref) {
                   Computer Science and Engineering (4 Years, Bachelor of
                   Technology)
                 </option>
-                <option value="1" selected="selected">
+                <option value="1">
                   Civil Engineering (4 Years, Bachelor of Technology)
                 </option>
               </select>

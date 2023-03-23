@@ -52,28 +52,18 @@ const Carousel = ({ listdata }) => {
   // compareAddCollege
   const compareAddCollege = async () => {
     setIsActiveCompare(!isActiveCompare);
+    const collegeId = Object.values(listdata[0])[0].collegeId;
+    const userId = user.userId;
 
+    console.log(collegeId, userId);
     if (!isActiveCompare === true) {
       alert("added");
-      const response = await predictorList.compareAddCollege();
-      console.log(response);
+      const response = await predictorList.compareAddCollege(userId, collegeId);
+      console.log(response.data);
     }
     if (!isActiveCompare === false) {
       alert("remove");
     }
-    // try {
-    //   if (isActiveCompare === true) {
-    //     console.log("compare", isActiveCompare);
-    //     const response = await predictorList.compareAddCollege();
-    //     console.log(response);
-    //     toast.success("Adding Success");
-    //   } else if (isActiveCompare === false) {
-    //     console.log("compare", isActiveCompare);
-    //     toast.success("Removed Success");
-    //   }
-    // } catch (error) {
-    //   console.log(error);
-    // }
   };
 
   return (

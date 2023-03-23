@@ -2321,7 +2321,7 @@ li .con input {
   background: #ffff;
   top: 0px;
   left: 0px;
-  z-index: 1001;
+  z-index: 1000;
   -webkit-transition: 0.2s;
   -o-transition: 0.2s;
   transition: 0.2s;

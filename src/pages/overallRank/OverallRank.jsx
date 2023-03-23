@@ -76,7 +76,7 @@ const OverallRank = () => {
               <a className="n_breadcrumbs_items_links">Overall</a>
             </li>
             <button
-              class="e_btn "
+              className="e_btn "
               data-bs-toggle="modal"
               data-bs-target="#exampleModalFullscreenMd"
             >
