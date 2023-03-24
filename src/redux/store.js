@@ -1,11 +1,8 @@
 import { applyMiddleware, combineReducers, createStore } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";
-import {
-  userLoginReducer,
-  userSignupReducer,
-} from "./reducer/userReducer/userReducer";
+import { userLoginReducer, userSignupReducer } from "./reducer/userReducer";
+import { filterChangeReducer } from "./reducer/filterChangeReducer";
 import thunk from "redux-thunk";
-import { filterChangeReducer } from "./reducer/filterChange/filterChange";
 
 const reducer = combineReducers({
   userLogin: userLoginReducer,

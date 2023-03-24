@@ -11,6 +11,8 @@ import {
   MdClose,
   MdMenu,
   MdFilterList,
+  MdCompareArrows,
+  MdOutlineAddCircle,
 } from "react-icons/md";
 import _ from "lodash";
 import predictorList from "../../models/predictorList.model";
@@ -97,6 +99,7 @@ const MainSection = ({ getValueData, onChange }) => {
               j_course_name: course.j_course,
               jFees: course.jFees,
               jSeats: course.jSeats,
+              cSno: course.cs_sno,
               collegeId: course.collegeId,
               seatId: course.seatId,
               genderId: course.genderId,
@@ -272,7 +275,6 @@ const MainSection = ({ getValueData, onChange }) => {
   //     });
   //   }
   // }, [selectRecommended]);
-
   useEffect(() => {
     window.sessionStorage.setItem("_values", JSON.stringify(initialValues));
   }, [initialValues]);
@@ -283,7 +285,6 @@ const MainSection = ({ getValueData, onChange }) => {
     predictorCasteList();
   }, []);
 
-  useEffect(() => {}, []);
   return (
     <>
       <section className="main_sec">
@@ -928,6 +929,67 @@ const MainSection = ({ getValueData, onChange }) => {
                       <MdVerified />
                     </span>
                     <div className="ticktext" style={{ maxWidth: "100%" }}>
+                      {initialValues?.rankId}
+                    </div>
+                  </div>
+                  <div className="catticked" id="">
+                    <span
+                      className="material-icons cnlbutton"
+                      style={{ color: "#119d78" }}
+                    >
+                      <MdHouse />
+                    </span>
+                    <div className="ticktext" style={{ maxWidth: "100%" }}>
+                      {findFormState?.stateName}
+                    </div>
+                  </div>
+                  <div className="catticked" id="">
+                    <span
+                      className="material-icons cnlbutton"
+                      style={{ color: "#119d78" }}
+                    >
+                      {initialValues?.genderId === "1" ? (
+                        <MdMale />
+                      ) : initialValues?.genderId === "2" ? (
+                        <MdFemale />
+                      ) : null}
+                    </span>
+
+                    <div className="ticktext" style={{ maxWidth: "100%" }}>
+                      {initialValues?.genderId === "1" ? "Male" : "Female"}
+                    </div>
+                  </div>
+                  <div className="catticked" id="">
+                    <span
+                      className="material-icons cnlbutton"
+                      style={{ color: "#119d78" }}
+                    >
+                      <svg
+                        stroke="currentColor"
+                        fill="currentColor"
+                        strokeWidth="0"
+                        viewBox="0 0 24 24"
+                        height="1em"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path fill="none" d="M0 0h24v24H0z"></path>
+                        <path d="M21 3v2h-2V3h-2v2h-2V3h-2v4l2 2v1H9V9l2-2V3H9v2H7V3H5v2H3V3H1v4l2 2v6l-2 2v4h9v-3c0-1.1.9-2 2-2s2 .9 2 2v3h9v-4l-2-2V9l2-2V3h-2z"></path>
+                      </svg>
+                    </span>
+
+                    <div className="ticktext" style={{ maxWidth: "100%" }}>
+                      {initialValues?.casteId}
+                    </div>
+                  </div>
+                  {/* <div className="catticked" id="">
+                    <span
+                      className="material-icons cnlbutton"
+                      style={{ color: "#119d78" }}
+                    >
+                      <MdVerified />
+                    </span>
+                    <div className="ticktext" style={{ maxWidth: "100%" }}>
                       15000
                     </div>
                   </div>
@@ -974,30 +1036,123 @@ const MainSection = ({ getValueData, onChange }) => {
                     <div className="ticktext" style={{ maxWidth: "100%" }}>
                       OPEN
                     </div>
-                  </div>
+                  </div> */}
                 </div>
               </div>
               <div className="f-body-warp">
-                <div className="cat-blocks">
-                  <div className="cat_contents">
-                    <i className="material-icons cnlbutton">
-                      <MdClose />
-                    </i>
-                    <div className="ticktext">engineering</div>
+                {filterByCollege?.filterStateId.length > 0 ||
+                filterByCollege?.courseList.length > 0 ||
+                filterByCollege?.sortBy.length > 0 ||
+                filterByCollege?.orderBy.length > 0 ? (
+                  <div className="cat-blocks">
+                    <div className="cat_contents">
+                      <i className="material-icons cnlbutton">
+                        <MdClose />
+                      </i>
+                      <div className="ticktext">Clear All</div>
+                    </div>
+                    {filterByCollege.orderBy && (
+                      <div className="cat_contents">
+                        <i
+                          className="material-icons cnlbutton"
+                          onClick={() =>
+                            setFilterByCollege({
+                              ...filterByCollege,
+                              orderBy: "",
+                            })
+                          }
+                        >
+                          <MdClose />
+                        </i>
+                        <div className="ticktext">
+                          {filterByCollege.orderBy == "asc"
+                            ? "Ascending"
+                            : "Decending"}
+                        </div>
+                      </div>
+                    )}
+
+                    {filterByCollege.sortBy && (
+                      <div className="cat_contents">
+                        <i
+                          className="material-icons cnlbutton"
+                          onClick={() =>
+                            setFilterByCollege({
+                              ...filterByCollege,
+                              sortBy: "",
+                            })
+                          }
+                        >
+                          <MdClose />
+                        </i>
+                        <div className="ticktext">
+                          {" "}
+                          {filterByCollege?.sortBy}
+                        </div>
+                      </div>
+                    )}
+
+                    {selectedCourseValue?.courseName && (
+                      <div className="cat_contents">
+                        <i
+                          className="material-icons cnlbutton"
+                          onClick={() =>
+                            setFilterByCollege({
+                              ...filterByCollege,
+                              courseList: "",
+                            })
+                          }
+                        >
+                          <MdClose />
+                        </i>
+                        <div className="ticktext">
+                          {selectedCourseValue?.courseName.split("(")[0]}
+                        </div>
+                      </div>
+                    )}
+
+                    {selectedStateValue?.stateName && (
+                      <div className="cat_contents">
+                        <i
+                          className="material-icons cnlbutton"
+                          onClick={() =>
+                            setFilterByCollege({
+                              ...filterByCollege,
+                              filterStateId: "",
+                              cityId: "",
+                            })
+                          }
+                        >
+                          <MdClose />
+                        </i>
+                        <div className="ticktext">
+                          {" "}
+                          {selectedStateValue?.stateName}
+                        </div>
+                      </div>
+                    )}
+
+                    {filterByCollege.cityId.length > 0 && (
+                      <div className="cat_contents">
+                        <i
+                          className="material-icons cnlbutton"
+                          onClick={() =>
+                            setFilterByCollege({
+                              ...filterByCollege,
+                              cityId: "",
+                            })
+                          }
+                        >
+                          <MdClose />
+                        </i>
+                        <div className="ticktext">
+                          {" "}
+                          {collegeList[0]?.cityName}
+                        </div>
+                      </div>
+                    )}
                   </div>
-                  <div className="cat_contents">
-                    <i className="material-icons cnlbutton">
-                      <MdClose />
-                    </i>
-                    <div className="ticktext">Civil engineering</div>
-                  </div>
-                  <div className="cat_contents">
-                    <i className="material-icons cnlbutton">
-                      <MdClose />
-                    </i>
-                    <div className="ticktext">Electrical Engineering</div>
-                  </div>
-                </div>
+                ) : null}
 
                 <div
                   className="course-accordion accordion"
@@ -1021,26 +1176,28 @@ const MainSection = ({ getValueData, onChange }) => {
                       <div className="accordion-body" id="stateFilter">
                         <div className="acc_heightbx">
                           <ul className="acc-list " id="state_list">
-                            <li>
+                            <li onClick={() => handleFilter("orderBy", "asc")}>
                               <label htmlFor="r1m" className="customradio">
                                 <input
                                   type="radio"
                                   id="r1m"
                                   className="customradioinput"
-                                  name="test1m"
+                                  checked={filterByCollege.orderBy == "asc"}
+                                  readOnly
                                 />
-                                <div className="radiobx">Median Salary </div>
+                                <div className="radiobx">Ascending </div>
                               </label>
                             </li>
-                            <li>
+                            <li onClick={() => handleFilter("orderBy", "desc")}>
                               <label htmlFor="r2m" className="customradio">
                                 <input
                                   type="radio"
                                   id="r2m"
                                   className="customradioinput"
-                                  name="test1m"
+                                  checked={filterByCollege.orderBy == "desc"}
+                                  readOnly
                                 />
-                                <div className="radiobx">Andhra Pradesh</div>
+                                <div className="radiobx">Descending</div>
                               </label>
                             </li>
                           </ul>
@@ -1066,26 +1223,83 @@ const MainSection = ({ getValueData, onChange }) => {
                       <div className="accordion-body" id="stateFilter">
                         <div className="acc_heightbx">
                           <ul className="acc-list " id="state_list">
-                            <li>
+                            <li
+                              onClick={() =>
+                                handleFilter("sortBy", "closingRank")
+                              }
+                            >
                               <label htmlFor="r12m" className="customradio">
                                 <input
                                   type="radio"
                                   id="r12m"
                                   className="customradioinput"
-                                  name="test12m"
+                                  checked={
+                                    filterByCollege.sortBy === "closingRank"
+                                  }
+                                  readOnly
                                 />
-                                <div className="radiobx">Percentage </div>
+                                <div className="radiobx">Closing Rank </div>
                               </label>
                             </li>
-                            <li>
+                            <li
+                              onClick={() => handleFilter("sortBy", "nirfRank")}
+                            >
                               <label htmlFor="r22m" className="customradio">
                                 <input
                                   type="radio"
                                   id="r22m"
                                   className="customradioinput"
-                                  name="test12m"
+                                  checked={
+                                    filterByCollege.sortBy === "nirfRank"
+                                  }
+                                  readOnly
                                 />
-                                <div className="radiobx">Andhra Pradesh</div>
+                                <div className="radiobx">NIRF Rank</div>
+                              </label>
+                            </li>
+                            <li
+                              onClick={() =>
+                                handleFilter("sortBy", "medianSalary")
+                              }
+                            >
+                              <label htmlFor="r22" className="customradio">
+                                <input
+                                  type="radio"
+                                  className="customradioinput"
+                                  checked={
+                                    filterByCollege.sortBy === "medianSalary"
+                                  }
+                                  readOnly
+                                />
+                                <div className="radiobx">Median Salary</div>
+                              </label>
+                            </li>
+                            <li
+                              onClick={() =>
+                                handleFilter("sortBy", "placement")
+                              }
+                            >
+                              <label htmlFor="r24" className="customradio">
+                                <input
+                                  type="radio"
+                                  className="customradioinput"
+                                  checked={
+                                    filterByCollege.sortBy == "placement"
+                                  }
+                                  readOnly
+                                />
+                                <div className="radiobx">Placement</div>
+                              </label>
+                            </li>
+                            <li onClick={() => handleFilter("sortBy", "fees")}>
+                              <label htmlFor="r25" className="customradio">
+                                <input
+                                  type="radio"
+                                  className="customradioinput"
+                                  checked={filterByCollege.sortBy == "fees"}
+                                  readOnly
+                                />
+                                <div className="radiobx">Fees</div>
                               </label>
                             </li>
                           </ul>
@@ -1128,84 +1342,52 @@ const MainSection = ({ getValueData, onChange }) => {
 
                         <div className="acc_heightbx">
                           <ul className="acc-list " id="ownershipnew">
-                            <li>
-                              <label htmlFor="r13m" className="customradio">
-                                <input
-                                  type="radio"
-                                  id="r13m"
-                                  className="customradioinput"
-                                  name="test13m"
-                                />
-                                <div className="radiobx">
-                                  Computer Science Engineering
-                                </div>
-                              </label>
-                            </li>
-                            <li>
-                              <label htmlFor="r23m" className="customradio">
-                                <input
-                                  type="radio"
-                                  id="r23m"
-                                  className="customradioinput"
-                                  name="test13m"
-                                />
-                                <div className="radiobx">
-                                  Electronics and Communication Engineering
-                                </div>
-                              </label>
-                            </li>
-                            <li>
-                              <label htmlFor="r33m" className="customradio">
-                                <input
-                                  type="radio"
-                                  id="r33m"
-                                  className="customradioinput"
-                                  name="test13m"
-                                />
-                                <div className="radiobx">
-                                  Electrical Engineering
-                                </div>
-                              </label>
-                            </li>
-
-                            <li>
-                              <label htmlFor="r34m" className="customradio">
-                                <input
-                                  type="radio"
-                                  id="r34m"
-                                  className="customradioinput"
-                                  name="test13m"
-                                />
-                                <div className="radiobx">Civil Engineering</div>
-                              </label>
-                            </li>
-
-                            <li>
-                              <label htmlFor="r35m" className="customradio">
-                                <input
-                                  type="radio"
-                                  id="r35m"
-                                  className="customradioinput"
-                                  name="test13m"
-                                />
-                                <div className="radiobx">
-                                  Electrical and Electronics Engineering
-                                </div>
-                              </label>
-                            </li>
-                            <li>
-                              <label htmlFor="r36m" className="customradio">
-                                <input
-                                  type="radio"
-                                  id="r36m"
-                                  className="customradioinput"
-                                  name="test13m"
-                                />
-                                <div className="radiobx">
-                                  Mechanical Engineering
-                                </div>
-                              </label>
-                            </li>
+                            {courseList.length !== 0 ? (
+                              courseList
+                                .filter((courseItem) =>
+                                  courseItem.courseName
+                                    .toLowerCase()
+                                    .includes(searchTerm.toLowerCase())
+                                )
+                                .map((courseItem) => {
+                                  return (
+                                    <li
+                                      key={courseItem.courseId}
+                                      onClick={() =>
+                                        handleFilter(
+                                          "courseList",
+                                          courseItem.courseId.toString()
+                                        )
+                                      }
+                                    >
+                                      <label
+                                        htmlFor={courseItem.courseId}
+                                        className="customradio"
+                                      >
+                                        <input
+                                          type="radio"
+                                          className="customradioinput"
+                                          checked={
+                                            filterByCollege.courseList ===
+                                            courseItem.courseId.toString()
+                                          }
+                                          readOnly
+                                        />
+                                        <div className="radiobx">
+                                          {
+                                            courseItem.courseName
+                                            // .split(
+                                            //   "("
+                                            // )[0]
+                                          }
+                                        </div>
+                                      </label>
+                                    </li>
+                                  );
+                                })
+                            ) : (
+                              <div>No course</div>
+                            )}
                           </ul>
                         </div>
                       </div>
@@ -1229,190 +1411,102 @@ const MainSection = ({ getValueData, onChange }) => {
                       <div className="accordion-body" id="stateFilter">
                         <div className="acc_heightbx">
                           <ul className="acc-list " id="ownershipnew">
-                            <li>
-                              <label htmlFor="r134m" className="customradio">
-                                <input
-                                  type="radio"
-                                  id="r134m"
-                                  className="customradioinput"
-                                  name="test134m"
-                                />
-                                <div className="radiobx">
-                                  Computer Science Engineering
-                                </div>
-                              </label>
-                            </li>
-                            <li>
-                              <label htmlFor="r234m" className="customradio">
-                                <input
-                                  type="radio"
-                                  id="r234m"
-                                  className="customradioinput"
-                                  name="test134m"
-                                />
-                                <div className="radiobx">
-                                  Electronics and Communication Engineering
-                                </div>
-                              </label>
-                            </li>
-                            <li>
-                              <label htmlFor="r334m" className="customradio">
-                                <input
-                                  type="radio"
-                                  id="r334m"
-                                  className="customradioinput"
-                                  name="test134m"
-                                />
-                                <div className="radiobx">
-                                  Electrical Engineering
-                                </div>
-                              </label>
-                            </li>
+                            {stateList &&
+                              stateList.map((stateItem, index) => {
+                                return (
+                                  <li
+                                    key={index}
+                                    onClick={() =>
+                                      handleFilter(
+                                        "filterStateId",
+                                        stateItem.stateId.toString()
+                                      )
+                                    }
+                                  >
+                                    <label
+                                      htmlFor={stateItem.stateName}
+                                      className="customradio"
+                                    >
+                                      <input
+                                        type="radio"
+                                        className="customradioinput"
+                                        checked={
+                                          filterByCollege.filterStateId ===
+                                          stateItem.stateId.toString()
+                                        }
+                                        readOnly
+                                      />
 
-                            <li>
-                              <label htmlFor="r3334m" className="customradio">
-                                <input
-                                  type="radio"
-                                  id="r3334m"
-                                  className="customradioinput"
-                                  name="test134m"
-                                />
-                                <div className="radiobx">Civil Engineering</div>
-                              </label>
-                            </li>
-
-                            <li>
-                              <label htmlFor="r354m" className="customradio">
-                                <input
-                                  type="radio"
-                                  id="r354m"
-                                  className="customradioinput"
-                                  name="test134m"
-                                />
-                                <div className="radiobx">
-                                  Electrical and Electronics Engineering
-                                </div>
-                              </label>
-                            </li>
-                            <li>
-                              <label htmlFor="r364m" className="customradio">
-                                <input
-                                  type="radio"
-                                  id="r364m"
-                                  className="customradioinput"
-                                  name="test134m"
-                                />
-                                <div className="radiobx">
-                                  Mechanical Engineering
-                                </div>
-                              </label>
-                            </li>
+                                      <div className="radiobx">
+                                        {stateItem.stateName}
+                                      </div>
+                                    </label>
+                                  </li>
+                                );
+                              })}
                           </ul>
                         </div>
                       </div>
                     </div>
                   </div>
-                  <div className="accordion-item">
-                    <button
-                      data-bs-toggle="collapse"
-                      data-bs-target="#collapseOne5m"
-                      className="collapsed"
-                      aria-expanded="false"
-                      fdprocessedid="sxwxf"
-                    >
-                      City
-                    </button>
-                    <div
-                      id="collapseOne5m"
-                      className="accordion-collapse collapse"
-                      data-bs-parent="#accordionCourse2"
-                    >
-                      <div className="accordion-body" id="stateFilter">
-                        <div className="acc_heightbx">
-                          <ul className="acc-list " id="ownershipnew">
-                            <li>
-                              <label htmlFor="r1345m" className="customradio">
-                                <input
-                                  type="radio"
-                                  id="r1345m"
-                                  className="customradioinput"
-                                  name="test1345m"
-                                />
-                                <div className="radiobx">
-                                  Computer Science Engineering
-                                </div>
-                              </label>
-                            </li>
-                            <li>
-                              <label htmlFor="r2345m" className="customradio">
-                                <input
-                                  type="radio"
-                                  id="r2345m"
-                                  className="customradioinput"
-                                  name="test1345m"
-                                />
-                                <div className="radiobx">
-                                  Electronics and Communication Engineering
-                                </div>
-                              </label>
-                            </li>
-                            <li>
-                              <label htmlFor="r3345m" className="customradio">
-                                <input
-                                  type="radio"
-                                  id="r3345m"
-                                  className="customradioinput"
-                                  name="test1345m"
-                                />
-                                <div className="radiobx">
-                                  Electrical Engineering
-                                </div>
-                              </label>
-                            </li>
-
-                            <li>
-                              <label htmlFor="r3445m" className="customradio">
-                                <input
-                                  type="radio"
-                                  id="r3445m"
-                                  className="customradioinput"
-                                  name="test134m"
-                                />
-                                <div className="radiobx">Civil Engineering</div>
-                              </label>
-                            </li>
-
-                            <li>
-                              <label htmlFor="r3545m" className="customradio">
-                                <input
-                                  type="radio"
-                                  id="r3545m"
-                                  className="customradioinput"
-                                  name="test134m"
-                                />
-                                <div className="radiobx">
-                                  Electrical and Electronics Engineering
-                                </div>
-                              </label>
-                            </li>
-                            <li>
-                              <label htmlFor="r3645m" className="customradio">
-                                <input
-                                  type="radio"
-                                  id="r3645m"
-                                  className="customradioinput"
-                                  name="test1345m"
-                                />
-                                <div className="radiobx">
-                                  Mechanical Engineering
-                                </div>
-                              </label>
-                            </li>
-                          </ul>
+                  {filterByCollege.filterStateId.length > 0 && (
+                    <div className="accordion-item">
+                      <button
+                        data-bs-toggle="collapse"
+                        data-bs-target="#collapseOne5m"
+                        className="collapsed"
+                        aria-expanded="false"
+                        fdprocessedid="sxwxf"
+                      >
+                        City
+                      </button>
+                      <div
+                        id="collapseOne5m"
+                        className="accordion-collapse collapse"
+                        data-bs-parent="#accordionCourse2"
+                      >
+                        <div className="accordion-body" id="stateFilter">
+                          <div className="acc_heightbx">
+                            <ul className="acc-list " id="ownershipnew">
+                              {collegeList &&
+                                collegeList.map((city) => {
+                                  // console.log(city?.cityId.toString());
+                                  return (
+                                    <li
+                                      key={city.cityId}
+                                      onClick={() =>
+                                        handleFilter(
+                                          "cityId",
+                                          city.cityId.toString()
+                                        )
+                                      }
+                                    >
+                                      <label
+                                        htmlFor={city.cityId}
+                                        className="customradio"
+                                      >
+                                        <input
+                                          type="radio"
+                                          className="customradioinput"
+                                          checked={
+                                            filterByCollege.cityId ==
+                                            city.cityId
+                                          }
+                                          readOnly
+                                        />
+                                        <div className="radiobx">
+                                          {city?.cityName}
+                                        </div>
+                                      </label>
+                                    </li>
+                                  );
+                                })}
+                            </ul>
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
+                  )}
                 </div>
               </div>
             </div>
@@ -1422,7 +1516,7 @@ const MainSection = ({ getValueData, onChange }) => {
             <div
               className="mobile_tab_overlay"
               style={{
-                display: searchShow ? "block" : "none",
+                display: menuShow ? "block" : "none",
               }}
             ></div>
 
@@ -1455,11 +1549,7 @@ const MainSection = ({ getValueData, onChange }) => {
                   className="tab"
                   value="0"
                   style={{
-                    display: menuShow
-                      ? "block"
-                      : "none" || searchShow
-                      ? "block"
-                      : "none",
+                    display: menuShow ? "block" : "none",
                   }}
                 >
                   <div className="bloG-con">
@@ -2286,6 +2376,102 @@ const MainSection = ({ getValueData, onChange }) => {
                           </form>
                         </div>
                       </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* comparison modal */}
+      <button
+        className="comparrison_btn2 modal-toggle"
+        data-bs-toggle="modal"
+        data-bs-target="#exampleModalXl1"
+        title="Click Comparision to Add colleges"
+      >
+        <div id="compra_warp1">
+          <div className="compra_warp2">
+            <span className="CM_text2 mobilehide">Comparison</span>
+            <span className="material-icons c_arrows2">
+              <MdCompareArrows />
+            </span>
+
+            <div className="nos2" id="cc_count">
+              0
+            </div>
+          </div>
+        </div>
+      </button>
+
+      <div
+        className="modal fade"
+        id="exampleModalXl1"
+        tabIndex="-1"
+        aria-labelledby="exampleModalXlLabel"
+        aria-hidden="true"
+      >
+        <div className="modal-dialog comparedialog modal-xl">
+          <div className="modal-content">
+            <div className="modal-header headcustomcompare">
+              <h5 className="modal-title h4 comp_data" id="exampleModalXlLabel">
+                Colleges in your compare queue
+              </h5>
+              <i
+                className="material-icons closecomparebtn_custom"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              >
+                <MdClose />
+              </i>
+            </div>
+            <div className="compareTmp_Data" id="compareListData">
+              <div className="modal-body overflow-hidden p-0">
+                <div className="mb_wrap2">
+                  <div className="mb_wrap_cols2 ">
+                    <div className="mb_wrap_colsinbx2">
+                      <a
+                        href="#"
+                        className="adderlistbtn"
+                        data-bs-toggle="modal"
+                        data-bs-target="#exampleModalXl2"
+                      >
+                        <i className="material-icons c_icn">
+                          <MdOutlineAddCircle />
+                        </i>
+                      </a>
+                    </div>
+                  </div>
+
+                  <div className="mb_wrap_cols2 ">
+                    <div className="mb_wrap_colsinbx2">
+                      <a
+                        href="#"
+                        className="adderlistbtn"
+                        data-bs-toggle="modal"
+                        data-bs-target="#exampleModalXl2"
+                      >
+                        <i className="material-icons c_icn">
+                          <MdOutlineAddCircle />
+                        </i>
+                      </a>
+                    </div>
+                  </div>
+
+                  <div className="mb_wrap_cols2 mobilehide">
+                    <div className="mb_wrap_colsinbx2">
+                      <a
+                        href="#"
+                        className="adderlistbtn"
+                        data-bs-toggle="modal"
+                        data-bs-target="#exampleModalXl2"
+                      >
+                        <i className="material-icons c_icn">
+                          <MdOutlineAddCircle />
+                        </i>
+                      </a>
                     </div>
                   </div>
                 </div>

@@ -20,6 +20,7 @@ const Carousel = ({ listdata }) => {
 
   const [cutOffList, setCutOffList] = useState([]);
   const [isActiveCompare, setIsActiveCompare] = useState(false);
+  const [isActiveBookMark, setIsActiveBookMark] = useState(false);
 
   const rankBasedChange = (college) => {
     const rank_Id = Number(getValueData?.rankId);
@@ -39,7 +40,6 @@ const Carousel = ({ listdata }) => {
   };
 
   const handleCutOffSelect = async (courseItemValues) => {
-    // console.log("courseItemValues", courseItemValues);
     try {
       const response = await predictorList.cutOffSelect(courseItemValues);
       setCutOffList(response.data.predictorCutoffList);
@@ -52,20 +52,46 @@ const Carousel = ({ listdata }) => {
   // compareAddCollege
   const compareAddCollege = async () => {
     setIsActiveCompare(!isActiveCompare);
-    const collegeId = Object.values(listdata[0])[0].collegeId;
+    const collegeId = Object.values(listdata[0])[0].cSno;
     const userId = user.userId;
-
-    console.log(collegeId, userId);
-    if (!isActiveCompare === true) {
-      alert("added");
-      const response = await predictorList.compareAddCollege(userId, collegeId);
-      console.log(response.data);
-    }
-    if (!isActiveCompare === false) {
-      alert("remove");
+    try {
+      if (!isActiveCompare === true) {
+        const response = await predictorList.compareAddCollege(
+          userId,
+          collegeId
+        );
+        console.log(response.data);
+        toast.success("Compared College Added");
+      }
+      if (!isActiveCompare === false) {
+        const response = await predictorList.compareAddCollege(
+          userId,
+          collegeId
+        );
+        console.log(response.data);
+        toast.success("Compared College Removed");
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
 
+  //addBookMark
+  const addBookMark = async () => {
+    setIsActiveBookMark(!isActiveBookMark);
+
+    if (!isActiveBookMark === true) {
+      const response = await predictorList.addBookMarkCollege();
+      console.log(response.data);
+      toast.success("Bookmark Added successfully");
+    }
+
+    if (!isActiveBookMark === false) {
+      const response = await predictorList.addBookMarkCollege();
+      console.log(response.data);
+      toast.success("Bookmark Removed successfully");
+    }
+  };
   return (
     <div>
       <Swiper
@@ -191,8 +217,14 @@ const Carousel = ({ listdata }) => {
                   <span className="m-text">Compare</span>
                 </button>
 
-                <button className="prebtn1 bg-gray btn-icon">
-                  <MdOutlineBookmarkAdd className="material-icons me-2 m-svg" />
+                <button
+                  className={`prebtn1 bg-gray btn-icon bookmark_Btn ${
+                    isActiveBookMark ? "active" : ""
+                  }`}
+                  onClick={addBookMark}
+                >
+                  <MdOutlineBookmarkAdd className="material-icons me-2 m-svg " />
+
                   <span className="m-text">Bookmark</span>
                 </button>
               </div>

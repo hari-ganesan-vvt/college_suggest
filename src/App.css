@@ -2029,25 +2029,6 @@ li .con {
   justify-content: center;
   height: 70vh;
 }
-.loader {
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  display: inline-block;
-  border-top: 3px solid #107e61;
-  border-right: 3px solid transparent;
-  box-sizing: border-box;
-  animation: rotation 0.7s linear infinite;
-}
-
-@keyframes rotation {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
 
 /* loadmore */
 
@@ -3025,8 +3006,7 @@ h3.menu-title {
   color: #fff !important;
 }
 
-.compare_Btn.active svg path,
-.bookmark_Btn.active svg path {
+.compare_Btn.active svg path {
   fill: #fff !important;
 }
 
@@ -3683,7 +3663,7 @@ footer {
 
 /* comparison-modal-css-starts-here */
 .comparrison_btn2 {
-  padding: 8px 15px;
+  padding: 2px 15px;
   width: 100%;
   max-width: 180px;
   background-color: #ffff;
@@ -3712,6 +3692,7 @@ footer {
 
 .c_arrows2 {
   color: #119d78;
+  font-size: 24px;
 }
 
 .nos2 {
@@ -3720,7 +3701,7 @@ footer {
   background-color: #119d78;
   color: #ffff;
   position: absolute;
-  top: -22px;
+  top: -15px;
   right: -14px;
   border-radius: 100%;
   font-size: 14px;
@@ -4171,8 +4152,51 @@ i.material-icons.closefiltermodal {
 
 #myBtn {
   bottom: 100px !important;
+  position: fixed;
+  opacity: 0;
+  bottom: 20px;
+  right: 30px;
+  z-index: 999;
+  border: none;
+  outline: none;
+  background-color: #18d1a4;
+  color: white;
+  cursor: pointer;
+  padding: 13px;
+  border-radius: 4px;
+  border-radius: 50%;
+  -webkit-transition: 0.3s ease-in-out;
+  -o-transition: 0.3s ease-in-out;
+  transition: 0.3s ease-in-out;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  justify-content: center;
 }
 
+#myBtn:hover {
+  background-color: #07664f8a;
+}
+
+#myBtn .topBtn {
+  font-size: 24px;
+  animation: gototop 1.2s linear infinite alternate-reverse;
+}
+
+@keyframes gototop {
+  0% {
+    transform: translateY(-0.2rem);
+  }
+  100% {
+    transform: translateY(0.2rem);
+  }
+}
 .n_breadcrumbs.witheditpad .e_btn {
   display: none;
 }

@@ -4,7 +4,7 @@ import {
   userLogin,
   userSignup,
   userVerifyOtp,
-} from "../../redux/Action/userAction/userAction";
+} from "../../redux/Action/userAction";
 import { toast } from "react-toastify";
 import Assets from "../../imports/assets.imports";
 

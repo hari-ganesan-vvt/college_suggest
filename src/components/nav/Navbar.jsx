@@ -11,7 +11,7 @@ import {
   MdOutlineLogout,
 } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
-import { userLogout } from "../../redux/Action/userAction/userAction";
+import { userLogout } from "../../redux/Action/userAction";
 import { toast } from "react-toastify";
 import LoginSidebar from "../loginSidebar/LoginSidebar";
 import user from "../../models/user.model";

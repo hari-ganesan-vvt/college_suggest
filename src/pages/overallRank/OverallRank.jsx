@@ -23,7 +23,7 @@ const OverallRank = () => {
 
   //getValues session Storage
   useEffect(() => {
-    window.scroll(0, 0);
+    window.scrollTo(0, 0);
   }, []);
 
   useEffect(() => {
