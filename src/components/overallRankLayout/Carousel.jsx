@@ -3,11 +3,11 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper";
 import { BiCloudDownload } from "react-icons/bi";
 import { MdOutlineBookmarkAdd } from "react-icons/md";
+import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
 import Assets from "../../imports/assets.imports";
 import predictorList from "../../models/predictorList.model";
 import ModalComponent from "./ModalComponent";
-import { useSelector } from "react-redux";
-import { toast } from "react-toastify";
 
 const Carousel = ({ listdata }) => {
   const swiperRef = useRef();
@@ -62,6 +62,7 @@ const Carousel = ({ listdata }) => {
         );
         console.log(response.data);
         toast.success("Compared College Added");
+        localStorage.setItem("compare_values", !isActiveCompare);
       }
       if (!isActiveCompare === false) {
         const response = await predictorList.compareAddCollege(
@@ -70,6 +71,7 @@ const Carousel = ({ listdata }) => {
         );
         console.log(response.data);
         toast.success("Compared College Removed");
+        localStorage.setItem("compare_values", !isActiveCompare);
       }
     } catch (error) {
       console.log(error);

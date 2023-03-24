@@ -101,7 +101,6 @@ const predictorList = {
   },
 
   compareAddCollege: (userId, collegeId) => {
-    console.log(userId, collegeId);
     let promise = new Promise((resolve, reject) => {
       let url = "/predictor/compare/compareAddCollege";
       instance()
@@ -121,6 +120,24 @@ const predictorList = {
     return promise;
   },
 
+  comparisonCollege: (userId) => {
+    // console.log(userId);
+    let promise = new Promise((resolve, reject) => {
+      let url = "/predictor/compare/predictorCollegeCompare";
+      instance()
+        .post(url, {
+          stud_id: 452,
+        })
+        .then((res) => {
+          resolve(res);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+
+    return promise;
+  },
   addBookMarkCollege: (userId, collegeId) => {
     let promise = new Promise((resolve, reject) => {
       let url = "/user/bookMark/addBookMark";

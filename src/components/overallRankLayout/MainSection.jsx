@@ -11,12 +11,11 @@ import {
   MdClose,
   MdMenu,
   MdFilterList,
-  MdCompareArrows,
-  MdOutlineAddCircle,
 } from "react-icons/md";
 import _ from "lodash";
 import predictorList from "../../models/predictorList.model";
 import Loading from "../Loading/Loading";
+import Comparison from "./Comparison";
 import MainCard from "./MainCard";
 import * as Yup from "yup";
 
@@ -75,8 +74,8 @@ const MainSection = ({ getValueData, onChange }) => {
       let collegeData = _.filter(data, (e) => {
         return e.cs_collegename === college[i].cs_collegename;
       });
+
       for (let department of collegeData) {
-        // console.log("department", department);
         if (
           !filterCourse.includes(department.j_course) &&
           !Array.isArray(department.j_course)
@@ -113,7 +112,6 @@ const MainSection = ({ getValueData, onChange }) => {
         parseInt(_.keys(obj)[0])
       ).reverse();
     }
-
     setCollegeList(college);
   };
 
@@ -2386,100 +2384,7 @@ const MainSection = ({ getValueData, onChange }) => {
       </div>
 
       {/* comparison modal */}
-      <button
-        className="comparrison_btn2 modal-toggle"
-        data-bs-toggle="modal"
-        data-bs-target="#exampleModalXl1"
-        title="Click Comparision to Add colleges"
-      >
-        <div id="compra_warp1">
-          <div className="compra_warp2">
-            <span className="CM_text2 mobilehide">Comparison</span>
-            <span className="material-icons c_arrows2">
-              <MdCompareArrows />
-            </span>
-
-            <div className="nos2" id="cc_count">
-              0
-            </div>
-          </div>
-        </div>
-      </button>
-
-      <div
-        className="modal fade"
-        id="exampleModalXl1"
-        tabIndex="-1"
-        aria-labelledby="exampleModalXlLabel"
-        aria-hidden="true"
-      >
-        <div className="modal-dialog comparedialog modal-xl">
-          <div className="modal-content">
-            <div className="modal-header headcustomcompare">
-              <h5 className="modal-title h4 comp_data" id="exampleModalXlLabel">
-                Colleges in your compare queue
-              </h5>
-              <i
-                className="material-icons closecomparebtn_custom"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              >
-                <MdClose />
-              </i>
-            </div>
-            <div className="compareTmp_Data" id="compareListData">
-              <div className="modal-body overflow-hidden p-0">
-                <div className="mb_wrap2">
-                  <div className="mb_wrap_cols2 ">
-                    <div className="mb_wrap_colsinbx2">
-                      <a
-                        href="#"
-                        className="adderlistbtn"
-                        data-bs-toggle="modal"
-                        data-bs-target="#exampleModalXl2"
-                      >
-                        <i className="material-icons c_icn">
-                          <MdOutlineAddCircle />
-                        </i>
-                      </a>
-                    </div>
-                  </div>
-
-                  <div className="mb_wrap_cols2 ">
-                    <div className="mb_wrap_colsinbx2">
-                      <a
-                        href="#"
-                        className="adderlistbtn"
-                        data-bs-toggle="modal"
-                        data-bs-target="#exampleModalXl2"
-                      >
-                        <i className="material-icons c_icn">
-                          <MdOutlineAddCircle />
-                        </i>
-                      </a>
-                    </div>
-                  </div>
-
-                  <div className="mb_wrap_cols2 mobilehide">
-                    <div className="mb_wrap_colsinbx2">
-                      <a
-                        href="#"
-                        className="adderlistbtn"
-                        data-bs-toggle="modal"
-                        data-bs-target="#exampleModalXl2"
-                      >
-                        <i className="material-icons c_icn">
-                          <MdOutlineAddCircle />
-                        </i>
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <Comparison />
     </>
   );
 };
