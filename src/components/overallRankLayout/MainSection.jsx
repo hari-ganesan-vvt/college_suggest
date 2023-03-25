@@ -24,21 +24,8 @@ const MainSection = ({ getValueData, onChange }) => {
     (state) => state.filterChange.predictorChangeData
   );
 
-  //state
-  const [courseList, setCourseList] = useState([]);
-  const [stateList, setStateList] = useState([]);
-  const [casteList, setCasteList] = useState([]);
-  const [collegeList, setCollegeList] = useState([]);
-
-  const [initialValues, setInitialValues] = useState(getValueData);
-  const [loading, setLoading] = useState(false);
-  const [menuShow, setMenuShow] = useState(false);
-  const [searchShow, setSearchShow] = useState(false);
-  const [filterMobileShow, setFilterMobileShow] = useState(false);
-  const [error, setError] = useState(null);
-  const [searchTerm, setSearchTerm] = useState("");
-
-  const [filterByCollege, setFilterByCollege] = useState({
+  //initial values
+  const initialState = {
     rankId: getValueData?.rankId,
     casteId: getValueData?.casteId,
     genderId: getValueData?.genderId,
@@ -49,7 +36,22 @@ const MainSection = ({ getValueData, onChange }) => {
     courseList: "",
     sortBy: "",
     orderBy: "",
-  });
+  };
+
+  //state
+  const [courseList, setCourseList] = useState([]);
+  const [stateList, setStateList] = useState([]);
+  const [casteList, setCasteList] = useState([]);
+  const [collegeList, setCollegeList] = useState([]);
+
+  const [filterByCollege, setFilterByCollege] = useState(initialState);
+  const [initialValues, setInitialValues] = useState(getValueData);
+  const [loading, setLoading] = useState(false);
+  const [menuShow, setMenuShow] = useState(false);
+  const [searchShow, setSearchShow] = useState(false);
+  const [filterMobileShow, setFilterMobileShow] = useState(false);
+  const [error, setError] = useState(null);
+  const [searchTerm, setSearchTerm] = useState("");
 
   //findValues && selectedValues
   const findFormState = _.find(stateList, {
@@ -243,7 +245,7 @@ const MainSection = ({ getValueData, onChange }) => {
     },
   });
 
-  //component updated
+  //component Mounding && updateding
   useEffect(() => {
     if (
       filterByCollege.filterStateId.length > 0 ||

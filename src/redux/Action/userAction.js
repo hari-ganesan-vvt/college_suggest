@@ -14,7 +14,6 @@ import {
 export const userLogin = (phoneNumber) => async (dispatch) => {
   try {
     const { data } = await user.userLogin(phoneNumber);
-    // console.log(data);
     dispatch({ type: USER_LOGIN_REQUEST, payload: data });
   } catch (error) {
     console.log(error);

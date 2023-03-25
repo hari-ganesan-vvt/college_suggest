@@ -1,24 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
+import { useSelector } from "react-redux";
 import { MdCompareArrows, MdOutlineAddCircle, MdClose } from "react-icons/md";
-import predictorList from "../../models/predictorList.model";
 
 const Comparison = () => {
-  const [comparison, setComparison] = useState([]);
-
-  const comparisonModal = async () => {
-    try {
-      const response = await predictorList.comparisonCollege();
-      console.log(response.data.predictorCompareCollegeDetails);
-      setComparison(response.data.predictorCompareCollegeDetails);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  console.log("comparison", comparison.length);
-  useEffect(() => {
-    comparisonModal();
-  }, []);
+  const compareItems = useSelector((state) => state.compare.compareItem);
+  console.log("compareItems", compareItems);
 
   return (
     <div>
@@ -36,7 +22,7 @@ const Comparison = () => {
             </span>
 
             <div className="nos2" id="cc_count">
-              {comparison?.length}
+              {compareItems.length}
             </div>
           </div>
         </div>
@@ -77,6 +63,26 @@ const Comparison = () => {
                           <MdOutlineAddCircle />
                         </i>
                       </a>
+
+                      <div className="added_clgbx2" id="box10">
+                        <div className="d-block rel">
+                          <a className="close_com_img2" data-boxes="box10">
+                            <MdClose />
+                          </a>
+
+                          <div className="added_collegescontent2">
+                            <div className="logobx2">
+                              <img
+                                src="https://cs.collegesuggest.com//assets/images/national-institute-of-1661752942.webp"
+                                alt=""
+                              />
+                            </div>
+                            <p className="text22">
+                              National Institute of Technology Tiruchirappalli
+                            </p>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
 
@@ -92,6 +98,25 @@ const Comparison = () => {
                           <MdOutlineAddCircle />
                         </i>
                       </a>
+                      <div className="added_clgbx2" id="box10">
+                        <div className="d-block rel">
+                          <a className="close_com_img2" data-boxes="box10">
+                            <MdClose />
+                          </a>
+
+                          <div className="added_collegescontent2">
+                            <div className="logobx2">
+                              <img
+                                src="https://cs.collegesuggest.com//assets/images/national-institute-of-1661752942.webp"
+                                alt=""
+                              />
+                            </div>
+                            <p className="text22">
+                              National Institute of Technology Tiruchirappalli
+                            </p>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
 
@@ -111,6 +136,13 @@ const Comparison = () => {
                   </div>
                 </div>
               </div>
+              <a
+                // href="https://cs.collegesuggest.com/predictors/jee-mains/comparison.php?studId=565"
+                target="_blank"
+                className="cmnwbtn2"
+              >
+                Compare Now
+              </a>
             </div>
           </div>
         </div>

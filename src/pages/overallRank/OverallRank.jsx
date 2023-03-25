@@ -12,27 +12,26 @@ const OverallRank = () => {
     (state) => state.filterChange.predictorChangeData
   );
 
-  const [getValueData, setGetValueData] = useState(
-    JSON.parse(sessionStorage.getItem("_values"))
-  );
-  const [emptyState, setEmptyState] = useState(false);
+  const getSessionValue = sessionStorage.getItem
+    ? JSON.parse(sessionStorage.getItem("_values"))
+    : null;
+
+  const [getValueData, setGetValueData] = useState(getSessionValue);
+  const [getSessionState, setGetSessionState] = useState(false);
 
   const handleChange = () => {
-    setEmptyState(!emptyState);
+    setGetSessionState(!getSessionState);
   };
 
   //getValues session Storage
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, []);
-
-  useEffect(() => {
     setGetValueData(
       sessionStorage.getItem("_values")
         ? JSON.parse(sessionStorage.getItem("_values"))
         : null
     );
-  }, [emptyState]);
+  }, [getSessionState]);
 
   useEffect(() => {
     if (getValueData === null) {

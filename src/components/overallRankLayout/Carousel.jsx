@@ -1,9 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper";
+import { AddToCompare } from "../../redux/Action/compareAction";
 import { BiCloudDownload } from "react-icons/bi";
 import { MdOutlineBookmarkAdd } from "react-icons/md";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import Assets from "../../imports/assets.imports";
 import predictorList from "../../models/predictorList.model";
@@ -12,6 +13,7 @@ import ModalComponent from "./ModalComponent";
 const Carousel = ({ listdata }) => {
   const swiperRef = useRef();
   const modalRef = useRef();
+  const dispatch = useDispatch();
   const user = useSelector((state) => state.userLogin.userInfo);
 
   const getValueData = sessionStorage.getItem("_values")
@@ -22,6 +24,7 @@ const Carousel = ({ listdata }) => {
   const [isActiveCompare, setIsActiveCompare] = useState(false);
   const [isActiveBookMark, setIsActiveBookMark] = useState(false);
 
+  //rankBasedChange Filter
   const rankBasedChange = (college) => {
     const rank_Id = Number(getValueData?.rankId);
     const closing_rankId = Number(college);
@@ -52,26 +55,22 @@ const Carousel = ({ listdata }) => {
   // compareAddCollege
   const compareAddCollege = async () => {
     setIsActiveCompare(!isActiveCompare);
-    const collegeId = Object.values(listdata[0])[0].cSno;
-    const userId = user.userId;
+    const compareItem = {
+      collegeId: Object.values(listdata[0])[0].cSno,
+      userId: user.userId,
+    };
     try {
       if (!isActiveCompare === true) {
-        const response = await predictorList.compareAddCollege(
-          userId,
-          collegeId
-        );
+        const response = await predictorList.compareAddCollege(compareItem);
         console.log(response.data);
         toast.success("Compared College Added");
-        localStorage.setItem("compare_values", !isActiveCompare);
+        dispatch(AddToCompare());
       }
       if (!isActiveCompare === false) {
-        const response = await predictorList.compareAddCollege(
-          userId,
-          collegeId
-        );
+        const response = await predictorList.compareAddCollege(compareItem);
         console.log(response.data);
         toast.success("Compared College Removed");
-        localStorage.setItem("compare_values", !isActiveCompare);
+        dispatch(AddToCompare());
       }
     } catch (error) {
       console.log(error);

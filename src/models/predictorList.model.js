@@ -78,6 +78,7 @@ const predictorList = {
 
     return promise;
   },
+
   cutOffSelect: (courseItemValues) => {
     let promise = new Promise((resolve, reject) => {
       let url = "/predictor/predictorCutoffList";
@@ -100,13 +101,13 @@ const predictorList = {
     return promise;
   },
 
-  compareAddCollege: (userId, collegeId) => {
+  compareAddCollege: (compareItem) => {
     let promise = new Promise((resolve, reject) => {
       let url = "/predictor/compare/compareAddCollege";
       instance()
         .post(url, {
-          collegeId: collegeId,
-          studId: userId,
+          collegeId: compareItem.collegeId,
+          studId: compareItem.userId,
           deviceType: 1,
         })
         .then((res) => {
@@ -121,7 +122,6 @@ const predictorList = {
   },
 
   comparisonCollege: (userId) => {
-    // console.log(userId);
     let promise = new Promise((resolve, reject) => {
       let url = "/predictor/compare/predictorCollegeCompare";
       instance()
@@ -138,6 +138,7 @@ const predictorList = {
 
     return promise;
   },
+
   addBookMarkCollege: (userId, collegeId) => {
     let promise = new Promise((resolve, reject) => {
       let url = "/user/bookMark/addBookMark";

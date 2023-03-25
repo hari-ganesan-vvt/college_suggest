@@ -6,12 +6,17 @@ import TabForm from "../../components/predictorLayout/TabForm";
 
 const Predictor = () => {
   const [isShowing, setIsShowing] = useState(false);
+  const [isReadMoreShow, setIsReadMoreShow] = useState(false);
 
   const openModalHander = () => {
     setIsShowing(true);
   };
   const closeModalHandler = () => {
     setIsShowing(false);
+  };
+
+  const toggleBtn = () => {
+    setIsReadMoreShow(!isReadMoreShow);
   };
   return (
     <div className="predictor">
@@ -59,7 +64,10 @@ const Predictor = () => {
                 </h1>
 
                 {/* <!-- newly-added--hero-list-here --> */}
-                <div className="heroulistbx" id="heroulist-bx">
+                <div
+                  className={`heroulistbx ${isReadMoreShow ? "active" : ""}`}
+                  id="heroulist-bx"
+                >
                   <ul>
                     <li>
                       Find Your Dream Institution with Our Easy-to-Use predictor
@@ -74,6 +82,7 @@ const Predictor = () => {
                       among the several States/Institutions that accept
                       admission with JEE Main.
                     </li>
+
                     <li>
                       Get Your Personalized JEE Main 2023 Report with Top
                       Predicted Colleges for JoSAA and State Level Counseling.
@@ -83,8 +92,8 @@ const Predictor = () => {
                       counseling.
                     </li>
                   </ul>
-                  <span className="r_btnnew" id="rbtn">
-                    Read More...
+                  <span className="r_btnnew" id="rbtn" onClick={toggleBtn}>
+                    {isReadMoreShow ? "Read Less" : "Read More..."}
                   </span>
                 </div>
                 {/* <!-- newly-added--hero-list-here --> */}
