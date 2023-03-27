@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { MdModeEdit } from "react-icons/md";
-import MainSection from "../../components/overallRankLayout/MainSection";
-import Assets from "../../imports/assets.imports";
+import MainSection from "../components/overAllRankComponents/MainSection";
+import Assets from "../imports/assets.imports";
 
 const OverallRank = () => {
   const navigate = useNavigate();
@@ -48,7 +48,8 @@ const OverallRank = () => {
               <div className="col-xl-12 col-lg-12 col-sm-12">
                 <div className="d-block heroleftcon">
                   <h1 className="text-white t2">
-                    Select JEE Main 2023 College Admission Counseling
+                    JEE Mains Predictor Tool - Make Informed Decisions for Your
+                    Academic Future
                   </h1>
                   <p className="paratitle">
                     College Predictor Results Shown for

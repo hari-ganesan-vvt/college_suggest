@@ -1,11 +1,22 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { MdCompareArrows, MdOutlineAddCircle, MdClose } from "react-icons/md";
+import predictorList from "../../models/predictorListModel";
 
 const Comparison = () => {
   const compareItems = useSelector((state) => state.compare.compareItem);
-  console.log("compareItems", compareItems);
 
+  const [comparedValues, setComparedValues] = useState([]);
+
+  useEffect(() => {
+    const getCompareList = async () => {
+      const response = await predictorList.comparisonCollege();
+      setComparedValues(response.data.predictorCompareCollegeDetails);
+    };
+    getCompareList();
+  }, [compareItems]);
+
+  console.log("comparedValues", comparedValues);
   return (
     <div>
       <button
@@ -22,7 +33,7 @@ const Comparison = () => {
             </span>
 
             <div className="nos2" id="cc_count">
-              {compareItems.length}
+              {comparedValues.length}
             </div>
           </div>
         </div>
@@ -98,6 +109,7 @@ const Comparison = () => {
                           <MdOutlineAddCircle />
                         </i>
                       </a>
+
                       <div className="added_clgbx2" id="box10">
                         <div className="d-block rel">
                           <a className="close_com_img2" data-boxes="box10">

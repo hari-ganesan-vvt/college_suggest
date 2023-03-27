@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import LoginSidebar from "../../components/loginSidebar/LoginSidebar";
-import Modal from "../../components/predictorLayout/Modal";
-import Assets from "../../imports/assets.imports";
-import TabForm from "../../components/predictorLayout/TabForm";
+import LoginSidebar from "../components/loginSidebar/LoginSidebar";
+import Modal from "../components/predictorComponents/Modal";
+import Assets from "../imports/assets.imports";
+import TabForm from "../components/predictorComponents/TabForm";
 
 const Predictor = () => {
   const [isShowing, setIsShowing] = useState(false);

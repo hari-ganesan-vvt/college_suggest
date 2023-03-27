@@ -1,12 +1,13 @@
 import React from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
+import { useSelector } from "react-redux";
 
-import Home from "./pages/Home/Home";
-import Predictor from "./pages/PredictorPage/Predictor";
+import Home from "./screens/HomeScreen";
 import Navbar from "./components/nav/Navbar";
-import OverallRank from "./pages/overallRank/OverallRank";
-import Profile from "./pages/profilePage/Profile";
+import Predictor from "./screens/PredictorScreen";
+import OverallRank from "./screens/OverAllRankScreen";
+import Profile from "./screens/ProfileScreen";
 import Footer from "./components/footer/Footer";
 
 import "react-toastify/dist/ReactToastify.css";
@@ -17,13 +18,19 @@ import "swiper/css";
 import "./App.css";
 
 const App = () => {
+  const userAuth = useSelector((state) => state.userLogin);
+  const { userInfo } = userAuth;
+
   return (
     <BrowserRouter>
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/predictor" element={<Predictor />} />
-        <Route path="/predictor/overallrank" element={<OverallRank />} />
+        <Route
+          path="/predictor/overallrank"
+          element={userInfo ? <OverallRank /> : <Navigate to="/" />}
+        />
         <Route path="/profile" element={<Profile />} />
       </Routes>
       <Footer />

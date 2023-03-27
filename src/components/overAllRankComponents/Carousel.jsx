@@ -1,13 +1,16 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper";
-import { AddToCompare } from "../../redux/Action/compareAction";
+import {
+  AddToCompare,
+  RemoveToCompare,
+} from "../../redux/Action/compareAction";
 import { BiCloudDownload } from "react-icons/bi";
 import { MdOutlineBookmarkAdd } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import Assets from "../../imports/assets.imports";
-import predictorList from "../../models/predictorList.model";
+import predictorList from "../../models/predictorListModel";
 import ModalComponent from "./ModalComponent";
 
 const Carousel = ({ listdata }) => {
@@ -61,16 +64,12 @@ const Carousel = ({ listdata }) => {
     };
     try {
       if (!isActiveCompare === true) {
-        const response = await predictorList.compareAddCollege(compareItem);
-        console.log(response.data);
         toast.success("Compared College Added");
-        dispatch(AddToCompare());
+        dispatch(AddToCompare(compareItem));
       }
       if (!isActiveCompare === false) {
-        const response = await predictorList.compareAddCollege(compareItem);
-        console.log(response.data);
         toast.success("Compared College Removed");
-        dispatch(AddToCompare());
+        dispatch(RemoveToCompare(compareItem));
       }
     } catch (error) {
       console.log(error);

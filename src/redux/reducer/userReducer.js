@@ -12,9 +12,11 @@ import {
 export const userLoginReducer = (state = {}, action) => {
   switch (action.type) {
     case USER_LOGIN_REQUEST:
-      return { user: action.payload };
+      return { loading: true };
+    case USER_LOGIN_SUCCESS:
+      return { loading: false, user: action.payload };
     case USER_LOGIN_FAIL:
-      return { error: action.payload };
+      return { loading: false, error: action.payload };
     case USER_OTP_VERIFY:
       return { isLoggedIn: true, userInfo: action.payload };
     case USER_LOGOUT:
@@ -26,10 +28,12 @@ export const userLoginReducer = (state = {}, action) => {
 
 export const userSignupReducer = (state = {}, action) => {
   switch (action.type) {
+    case USER_REGISTER_REQUEST:
+      return { loading: true };
     case USER_REGISTER_SUCCESS:
-      return { userInfo: action.payload };
+      return { loading: false, userInfo: action.payload };
     case USER_REGISTER_FAIL:
-      return { error: action.payload };
+      return { loading: false, error: action.payload };
 
     default:
       return state;

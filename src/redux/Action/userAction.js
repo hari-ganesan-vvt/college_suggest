@@ -1,20 +1,21 @@
-import user from "../../models/user.model";
+import user from "../../models/userModel";
 import {
-  USER_LOGIN_REQUEST,
   USER_LOGIN_SUCCESS,
   USER_LOGIN_FAIL,
   USER_LOGOUT,
-  USER_REGISTER_REQUEST,
   USER_OTP_VERIFY,
   USER_REGISTER_SUCCESS,
   USER_REGISTER_FAIL,
+  USER_LOGIN_REQUEST,
+  USER_REGISTER_REQUEST,
 } from "../Constants/UserConstants";
 
 //login
 export const userLogin = (phoneNumber) => async (dispatch) => {
   try {
+    dispatch({ type: USER_LOGIN_REQUEST });
     const { data } = await user.userLogin(phoneNumber);
-    dispatch({ type: USER_LOGIN_REQUEST, payload: data });
+    dispatch({ type: USER_LOGIN_SUCCESS, payload: data });
   } catch (error) {
     console.log(error);
     dispatch({
@@ -59,9 +60,10 @@ export const userLogout = (userId) => async (dispatch) => {
 //signup
 export const userSignup = (name, email, mobile) => async (dispatch) => {
   try {
+    dispatch({ type: USER_REGISTER_REQUEST });
     const { data } = await user.userSignup(name, email, mobile);
     dispatch({ type: USER_REGISTER_SUCCESS, payload: data });
-    dispatch({ type: USER_LOGIN_SUCCESS, payload: data });
+    // dispatch({ type: USER_LOGIN_SUCCESS, payload: data });
   } catch (error) {
     console.log(error);
     dispatch({

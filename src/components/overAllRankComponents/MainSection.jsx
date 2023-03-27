@@ -13,8 +13,8 @@ import {
   MdFilterList,
 } from "react-icons/md";
 import _ from "lodash";
-import predictorList from "../../models/predictorList.model";
-import Loading from "../Loading/Loading";
+import predictorList from "../../models/predictorListModel";
+import Loading from "../loading/Loading";
 import Comparison from "./Comparison";
 import MainCard from "./MainCard";
 import * as Yup from "yup";
@@ -2082,7 +2082,7 @@ const MainSection = ({ getValueData, onChange }) => {
                                 value={values.stateId}
                                 // onchange="hiddenState()"
                               >
-                                <option value={"DEFAULT"}>
+                                <option value={"DEFAULT"} disabled>
                                   Select your Home State
                                 </option>
                                 {stateList &&
@@ -2106,7 +2106,9 @@ const MainSection = ({ getValueData, onChange }) => {
                                 onChange={handleChange}
                                 value={values.casteId}
                               >
-                                <option value={"DEFAULT"}>Select Caste</option>
+                                <option value={"DEFAULT"} disabled>
+                                  Select Caste
+                                </option>
                                 {casteList &&
                                   casteList.map((caste, i) => (
                                     <option value={caste.casteName} key={i}>
@@ -2250,7 +2252,9 @@ const MainSection = ({ getValueData, onChange }) => {
                                 className="form-select"
                                 aria-label="Default select example"
                               >
-                                <option value={"DEFAULT"}>Select course</option>
+                                <option value={"DEFAULT"} disabled>
+                                  Select course
+                                </option>
                                 {courseList &&
                                   courseList.map((course) => (
                                     <option
@@ -2295,7 +2299,9 @@ const MainSection = ({ getValueData, onChange }) => {
                                 onChange={handleChange}
                                 value={values.casteId}
                               >
-                                <option value={"DEFAULT"}>Select Caste</option>
+                                <option value={"DEFAULT"} disabled>
+                                  Select Caste
+                                </option>
                                 {casteList &&
                                   casteList.map((caste, i) => (
                                     <option value={caste.casteName} key={i}>

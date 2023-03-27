@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import { toast } from "react-toastify";
 import CourseForm from "./CourseForm";
-import predictorList from "../../models/predictorList.model";
+import predictorList from "../../models/predictorListModel";
 import * as Yup from "yup";
 
 const TabForm = () => {
