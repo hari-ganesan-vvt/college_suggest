@@ -14,8 +14,8 @@ import {
 export const userLogin = (phoneNumber) => async (dispatch) => {
   try {
     dispatch({ type: USER_LOGIN_REQUEST });
-    const { data } = await user.userLogin(phoneNumber);
-    dispatch({ type: USER_LOGIN_SUCCESS, payload: data });
+    await user.userLogin(phoneNumber);
+    dispatch({ type: USER_LOGIN_SUCCESS });
   } catch (error) {
     console.log(error);
     dispatch({
@@ -63,7 +63,6 @@ export const userSignup = (name, email, mobile) => async (dispatch) => {
     dispatch({ type: USER_REGISTER_REQUEST });
     const { data } = await user.userSignup(name, email, mobile);
     dispatch({ type: USER_REGISTER_SUCCESS, payload: data });
-    // dispatch({ type: USER_LOGIN_SUCCESS, payload: data });
   } catch (error) {
     console.log(error);
     dispatch({

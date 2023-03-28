@@ -11,11 +11,11 @@ import {
   MdOutlineLogout,
 } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
-import { userLogout } from "../../redux/Action/userAction";
+import { userLogout } from "../redux/Action/userAction";
 import { toast } from "react-toastify";
-import LoginSidebar from "../loginSidebar/LoginSidebar";
-import user from "../../models/userModel";
-import Assets from "../../imports/assets.imports";
+import LoginSidebar from "./LoginSidebar";
+import user from "../models/userModel";
+import Assets from "../imports/assets.imports";
 
 const Navbar = () => {
   const navigate = useNavigate();

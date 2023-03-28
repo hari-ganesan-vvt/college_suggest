@@ -4,9 +4,9 @@ import {
   userLogin,
   userSignup,
   userVerifyOtp,
-} from "../../redux/Action/userAction";
+} from "../redux/Action/userAction";
 import { toast } from "react-toastify";
-import Assets from "../../imports/assets.imports";
+import Assets from "../imports/assets.imports";
 import { BeatLoader } from "react-spinners";
 
 const LoginSidebar = () => {

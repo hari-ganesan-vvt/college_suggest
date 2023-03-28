@@ -4,11 +4,12 @@ import { ToastContainer } from "react-toastify";
 import { useSelector } from "react-redux";
 
 import Home from "./screens/HomeScreen";
-import Navbar from "./components/nav/Navbar";
+import Navbar from "./components/Navbar";
 import Predictor from "./screens/PredictorScreen";
 import OverallRank from "./screens/OverAllRankScreen";
 import Profile from "./screens/ProfileScreen";
-import Footer from "./components/footer/Footer";
+import Footer from "./components/Footer";
+import NotFound from "./screens/NotFound";
 
 import "react-toastify/dist/ReactToastify.css";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -25,13 +26,14 @@ const App = () => {
     <BrowserRouter>
       <Navbar />
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/predictor" element={<Predictor />} />
+        <Route path="/" element={<Home />} exact />
+        <Route path="/predictor" element={<Predictor />} exact />
         <Route
           path="/predictor/overallrank"
-          element={userInfo ? <OverallRank /> : <Navigate to="/" />}
+          element={userInfo ? <OverallRank /> : <Navigate to="/" exact />}
         />
-        <Route path="/profile" element={<Profile />} />
+        <Route path="/profile" element={<Profile />} exact />
+        <Route path="*" element={<NotFound />} />
       </Routes>
       <Footer />
       <ToastContainer

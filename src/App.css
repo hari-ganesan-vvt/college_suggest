@@ -4052,6 +4052,85 @@ i.material-icons.closefiltermodal {
   color: #818585;
 }
 
+/* notfound 404 */
+.e_sec {
+  display: block;
+  padding: 5rem 0px;
+}
+
+.e_sec_block {
+  display: block;
+  padding: 20px 0px;
+  width: 100%;
+  max-width: 1000px;
+  margin: auto;
+}
+
+.e_img_bx {
+  width: 100%;
+  position: relative;
+  display: block;
+  padding-top: 53%;
+  margin-bottom: 20px;
+}
+
+.e_img_bx img {
+  width: 100%;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  object-position: center;
+  object-fit: contain;
+  height: 100%;
+}
+
+.opps_txt {
+  font-family: inherit;
+  font-weight: 500;
+  color: #333;
+  font-size: 32px;
+  text-align: center;
+  margin-bottom: 20px;
+  line-height: 24px;
+  letter-spacing: 0.8px;
+}
+
+.oops-para {
+  font-family: inherit;
+  font-weight: 300;
+  color: rgb(161 161 161);
+  font-size: 16px;
+  text-align: center;
+  line-height: 24px;
+  letter-spacing: 0.8px;
+  margin-bottom: 25px;
+}
+
+.btn_oops_ {
+  max-width: 280px;
+  width: 100%;
+  display: block;
+  padding: 12px 25px;
+  border-radius: 25px;
+  font-family: inherit;
+  font-weight: 400;
+  color: #fff;
+  font-size: 15px;
+  text-align: center;
+  line-height: 24px;
+  letter-spacing: 0.8px;
+  border: none;
+  outline: none;
+  background-color: #18d2a5;
+  margin: auto;
+  transition: 0.3s ease-out;
+}
+
+.btn_oops_:hover {
+  background-color: #5c6a77;
+  transform: scale(0.95);
+  color: #fff;
+}
 /* recommended_clg-css-start-here */
 .rcom_block {
   border-radius: 4px;

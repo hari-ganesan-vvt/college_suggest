@@ -14,7 +14,7 @@ import {
 } from "react-icons/md";
 import _ from "lodash";
 import predictorList from "../../models/predictorListModel";
-import Loading from "../loading/Loading";
+import Loading from "../Loading";
 import Comparison from "./Comparison";
 import MainCard from "./MainCard";
 import * as Yup from "yup";

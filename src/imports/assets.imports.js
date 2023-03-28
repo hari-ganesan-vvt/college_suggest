@@ -11,6 +11,7 @@ import dummyThumb from "../assets/images/dummythumb.png";
 import downArrow from "../assets/icons/downarrow.svg";
 import allArrow from "../assets/icons/allArrow.svg";
 import addChartIcon from "../assets/icons/add_chart.svg";
+import error404 from "../assets/images/e404.gif";
 
 const Assets = {
   googleIcon,
@@ -26,6 +27,7 @@ const Assets = {
   dummyThumb,
   allArrow,
   addChartIcon,
+  error404,
 };
 
 export default Assets;

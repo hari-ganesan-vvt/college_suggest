@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import LoginSidebar from "../components/loginSidebar/LoginSidebar";
+import LoginSidebar from "../components/LoginSidebar";
 import Modal from "../components/predictorComponents/Modal";
 import Assets from "../imports/assets.imports";
 import TabForm from "../components/predictorComponents/TabForm";

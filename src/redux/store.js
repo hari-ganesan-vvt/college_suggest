@@ -15,8 +15,8 @@ const reducer = combineReducers({
 const compareItemsFromLocalStorage = localStorage.getItem("compareItems")
   ? JSON.parse(localStorage.getItem("compareItems"))
   : [];
-// login
 
+// login
 const userInfoFromLocalStorage = localStorage.getItem("userInfo")
   ? JSON.parse(localStorage.getItem("userInfo"))
   : null;

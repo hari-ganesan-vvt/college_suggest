@@ -37,7 +37,7 @@ const OverallRank = () => {
     if (getValueData === null) {
       navigate("/");
     }
-  }, [getValueData]);
+  }, [getValueData, navigate]);
 
   return (
     <>
