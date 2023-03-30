@@ -1,4 +1,3 @@
-import _ from "lodash";
 import React, { useEffect, useState } from "react";
 import { MdOutlinePayments, MdSearch, MdHouse } from "react-icons/md";
 import { useSelector } from "react-redux";
@@ -25,19 +24,19 @@ const MainCard = ({ listdata, stateInfo }) => {
 
     switch (filterChange) {
       case "MEDIUM_UPDATED":
-        const mediumChanged = _.filter(filterData, (e) => {
+        const mediumChanged = filterData.filter((e) => {
           return Object.keys(e)[0] >= minRank && Object.keys(e)[0] <= maxRank;
         });
         setCourseList(mediumChanged);
         break;
       case "HIGH_UPDATED":
-        const highChanged = _.filter(filterData, (e) => {
+        const highChanged = filterData.filter((e) => {
           return Object.keys(e)[0] > maxRank;
         });
         setCourseList(highChanged);
         break;
       case "LOW_UPDATED":
-        const lowChanged = _.filter(filterData, (e) => {
+        const lowChanged = filterData.filter((e) => {
           return Object.keys(e)[0] < minRank;
         });
         setCourseList(lowChanged);

@@ -189,9 +189,10 @@ const LoginSidebar = () => {
                     </button>
                   </div>
                 </form>
+
                 <div className="d-flex justify-content-center align-items-center mt-2">
                   <a href="#" className="socialicn-links">
-                    <img src={Assets.googleIcon} alt="google images" />
+                    <img src={Assets.googleIcon} alt="google images" />,
                   </a>
 
                   <a href="#" className="socialicn-links">
@@ -268,7 +269,15 @@ const LoginSidebar = () => {
                       placeholder="Contact number"
                       name="mobile"
                       value={mobile}
-                      onChange={(e) => setMobile(e.target.value)}
+                      onChange={(e) =>
+                        setMobile(
+                          e.target.value
+                            .replace(/[^0-9.]/g, "")
+                            .replace(/(\..*)\./g, "$1")
+                        )
+                      }
+                      minLength="10"
+                      maxLength="10"
                     />
                   </div>
 

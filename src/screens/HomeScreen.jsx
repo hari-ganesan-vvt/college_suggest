@@ -1,6 +1,8 @@
 import React from "react";
 
 const Home = () => {
+  window.scrollTo(0, 0);
+
   return (
     <div
       style={{
@@ -10,7 +12,7 @@ const Home = () => {
         height: "100vh",
       }}
     >
-      <h1> Home</h1>
+      <h1>Home</h1>
     </div>
   );
 };

@@ -1,20 +1,34 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { MdCompareArrows, MdOutlineAddCircle, MdClose } from "react-icons/md";
 import predictorList from "../../models/predictorListModel";
+import { RemoveToCompare } from "../../redux/Action/compareAction";
 
 const Comparison = () => {
-  const compareItems = useSelector((state) => state.compare.compareItem);
+  const dispatch = useDispatch();
+  const compareItem = useSelector((state) => state.compare.compareItem);
+  const user = useSelector((state) => state.userLogin.userInfo);
 
   const [comparedValues, setComparedValues] = useState([]);
 
-  useEffect(() => {
-    const getCompareList = async () => {
-      const response = await predictorList.comparisonCollege();
-      setComparedValues(response.data.predictorCompareCollegeDetails);
+  const compareRemove = () => {
+    const comparedItem = {
+      collegeId: 10,
+      userId: 452,
     };
-    getCompareList();
-  }, [compareItems]);
+    dispatch(RemoveToCompare(comparedItem));
+  };
+  useEffect(() => {
+    const getComparedList = async () => {
+      const response = await predictorList.comparisonCollege(user.userId);
+      setComparedValues(response.data.predictorCompareCollegeDetails);
+      window.localStorage.setItem(
+        "compareItems",
+        JSON.stringify(response.data.predictorCompareCollegeDetails)
+      );
+    };
+    getComparedList();
+  }, [compareItem]);
 
   console.log("comparedValues", comparedValues);
   return (
@@ -62,99 +76,213 @@ const Comparison = () => {
             <div className="compareTmp_Data" id="compareListData">
               <div className="modal-body overflow-hidden p-0">
                 <div className="mb_wrap2">
-                  <div className="mb_wrap_cols2 ">
-                    <div className="mb_wrap_colsinbx2">
-                      <a
-                        href="#"
-                        className="adderlistbtn"
-                        data-bs-toggle="modal"
-                        data-bs-target="#exampleModalXl2"
-                      >
-                        <i className="material-icons c_icn">
-                          <MdOutlineAddCircle />
-                        </i>
-                      </a>
+                  {comparedValues.length === 1 ? (
+                    comparedValues.map((compared, i) => {
+                      return (
+                        <React.Fragment key={i}>
+                          <div className="mb_wrap_cols2 first">
+                            <div className="mb_wrap_colsinbx2">
+                              <div className="added_clgbx2" id="box10">
+                                <div className="d-block rel">
+                                  <a
+                                    className="close_com_img2"
+                                    data-boxes="box10"
+                                    onClick={compareRemove}
+                                  >
+                                    <MdClose />
+                                  </a>
 
-                      <div className="added_clgbx2" id="box10">
-                        <div className="d-block rel">
-                          <a className="close_com_img2" data-boxes="box10">
-                            <MdClose />
-                          </a>
-
-                          <div className="added_collegescontent2">
-                            <div className="logobx2">
-                              <img
-                                src="https://cs.collegesuggest.com//assets/images/national-institute-of-1661752942.webp"
-                                alt=""
-                              />
+                                  <div className="added_collegescontent2">
+                                    <div className="logobx2">
+                                      <img
+                                        src={`https://collegesuggest.com//assets/images/${compared.collegeLogo}`}
+                                        alt=""
+                                      />
+                                    </div>
+                                    <p className="text22">
+                                      {compared.collegeName}
+                                    </p>
+                                  </div>
+                                </div>
+                              </div>
                             </div>
-                            <p className="text22">
-                              National Institute of Technology Tiruchirappalli
-                            </p>
                           </div>
+                          <div className="mb_wrap_cols2 ">
+                            <div className="mb_wrap_colsinbx2">
+                              <a
+                                href="#"
+                                className="adderlistbtn"
+                                data-bs-toggle="modal"
+                                data-bs-target="#exampleModalXl2"
+                              >
+                                <i className="material-icons c_icn">
+                                  <MdOutlineAddCircle />
+                                </i>
+                              </a>
+                            </div>
+                          </div>
+                          <div className="mb_wrap_cols2 mobilehide">
+                            <div className="mb_wrap_colsinbx2">
+                              <a
+                                href="#"
+                                className="adderlistbtn"
+                                data-bs-toggle="modal"
+                                data-bs-target="#exampleModalXl2"
+                              >
+                                <i className="material-icons c_icn">
+                                  <MdOutlineAddCircle />
+                                </i>
+                              </a>
+                            </div>
+                          </div>
+                        </React.Fragment>
+                      );
+                    })
+                  ) : comparedValues.length === 2 ? (
+                    comparedValues.map((compared, i) => {
+                      return (
+                        <>
+                          <div className="mb_wrap_cols2 sec" key={i}>
+                            <div className="mb_wrap_colsinbx2">
+                              <a
+                                href="#"
+                                className="adderlistbtn"
+                                data-bs-toggle="modal"
+                                data-bs-target="#exampleModalXl2"
+                              >
+                                <i className="material-icons c_icn">
+                                  <MdOutlineAddCircle />
+                                </i>
+                              </a>
+                              <div className="added_clgbx2" id="box10">
+                                <div className="d-block rel">
+                                  <a
+                                    className="close_com_img2"
+                                    data-boxes="box10"
+                                  >
+                                    <MdClose />
+                                  </a>
+
+                                  <div className="added_collegescontent2">
+                                    <div className="logobx2">
+                                      <img
+                                        src={`https://collegesuggest.com/assets/images/${compared.collegeLogo}`}
+                                        alt="collegeLogo"
+                                      />
+                                    </div>
+                                    <p className="text22">
+                                      {compared.collegeName}
+                                    </p>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </>
+                      );
+                    })
+                  ) : comparedValues.length === 3 ? (
+                    comparedValues.map((compared, i) => {
+                      console.log(compared.collegeId);
+                      return (
+                        <>
+                          <div className="mb_wrap_cols2 third" key={i}>
+                            <div className="mb_wrap_colsinbx2">
+                              <a
+                                href="#"
+                                className="adderlistbtn"
+                                data-bs-toggle="modal"
+                                data-bs-target="#exampleModalXl2"
+                              >
+                                <i className="material-icons c_icn">
+                                  <MdOutlineAddCircle />
+                                </i>
+                              </a>
+                              <div className="added_clgbx2" id="box10">
+                                <div className="d-block rel">
+                                  <a
+                                    className="close_com_img2"
+                                    data-boxes="box10"
+                                    onClick={compareRemove}
+                                  >
+                                    <MdClose />
+                                  </a>
+
+                                  <div className="added_collegescontent2">
+                                    <div className="logobx2">
+                                      <img
+                                        src={`https://collegesuggest.com/assets/images/${compared.collegeLogo}`}
+                                        alt=""
+                                      />
+                                    </div>
+                                    <p className="text22">
+                                      {compared.collegeName}
+                                    </p>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </>
+                      );
+                    })
+                  ) : (
+                    <React.Fragment>
+                      <div className="mb_wrap_cols2 default">
+                        <div className="mb_wrap_colsinbx2">
+                          <a
+                            href="#"
+                            className="adderlistbtn"
+                            data-bs-toggle="modal"
+                            data-bs-target="#exampleModalXl2"
+                          >
+                            <i className="material-icons c_icn">
+                              <MdOutlineAddCircle />
+                            </i>
+                          </a>
                         </div>
                       </div>
-                    </div>
-                  </div>
-
-                  <div className="mb_wrap_cols2 ">
-                    <div className="mb_wrap_colsinbx2">
-                      <a
-                        href="#"
-                        className="adderlistbtn"
-                        data-bs-toggle="modal"
-                        data-bs-target="#exampleModalXl2"
-                      >
-                        <i className="material-icons c_icn">
-                          <MdOutlineAddCircle />
-                        </i>
-                      </a>
-
-                      <div className="added_clgbx2" id="box10">
-                        <div className="d-block rel">
-                          <a className="close_com_img2" data-boxes="box10">
-                            <MdClose />
+                      <div className="mb_wrap_cols2 ">
+                        <div className="mb_wrap_colsinbx2">
+                          <a
+                            href="#"
+                            className="adderlistbtn"
+                            data-bs-toggle="modal"
+                            data-bs-target="#exampleModalXl2"
+                          >
+                            <i className="material-icons c_icn">
+                              <MdOutlineAddCircle />
+                            </i>
                           </a>
-
-                          <div className="added_collegescontent2">
-                            <div className="logobx2">
-                              <img
-                                src="https://cs.collegesuggest.com//assets/images/national-institute-of-1661752942.webp"
-                                alt=""
-                              />
-                            </div>
-                            <p className="text22">
-                              National Institute of Technology Tiruchirappalli
-                            </p>
-                          </div>
                         </div>
                       </div>
-                    </div>
-                  </div>
-
-                  <div className="mb_wrap_cols2 mobilehide">
-                    <div className="mb_wrap_colsinbx2">
-                      <a
-                        href="#"
-                        className="adderlistbtn"
-                        data-bs-toggle="modal"
-                        data-bs-target="#exampleModalXl2"
-                      >
-                        <i className="material-icons c_icn">
-                          <MdOutlineAddCircle />
-                        </i>
-                      </a>
-                    </div>
-                  </div>
+                      <div className="mb_wrap_cols2 mobilehide">
+                        <div className="mb_wrap_colsinbx2">
+                          <a
+                            href="#"
+                            className="adderlistbtn"
+                            data-bs-toggle="modal"
+                            data-bs-target="#exampleModalXl2"
+                          >
+                            <i className="material-icons c_icn">
+                              <MdOutlineAddCircle />
+                            </i>
+                          </a>
+                        </div>
+                      </div>
+                    </React.Fragment>
+                  )}
                 </div>
               </div>
-              <a
-                // href="https://cs.collegesuggest.com/predictors/jee-mains/comparison.php?studId=565"
-                target="_blank"
-                className="cmnwbtn2"
-              >
-                Compare Now
-              </a>
+              {comparedValues.length === 3 && (
+                <a
+                  // href="https://cs.collegesuggest.com/predictors/jee-mains/comparison.php?studId=565"
+                  target="_blank"
+                  className="cmnwbtn2"
+                >
+                  Compare Now
+                </a>
+              )}
             </div>
           </div>
         </div>

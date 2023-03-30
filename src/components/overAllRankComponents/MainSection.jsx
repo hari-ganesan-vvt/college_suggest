@@ -54,17 +54,16 @@ const MainSection = ({ getValueData, onChange }) => {
   const [searchTerm, setSearchTerm] = useState("");
 
   //findValues && selectedValues
-  const findFormState = _.find(stateList, {
-    stateId: parseInt(initialValues?.stateId),
-  });
+  const findFormState = stateList.find(
+    (state) => state.stateId === parseInt(initialValues?.stateId)
+  );
+  const selectedStateValue = stateList.find(
+    (state) => state.stateId === parseInt(filterByCollege.filterStateId)
+  );
 
-  const selectedStateValue = _.find(stateList, {
-    stateId: parseInt(filterByCollege.filterStateId),
-  });
-
-  const selectedCourseValue = _.find(courseList, {
-    courseId: parseInt(filterByCollege.courseList),
-  });
+  const selectedCourseValue = courseList.find(
+    (course) => course.courseId === parseInt(filterByCollege.courseList)
+  );
 
   //responseData
   const fetchDataFilter = (data) => {
@@ -294,598 +293,576 @@ const MainSection = ({ getValueData, onChange }) => {
           ) : error ? (
             <div>{error}</div>
           ) : (
-            <div className="row">
-              <>
-                <div className="col-xl-8 col-lg-6 col-sm-12 custom-col-lay">
-                  <div className="mainblock">
-                    {collegeList.length > 0 ? (
-                      collegeList.map((listdata, index) => {
-                        return (
-                          <MainCard
-                            listdata={listdata}
-                            key={index}
-                            stateInfo={findFormState}
-                            updateRecommended={updateRecommended}
-                          />
-                        );
-                      })
-                    ) : (
-                      <div>No data found</div>
-                    )}
-                  </div>
-                </div>
-
-                <div className="col-xl-4 col-lg-6 mobilehide">
-                  <div className="sticybx">
-                    <div className="d-block">
-                      <div className="cat-show-box" id="formValues">
-                        <button
-                          className="e_btn"
-                          data-bs-toggle="modal"
-                          data-bs-target="#exampleModalFullscreenMd"
-                          // onClick={updateRecommended}
-                        >
-                          <MdModeEdit className="m-edit-icon" />
-                          Edit
-                        </button>
-                        <div className="catticked" id="">
-                          <span
-                            className="material-icons cnlbutton"
-                            style={{ color: "#119d78" }}
-                          >
-                            <MdVerified />
-                          </span>
-                          <div
-                            className="ticktext"
-                            style={{ maxWidth: "100%" }}
-                          >
-                            {initialValues?.rankId}
-                          </div>
-                        </div>
-                        <div className="catticked" id="">
-                          <span
-                            className="material-icons cnlbutton"
-                            style={{ color: "#119d78" }}
-                          >
-                            <MdHouse />
-                          </span>
-                          <div
-                            className="ticktext"
-                            style={{ maxWidth: "100%" }}
-                          >
-                            {findFormState?.stateName}
-                          </div>
-                        </div>
-                        <div className="catticked" id="">
-                          <span
-                            className="material-icons cnlbutton"
-                            style={{ color: "#119d78" }}
-                          >
-                            {initialValues?.genderId === "1" ? (
-                              <MdMale />
-                            ) : initialValues?.genderId === "2" ? (
-                              <MdFemale />
-                            ) : null}
-                          </span>
-
-                          <div
-                            className="ticktext"
-                            style={{ maxWidth: "100%" }}
-                          >
-                            {initialValues?.genderId === "1"
-                              ? "Male"
-                              : "Female"}
-                          </div>
-                        </div>
-                        <div className="catticked" id="">
-                          <span
-                            className="material-icons cnlbutton"
-                            style={{ color: "#119d78" }}
-                          >
-                            <svg
-                              stroke="currentColor"
-                              fill="currentColor"
-                              strokeWidth="0"
-                              viewBox="0 0 24 24"
-                              height="1em"
-                              width="1em"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path fill="none" d="M0 0h24v24H0z"></path>
-                              <path d="M21 3v2h-2V3h-2v2h-2V3h-2v4l2 2v1H9V9l2-2V3H9v2H7V3H5v2H3V3H1v4l2 2v6l-2 2v4h9v-3c0-1.1.9-2 2-2s2 .9 2 2v3h9v-4l-2-2V9l2-2V3h-2z"></path>
-                            </svg>
-                          </span>
-
-                          <div
-                            className="ticktext"
-                            style={{ maxWidth: "100%" }}
-                          >
-                            {initialValues?.casteId}
-                          </div>
-                        </div>
-                      </div>
+            <>
+              <div className="row">
+                <>
+                  <div className="col-xl-8 col-lg-6 col-sm-12 custom-col-lay">
+                    <div className="mainblock">
+                      {collegeList.length > 0 ? (
+                        collegeList.map((listdata, index) => {
+                          return (
+                            <MainCard
+                              listdata={listdata}
+                              key={index}
+                              stateInfo={findFormState}
+                              updateRecommended={updateRecommended}
+                            />
+                          );
+                        })
+                      ) : (
+                        <div>No data found</div>
+                      )}
                     </div>
+                  </div>
 
-                    <div className="d-block mb-2">
-                      <h3 className="fl_txt text-left">Filter</h3>
-                      {filterByCollege?.filterStateId.length > 0 ||
-                      filterByCollege?.courseList.length > 0 ||
-                      filterByCollege?.sortBy.length > 0 ||
-                      filterByCollege?.orderBy.length > 0 ? (
-                        <div className="cat-show-box" id="desktopFilterTag">
-                          <div
-                            className="catticked"
-                            id="FTclear"
-                            // onclick="closeFilter('FTclear','all')"
+                  <div className="col-xl-4 col-lg-6 mobilehide">
+                    <div className="sticybx">
+                      <div className="d-block">
+                        <div className="cat-show-box" id="formValues">
+                          <button
+                            className="e_btn"
+                            data-bs-toggle="modal"
+                            data-bs-target="#exampleModalFullscreenMd"
+                            // onClick={updateRecommended}
                           >
+                            <MdModeEdit className="m-edit-icon" />
+                            Edit
+                          </button>
+                          <div className="catticked" id="">
                             <span
                               className="material-icons cnlbutton"
-                              onClick={handleSelectedAllClear}
+                              style={{ color: "#119d78" }}
                             >
-                              <MdClose />
+                              <MdVerified />
                             </span>
-                            <div className="ticktext">Clear All</div>
-                          </div>
-
-                          {filterByCollege.orderBy && (
-                            <div className="catticked" id="FTorderasc">
-                              <span
-                                className="material-icons cnlbutton"
-                                onClick={() =>
-                                  setFilterByCollege({
-                                    ...filterByCollege,
-                                    orderBy: "",
-                                  })
-                                }
-                              >
-                                <MdClose />
-                              </span>
-                              <div className="ticktext">
-                                {filterByCollege.orderBy == "asc"
-                                  ? "Ascending"
-                                  : "Decending"}
-                              </div>
-                            </div>
-                          )}
-                          {filterByCollege.sortBy && (
-                            <div className="catticked" id="FTSortnirfRank">
-                              <span
-                                className="material-icons cnlbutton"
-                                onClick={() =>
-                                  setFilterByCollege({
-                                    ...filterByCollege,
-                                    sortBy: "",
-                                  })
-                                }
-                              >
-                                <MdClose />
-                              </span>
-                              <div className="ticktext">
-                                {filterByCollege?.sortBy}
-                              </div>
-                            </div>
-                          )}
-
-                          {selectedCourseValue?.courseName && (
-                            <div className="catticked" id="FTorderasc">
-                              <span
-                                className="material-icons cnlbutton"
-                                onClick={() =>
-                                  setFilterByCollege({
-                                    ...filterByCollege,
-                                    courseList: "",
-                                  })
-                                }
-                              >
-                                <MdClose />
-                              </span>
-                              <div className="ticktext">
-                                {selectedCourseValue?.courseName.split("(")[0]}
-                              </div>
-                            </div>
-                          )}
-
-                          {selectedStateValue?.stateName && (
-                            <div className="catticked" id="FTorderasc">
-                              <span
-                                className="material-icons cnlbutton"
-                                onClick={() =>
-                                  setFilterByCollege({
-                                    ...filterByCollege,
-                                    filterStateId: "",
-                                    cityId: "",
-                                  })
-                                }
-                              >
-                                <MdClose />
-                              </span>
-                              <div className="ticktext">
-                                {selectedStateValue?.stateName}
-                              </div>
-                            </div>
-                          )}
-
-                          {filterByCollege.cityId.length > 0 && (
-                            <div className="catticked" id="FTorderasc">
-                              <span
-                                className="material-icons cnlbutton"
-                                onClick={() =>
-                                  setFilterByCollege({
-                                    ...filterByCollege,
-                                    cityId: "",
-                                  })
-                                }
-                              >
-                                <MdClose />
-                              </span>
-                              <div className="ticktext hari">
-                                {collegeList[0]?.cityName}
-                              </div>
-                            </div>
-                          )}
-                        </div>
-                      ) : null}
-                    </div>
-
-                    <div
-                      className="course-accordion accordion"
-                      id="accordionCourse3"
-                    >
-                      <div className="accordion-item">
-                        <button
-                          data-bs-toggle="collapse"
-                          data-bs-target="#collapseOne1"
-                          className="collapsed"
-                          aria-expanded="false"
-                          fdprocessedid="sxwxf"
-                        >
-                          Order by
-                        </button>
-                        <div
-                          id="collapseOne1"
-                          className="accordion-collapse collapse"
-                          data-bs-parent="#accordionCourse3"
-                        >
-                          <div className="accordion-body" id="stateFilter">
-                            <div className="acc_heightbx">
-                              <ul className="acc-list " id="state_list">
-                                <li
-                                  onClick={() => handleFilter("orderBy", "asc")}
-                                >
-                                  <label htmlFor="r1" className="customradio">
-                                    <input
-                                      type="radio"
-                                      className="customradioinput"
-                                      // name="orderBy"
-                                      // value="asc"
-                                      checked={filterByCollege.orderBy == "asc"}
-                                      readOnly
-                                    />
-                                    <div className="radiobx">Ascending </div>
-                                  </label>
-                                </li>
-                                <li
-                                  onClick={() =>
-                                    handleFilter("orderBy", "desc")
-                                  }
-                                >
-                                  <label htmlFor="r2" className="customradio">
-                                    <input
-                                      type="radio"
-                                      className="customradioinput"
-                                      // name="orderBy"
-                                      // value="desc"
-                                      checked={
-                                        filterByCollege.orderBy == "desc"
-                                      }
-                                      readOnly
-                                    />
-                                    <div className="radiobx">Descending</div>
-                                  </label>
-                                </li>
-                              </ul>
+                            <div
+                              className="ticktext"
+                              style={{ maxWidth: "100%" }}
+                            >
+                              {initialValues?.rankId}
                             </div>
                           </div>
-                        </div>
-                      </div>
-                      <div className="accordion-item">
-                        <button
-                          data-bs-toggle="collapse"
-                          data-bs-target="#collapseOne2"
-                          className="collapsed"
-                          aria-expanded="false"
-                          fdprocessedid="sxwxf"
-                        >
-                          Sort by
-                        </button>
-                        <div
-                          id="collapseOne2"
-                          className="accordion-collapse collapse"
-                          data-bs-parent="#accordionCourse3"
-                        >
-                          <div className="accordion-body" id="stateFilter">
-                            <div className="acc_heightbx">
-                              <ul className="acc-list " id="state_list">
-                                <li
-                                  onClick={() =>
-                                    handleFilter("sortBy", "closingRank")
-                                  }
-                                >
-                                  <label htmlFor="r12" className="customradio">
-                                    <input
-                                      type="radio"
-                                      className="customradioinput"
-                                      checked={
-                                        filterByCollege.sortBy === "closingRank"
-                                      }
-                                      readOnly
-                                    />
-                                    <div className="radiobx">Closing Rank</div>
-                                  </label>
-                                </li>
-                                <li
-                                  onClick={() =>
-                                    handleFilter("sortBy", "nirfRank")
-                                  }
-                                >
-                                  <label htmlFor="r13" className="customradio">
-                                    <input
-                                      type="radio"
-                                      className="customradioinput"
-                                      checked={
-                                        filterByCollege.sortBy === "nirfRank"
-                                      }
-                                      readOnly
-                                    />
-                                    <div className="radiobx">NIRF Rank </div>
-                                  </label>
-                                </li>
-                                <li
-                                  onClick={() =>
-                                    handleFilter("sortBy", "medianSalary")
-                                  }
-                                >
-                                  <label htmlFor="r22" className="customradio">
-                                    <input
-                                      type="radio"
-                                      className="customradioinput"
-                                      checked={
-                                        filterByCollege.sortBy ===
-                                        "medianSalary"
-                                      }
-                                      readOnly
-                                    />
-                                    <div className="radiobx">Median Salary</div>
-                                  </label>
-                                </li>
-                                <li
-                                  onClick={() =>
-                                    handleFilter("sortBy", "placement")
-                                  }
-                                >
-                                  <label htmlFor="r24" className="customradio">
-                                    <input
-                                      type="radio"
-                                      className="customradioinput"
-                                      checked={
-                                        filterByCollege.sortBy == "placement"
-                                      }
-                                      readOnly
-                                    />
-                                    <div className="radiobx">Placement</div>
-                                  </label>
-                                </li>
-                                <li
-                                  onClick={() => handleFilter("sortBy", "fees")}
-                                >
-                                  <label htmlFor="r25" className="customradio">
-                                    <input
-                                      type="radio"
-                                      className="customradioinput"
-                                      checked={filterByCollege.sortBy == "fees"}
-                                      readOnly
-                                    />
-                                    <div className="radiobx">Fees</div>
-                                  </label>
-                                </li>
-                              </ul>
+                          <div className="catticked" id="">
+                            <span
+                              className="material-icons cnlbutton"
+                              style={{ color: "#119d78" }}
+                            >
+                              <MdHouse />
+                            </span>
+                            <div
+                              className="ticktext"
+                              style={{ maxWidth: "100%" }}
+                            >
+                              {findFormState?.stateName}
+                            </div>
+                          </div>
+                          <div className="catticked" id="">
+                            <span
+                              className="material-icons cnlbutton"
+                              style={{ color: "#119d78" }}
+                            >
+                              {initialValues?.genderId === "1" ? (
+                                <MdMale />
+                              ) : initialValues?.genderId === "2" ? (
+                                <MdFemale />
+                              ) : null}
+                            </span>
+
+                            <div
+                              className="ticktext"
+                              style={{ maxWidth: "100%" }}
+                            >
+                              {initialValues?.genderId === "1"
+                                ? "Male"
+                                : "Female"}
+                            </div>
+                          </div>
+                          <div className="catticked" id="">
+                            <span
+                              className="material-icons cnlbutton"
+                              style={{ color: "#119d78" }}
+                            >
+                              <svg
+                                stroke="currentColor"
+                                fill="currentColor"
+                                strokeWidth="0"
+                                viewBox="0 0 24 24"
+                                height="1em"
+                                width="1em"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path fill="none" d="M0 0h24v24H0z"></path>
+                                <path d="M21 3v2h-2V3h-2v2h-2V3h-2v4l2 2v1H9V9l2-2V3H9v2H7V3H5v2H3V3H1v4l2 2v6l-2 2v4h9v-3c0-1.1.9-2 2-2s2 .9 2 2v3h9v-4l-2-2V9l2-2V3h-2z"></path>
+                              </svg>
+                            </span>
+
+                            <div
+                              className="ticktext"
+                              style={{ maxWidth: "100%" }}
+                            >
+                              {initialValues?.casteId}
                             </div>
                           </div>
                         </div>
                       </div>
 
-                      <div className="accordion-item">
-                        <button
-                          className="collapsed1"
-                          data-bs-toggle="collapse"
-                          data-bs-target="#collapseThree3"
-                          aria-expanded="true"
-                          fdprocessedid="cm6dn"
-                        >
-                          Courses
-                        </button>
-                        <div
-                          id="collapseThree3"
-                          className="accordion-collapse collapse show"
-                          data-bs-parent="#accordionCourse3"
-                        >
-                          <div className="accordion-body" id="ownerShipFilter">
-                            <div className="sidebar-widget">
-                              <div className="widget-search d-block w-100">
-                                <form action="#" className="d-block">
-                                  <div className="search_block mini">
-                                    <MdSearch className="sicn" />
-                                    <input
-                                      type="text"
-                                      placeholder="Find Your Course"
-                                      name="searchTerm"
-                                      value={searchTerm}
-                                      onChange={(e) =>
-                                        setSearchTerm(e.target.value)
-                                      }
-                                    />
-                                  </div>
-                                </form>
-                              </div>
+                      <div className="d-block mb-2">
+                        <h3 className="fl_txt text-left">Filter</h3>
+                        {filterByCollege?.filterStateId.length > 0 ||
+                        filterByCollege?.courseList.length > 0 ||
+                        filterByCollege?.sortBy.length > 0 ||
+                        filterByCollege?.orderBy.length > 0 ? (
+                          <div className="cat-show-box" id="desktopFilterTag">
+                            <div
+                              className="catticked"
+                              id="FTclear"
+                              // onclick="closeFilter('FTclear','all')"
+                            >
+                              <span
+                                className="material-icons cnlbutton"
+                                onClick={handleSelectedAllClear}
+                              >
+                                <MdClose />
+                              </span>
+                              <div className="ticktext">Clear All</div>
                             </div>
 
-                            <div className="acc_heightbx">
-                              <ul className="acc-list " id="ownershipnew">
-                                {courseList.length !== 0 ? (
-                                  courseList
-                                    .filter((courseItem) =>
-                                      courseItem.courseName
-                                        .toLowerCase()
-                                        .includes(searchTerm.toLowerCase())
-                                    )
-                                    .map((courseItem) => {
-                                      return (
-                                        <li
-                                          key={courseItem.courseId}
-                                          onClick={() =>
-                                            handleFilter(
-                                              "courseList",
-                                              courseItem.courseId.toString()
-                                            )
-                                          }
-                                        >
-                                          <label
-                                            htmlFor={courseItem.courseId}
-                                            className="customradio"
-                                          >
-                                            <input
-                                              type="radio"
-                                              className="customradioinput"
-                                              checked={
-                                                filterByCollege.courseList ===
-                                                courseItem.courseId.toString()
-                                              }
-                                              readOnly
-                                            />
-                                            <div className="radiobx">
-                                              {
-                                                courseItem.courseName
-                                                // .split(
-                                                //   "("
-                                                // )[0]
-                                              }
-                                            </div>
-                                          </label>
-                                        </li>
-                                      );
+                            {filterByCollege.orderBy && (
+                              <div className="catticked" id="FTorderasc">
+                                <span
+                                  className="material-icons cnlbutton"
+                                  onClick={() =>
+                                    setFilterByCollege({
+                                      ...filterByCollege,
+                                      orderBy: "",
                                     })
-                                ) : (
-                                  <div>No course</div>
-                                )}
-                              </ul>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="accordion-item">
-                        <button
-                          data-bs-toggle="collapse"
-                          data-bs-target="#collapseOne4"
-                          className="collapsed"
-                          aria-expanded="false"
-                          fdprocessedid="sxwxf"
-                        >
-                          State
-                        </button>
-                        <div
-                          id="collapseOne4"
-                          className="accordion-collapse collapse"
-                          data-bs-parent="#accordionCourse3"
-                        >
-                          <div className="accordion-body" id="stateFilter">
-                            <div className="acc_heightbx">
-                              <ul className="acc-list " id="ownershipnew">
-                                {stateList &&
-                                  stateList.map((stateItem, index) => {
-                                    return (
-                                      <li
-                                        key={index}
-                                        onClick={() =>
-                                          handleFilter(
-                                            "filterStateId",
-                                            stateItem.stateId.toString()
-                                          )
-                                        }
-                                      >
-                                        <label
-                                          htmlFor={stateItem.stateName}
-                                          className="customradio"
-                                        >
-                                          <input
-                                            type="radio"
-                                            className="customradioinput"
-                                            checked={
-                                              filterByCollege.filterStateId ===
-                                              stateItem.stateId.toString()
-                                            }
-                                            readOnly
-                                          />
+                                  }
+                                >
+                                  <MdClose />
+                                </span>
+                                <div className="ticktext">
+                                  {filterByCollege.orderBy == "asc"
+                                    ? "Ascending"
+                                    : "Decending"}
+                                </div>
+                              </div>
+                            )}
+                            {filterByCollege.sortBy && (
+                              <div className="catticked" id="FTSortnirfRank">
+                                <span
+                                  className="material-icons cnlbutton"
+                                  onClick={() =>
+                                    setFilterByCollege({
+                                      ...filterByCollege,
+                                      sortBy: "",
+                                    })
+                                  }
+                                >
+                                  <MdClose />
+                                </span>
+                                <div className="ticktext">
+                                  {filterByCollege?.sortBy}
+                                </div>
+                              </div>
+                            )}
 
-                                          <div className="radiobx">
-                                            {stateItem.stateName}
-                                          </div>
-                                        </label>
-                                      </li>
-                                    );
-                                  })}
-                              </ul>
-                            </div>
+                            {selectedCourseValue?.courseName && (
+                              <div className="catticked" id="FTorderasc">
+                                <span
+                                  className="material-icons cnlbutton"
+                                  onClick={() =>
+                                    setFilterByCollege({
+                                      ...filterByCollege,
+                                      courseList: "",
+                                    })
+                                  }
+                                >
+                                  <MdClose />
+                                </span>
+                                <div className="ticktext">
+                                  {
+                                    selectedCourseValue?.courseName.split(
+                                      "("
+                                    )[0]
+                                  }
+                                </div>
+                              </div>
+                            )}
+
+                            {selectedStateValue?.stateName && (
+                              <div className="catticked" id="FTorderasc">
+                                <span
+                                  className="material-icons cnlbutton"
+                                  onClick={() =>
+                                    setFilterByCollege({
+                                      ...filterByCollege,
+                                      filterStateId: "",
+                                      cityId: "",
+                                    })
+                                  }
+                                >
+                                  <MdClose />
+                                </span>
+                                <div className="ticktext">
+                                  {selectedStateValue?.stateName}
+                                </div>
+                              </div>
+                            )}
+
+                            {filterByCollege.cityId.length > 0 && (
+                              <div className="catticked" id="FTorderasc">
+                                <span
+                                  className="material-icons cnlbutton"
+                                  onClick={() =>
+                                    setFilterByCollege({
+                                      ...filterByCollege,
+                                      cityId: "",
+                                    })
+                                  }
+                                >
+                                  <MdClose />
+                                </span>
+                                <div className="ticktext hari">
+                                  {collegeList[0]?.cityName}
+                                </div>
+                              </div>
+                            )}
                           </div>
-                        </div>
+                        ) : null}
                       </div>
 
-                      {filterByCollege.filterStateId.length > 0 && (
+                      <div
+                        className="course-accordion accordion"
+                        id="accordionCourse3"
+                      >
                         <div className="accordion-item">
                           <button
                             data-bs-toggle="collapse"
-                            data-bs-target="#collapseOne5"
+                            data-bs-target="#collapseOne1"
                             className="collapsed"
                             aria-expanded="false"
                             fdprocessedid="sxwxf"
                           >
-                            City
+                            Order by
                           </button>
                           <div
-                            id="collapseOne5"
+                            id="collapseOne1"
+                            className="accordion-collapse collapse"
+                            data-bs-parent="#accordionCourse3"
+                          >
+                            <div className="accordion-body" id="stateFilter">
+                              <div className="acc_heightbx">
+                                <ul className="acc-list " id="state_list">
+                                  <li
+                                    onClick={() =>
+                                      handleFilter("orderBy", "asc")
+                                    }
+                                  >
+                                    <label htmlFor="r1" className="customradio">
+                                      <input
+                                        type="radio"
+                                        className="customradioinput"
+                                        // name="orderBy"
+                                        // value="asc"
+                                        checked={
+                                          filterByCollege.orderBy == "asc"
+                                        }
+                                        readOnly
+                                      />
+                                      <div className="radiobx">Ascending </div>
+                                    </label>
+                                  </li>
+                                  <li
+                                    onClick={() =>
+                                      handleFilter("orderBy", "desc")
+                                    }
+                                  >
+                                    <label htmlFor="r2" className="customradio">
+                                      <input
+                                        type="radio"
+                                        className="customradioinput"
+                                        // name="orderBy"
+                                        // value="desc"
+                                        checked={
+                                          filterByCollege.orderBy == "desc"
+                                        }
+                                        readOnly
+                                      />
+                                      <div className="radiobx">Descending</div>
+                                    </label>
+                                  </li>
+                                </ul>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="accordion-item">
+                          <button
+                            data-bs-toggle="collapse"
+                            data-bs-target="#collapseOne2"
+                            className="collapsed"
+                            aria-expanded="false"
+                            fdprocessedid="sxwxf"
+                          >
+                            Sort by
+                          </button>
+                          <div
+                            id="collapseOne2"
+                            className="accordion-collapse collapse"
+                            data-bs-parent="#accordionCourse3"
+                          >
+                            <div className="accordion-body" id="stateFilter">
+                              <div className="acc_heightbx">
+                                <ul className="acc-list " id="state_list">
+                                  <li
+                                    onClick={() =>
+                                      handleFilter("sortBy", "closingRank")
+                                    }
+                                  >
+                                    <label
+                                      htmlFor="r12"
+                                      className="customradio"
+                                    >
+                                      <input
+                                        type="radio"
+                                        className="customradioinput"
+                                        checked={
+                                          filterByCollege.sortBy ===
+                                          "closingRank"
+                                        }
+                                        readOnly
+                                      />
+                                      <div className="radiobx">
+                                        Closing Rank
+                                      </div>
+                                    </label>
+                                  </li>
+                                  <li
+                                    onClick={() =>
+                                      handleFilter("sortBy", "nirfRank")
+                                    }
+                                  >
+                                    <label
+                                      htmlFor="r13"
+                                      className="customradio"
+                                    >
+                                      <input
+                                        type="radio"
+                                        className="customradioinput"
+                                        checked={
+                                          filterByCollege.sortBy === "nirfRank"
+                                        }
+                                        readOnly
+                                      />
+                                      <div className="radiobx">NIRF Rank </div>
+                                    </label>
+                                  </li>
+                                  <li
+                                    onClick={() =>
+                                      handleFilter("sortBy", "medianSalary")
+                                    }
+                                  >
+                                    <label
+                                      htmlFor="r22"
+                                      className="customradio"
+                                    >
+                                      <input
+                                        type="radio"
+                                        className="customradioinput"
+                                        checked={
+                                          filterByCollege.sortBy ===
+                                          "medianSalary"
+                                        }
+                                        readOnly
+                                      />
+                                      <div className="radiobx">
+                                        Median Salary
+                                      </div>
+                                    </label>
+                                  </li>
+                                  <li
+                                    onClick={() =>
+                                      handleFilter("sortBy", "placement")
+                                    }
+                                  >
+                                    <label
+                                      htmlFor="r24"
+                                      className="customradio"
+                                    >
+                                      <input
+                                        type="radio"
+                                        className="customradioinput"
+                                        checked={
+                                          filterByCollege.sortBy == "placement"
+                                        }
+                                        readOnly
+                                      />
+                                      <div className="radiobx">Placement</div>
+                                    </label>
+                                  </li>
+                                  <li
+                                    onClick={() =>
+                                      handleFilter("sortBy", "fees")
+                                    }
+                                  >
+                                    <label
+                                      htmlFor="r25"
+                                      className="customradio"
+                                    >
+                                      <input
+                                        type="radio"
+                                        className="customradioinput"
+                                        checked={
+                                          filterByCollege.sortBy == "fees"
+                                        }
+                                        readOnly
+                                      />
+                                      <div className="radiobx">Fees</div>
+                                    </label>
+                                  </li>
+                                </ul>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="accordion-item">
+                          <button
+                            className="collapsed1"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#collapseThree3"
+                            aria-expanded="true"
+                            fdprocessedid="cm6dn"
+                          >
+                            Courses
+                          </button>
+                          <div
+                            id="collapseThree3"
+                            className="accordion-collapse collapse show"
+                            data-bs-parent="#accordionCourse3"
+                          >
+                            <div
+                              className="accordion-body"
+                              id="ownerShipFilter"
+                            >
+                              <div className="sidebar-widget">
+                                <div className="widget-search d-block w-100">
+                                  <form action="#" className="d-block">
+                                    <div className="search_block mini">
+                                      <MdSearch className="sicn" />
+                                      <input
+                                        type="text"
+                                        placeholder="Find Your Course"
+                                        name="searchTerm"
+                                        value={searchTerm}
+                                        onChange={(e) =>
+                                          setSearchTerm(e.target.value)
+                                        }
+                                      />
+                                    </div>
+                                  </form>
+                                </div>
+                              </div>
+
+                              <div className="acc_heightbx">
+                                <ul className="acc-list " id="ownershipnew">
+                                  {courseList.length !== 0 ? (
+                                    courseList
+                                      .filter((courseItem) =>
+                                        courseItem.courseName
+                                          .toLowerCase()
+                                          .includes(searchTerm.toLowerCase())
+                                      )
+                                      .map((courseItem) => {
+                                        return (
+                                          <li
+                                            key={courseItem.courseId}
+                                            onClick={() =>
+                                              handleFilter(
+                                                "courseList",
+                                                courseItem.courseId.toString()
+                                              )
+                                            }
+                                          >
+                                            <label
+                                              htmlFor={courseItem.courseId}
+                                              className="customradio"
+                                            >
+                                              <input
+                                                type="radio"
+                                                className="customradioinput"
+                                                checked={
+                                                  filterByCollege.courseList ===
+                                                  courseItem.courseId.toString()
+                                                }
+                                                readOnly
+                                              />
+                                              <div className="radiobx">
+                                                {
+                                                  courseItem.courseName
+                                                  // .split(
+                                                  //   "("
+                                                  // )[0]
+                                                }
+                                              </div>
+                                            </label>
+                                          </li>
+                                        );
+                                      })
+                                  ) : (
+                                    <div>No course</div>
+                                  )}
+                                </ul>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="accordion-item">
+                          <button
+                            data-bs-toggle="collapse"
+                            data-bs-target="#collapseOne4"
+                            className="collapsed"
+                            aria-expanded="false"
+                            fdprocessedid="sxwxf"
+                          >
+                            State
+                          </button>
+                          <div
+                            id="collapseOne4"
                             className="accordion-collapse collapse"
                             data-bs-parent="#accordionCourse3"
                           >
                             <div className="accordion-body" id="stateFilter">
                               <div className="acc_heightbx">
                                 <ul className="acc-list " id="ownershipnew">
-                                  {collegeList &&
-                                    collegeList.map((city) => {
-                                      // console.log(city?.cityId.toString());
+                                  {stateList &&
+                                    stateList.map((stateItem, index) => {
                                       return (
                                         <li
-                                          key={city.cityId}
+                                          key={index}
                                           onClick={() =>
                                             handleFilter(
-                                              "cityId",
-                                              city.cityId.toString()
+                                              "filterStateId",
+                                              stateItem.stateId.toString()
                                             )
                                           }
                                         >
                                           <label
-                                            htmlFor={city.cityId}
+                                            htmlFor={stateItem.stateName}
                                             className="customradio"
                                           >
                                             <input
                                               type="radio"
                                               className="customradioinput"
                                               checked={
-                                                filterByCollege.cityId ==
-                                                city.cityId
+                                                filterByCollege.filterStateId ===
+                                                stateItem.stateId.toString()
                                               }
                                               readOnly
                                             />
+
                                             <div className="radiobx">
-                                              {city?.cityName}
+                                              {stateItem.stateName}
                                             </div>
                                           </label>
                                         </li>
@@ -896,12 +873,74 @@ const MainSection = ({ getValueData, onChange }) => {
                             </div>
                           </div>
                         </div>
-                      )}
+
+                        {filterByCollege.filterStateId.length > 0 && (
+                          <div className="accordion-item">
+                            <button
+                              data-bs-toggle="collapse"
+                              data-bs-target="#collapseOne5"
+                              className="collapsed"
+                              aria-expanded="false"
+                              fdprocessedid="sxwxf"
+                            >
+                              City
+                            </button>
+                            <div
+                              id="collapseOne5"
+                              className="accordion-collapse collapse"
+                              data-bs-parent="#accordionCourse3"
+                            >
+                              <div className="accordion-body" id="stateFilter">
+                                <div className="acc_heightbx">
+                                  <ul className="acc-list " id="ownershipnew">
+                                    {collegeList &&
+                                      collegeList.map((city) => {
+                                        // console.log(city?.cityId.toString());
+                                        return (
+                                          <li
+                                            key={city.cityId}
+                                            onClick={() =>
+                                              handleFilter(
+                                                "cityId",
+                                                city.cityId.toString()
+                                              )
+                                            }
+                                          >
+                                            <label
+                                              htmlFor={city.cityId}
+                                              className="customradio"
+                                            >
+                                              <input
+                                                type="radio"
+                                                className="customradioinput"
+                                                checked={
+                                                  filterByCollege.cityId ==
+                                                  city.cityId
+                                                }
+                                                readOnly
+                                              />
+                                              <div className="radiobx">
+                                                {city?.cityName}
+                                              </div>
+                                            </label>
+                                          </li>
+                                        );
+                                      })}
+                                  </ul>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        )}
+                      </div>
                     </div>
                   </div>
-                </div>
-              </>
-            </div>
+                </>
+              </div>
+
+              {/* comparison */}
+              <Comparison />
+            </>
           )}
         </div>
 
@@ -2390,9 +2429,6 @@ const MainSection = ({ getValueData, onChange }) => {
           </div>
         </div>
       </div>
-
-      {/* comparison modal */}
-      <Comparison />
     </>
   );
 };

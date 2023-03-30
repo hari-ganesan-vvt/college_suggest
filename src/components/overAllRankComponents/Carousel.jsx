@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper";
 import {
@@ -26,7 +26,15 @@ const Carousel = ({ listdata }) => {
   const [cutOffList, setCutOffList] = useState([]);
   const [isActiveCompare, setIsActiveCompare] = useState(false);
   const [isActiveBookMark, setIsActiveBookMark] = useState(false);
+  const [getCompareStorage, setGetCompareStorage] = useState(
+    JSON.parse(localStorage.getItem("compareItems")) || []
+  );
 
+  const checkFunction = () => {
+    return getCompareStorage.some(
+      (ele) => ele.collegeId === Object.values(listdata[0])[0].cSno
+    );
+  };
   //rankBasedChange Filter
   const rankBasedChange = (college) => {
     const rank_Id = Number(getValueData?.rankId);
@@ -62,17 +70,12 @@ const Carousel = ({ listdata }) => {
       collegeId: Object.values(listdata[0])[0].cSno,
       userId: user.userId,
     };
-    try {
-      if (!isActiveCompare === true) {
-        toast.success("Compared College Added");
-        dispatch(AddToCompare(compareItem));
-      }
-      if (!isActiveCompare === false) {
-        toast.success("Compared College Removed");
-        dispatch(RemoveToCompare(compareItem));
-      }
-    } catch (error) {
-      console.log(error);
+    if (checkFunction()) {
+      toast.success("Compared College Removed");
+      dispatch(RemoveToCompare(compareItem));
+    } else if (getCompareStorage.length < 3) {
+      toast.success("Compared College Added");
+      dispatch(AddToCompare(compareItem));
     }
   };
 
@@ -92,6 +95,10 @@ const Carousel = ({ listdata }) => {
       toast.success("Bookmark Removed successfully");
     }
   };
+
+  useEffect(() => {
+    setGetCompareStorage(JSON.parse(localStorage.getItem("compareItems")));
+  }, [isActiveCompare]);
   return (
     <div>
       <Swiper
@@ -197,7 +204,7 @@ const Carousel = ({ listdata }) => {
               <div className="d-flex">
                 <button
                   className={`prebtn1 bg-gray me-2 compare_Btn ${
-                    isActiveCompare ? "active" : " "
+                    checkFunction() ? "active" : " "
                   }`}
                   onClick={compareAddCollege}
                 >

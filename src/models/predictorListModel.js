@@ -126,7 +126,7 @@ const predictorList = {
       let url = "/predictor/compare/predictorCollegeCompare";
       instance()
         .post(url, {
-          stud_id: 452,
+          stud_id: userId,
         })
         .then((res) => {
           resolve(res);
