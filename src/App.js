@@ -7,6 +7,7 @@ import Home from "./screens/HomeScreen";
 import Navbar from "./components/Navbar";
 import Predictor from "./screens/PredictorScreen";
 import OverallRank from "./screens/OverAllRankScreen";
+import ComparisonScreen from "./screens/ComparisonScreen";
 import Profile from "./screens/ProfileScreen";
 import Footer from "./components/Footer";
 import NotFound from "./screens/NotFound";
@@ -31,6 +32,11 @@ const App = () => {
         <Route
           path="/predictor/overallrank"
           element={userInfo ? <OverallRank /> : <Navigate to="/" exact />}
+        />
+        <Route
+          path="/predictor/predictor-main/comparison"
+          element={<ComparisonScreen />}
+          exact
         />
         <Route path="/profile" element={<Profile />} exact />
         <Route path="*" element={<NotFound />} />

@@ -54,9 +54,16 @@ const LoginSidebar = () => {
 
   const handleverifyOTP = (e) => {
     e.preventDefault();
-    dispatch(userVerifyOtp(otp));
-    setShowOtp(false);
-    setOtp("");
+    if (otp === "") {
+      toast.error("Please Enter the OTP");
+    } else {
+      dispatch(userVerifyOtp(otp));
+      setTimeout(() => {
+        setShowOtp(false);
+        setOtp("");
+      }, 3000);
+    }
+
     //else if (parseInt(otp) === userOTP) {
     //   dispatch(userVerifyOtp(otp));
     //

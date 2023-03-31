@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { MdCompareArrows, MdOutlineAddCircle, MdClose } from "react-icons/md";
 import predictorList from "../../models/predictorListModel";
 import { RemoveToCompare } from "../../redux/Action/compareAction";
+import { Link } from "react-router-dom";
 
 const Comparison = () => {
   const dispatch = useDispatch();
@@ -30,7 +31,6 @@ const Comparison = () => {
     getComparedList();
   }, [compareItem]);
 
-  console.log("comparedValues", comparedValues);
   return (
     <div>
       <button
@@ -183,7 +183,6 @@ const Comparison = () => {
                     })
                   ) : comparedValues.length === 3 ? (
                     comparedValues.map((compared, i) => {
-                      console.log(compared.collegeId);
                       return (
                         <>
                           <div className="mb_wrap_cols2 third" key={i}>
@@ -275,13 +274,14 @@ const Comparison = () => {
                 </div>
               </div>
               {comparedValues.length === 3 && (
-                <a
+                <Link
                   // href="https://cs.collegesuggest.com/predictors/jee-mains/comparison.php?studId=565"
                   target="_blank"
                   className="cmnwbtn2"
+                  to="/predictor/predictor-main/comparison"
                 >
                   Compare Now
-                </a>
+                </Link>
               )}
             </div>
           </div>

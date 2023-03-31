@@ -940,6 +940,51 @@ const MainSection = ({ getValueData, onChange }) => {
 
               {/* comparison */}
               <Comparison />
+              {/* compare Modal list button */}
+              <div
+                className="modal fade predictSearchModal"
+                id="exampleModalXl2"
+                tabIndex="-1"
+                aria-labelledby="exampleModalXlLabel"
+                aria-hidden="true"
+              >
+                <div className="modal-dialog comparedialog modal-xl">
+                  <div className="modal-content">
+                    <div className="modal-header headcustomcompare">
+                      <h5
+                        className="modal-title h4 comp_data"
+                        id="exampleModalXlLabel"
+                      >
+                        Select colleges to Compare
+                      </h5>
+                      <i
+                        className="material-icons closecomparebtn_custom"
+                        id="selectCollegeClose"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"
+                      >
+                        <MdClose />
+                      </i>
+                    </div>
+                    <div className="modal-body overflow-hidden comparelistboxheight">
+                      <div className="search_block">
+                        <i className="material-icons sicn">
+                          <MdSearch />
+                        </i>
+                        <input
+                          type="text"
+                          placeholder="Find Your Colleges"
+                          id="searchPredictCollege"
+                        />
+                        <div
+                          className="s_list_modal listheight"
+                          id="searchCollegeList"
+                        ></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </>
           )}
         </div>

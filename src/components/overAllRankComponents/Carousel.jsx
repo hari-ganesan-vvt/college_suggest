@@ -65,11 +65,11 @@ const Carousel = ({ listdata }) => {
 
   // compareAddCollege
   const compareAddCollege = async () => {
-    setIsActiveCompare(!isActiveCompare);
     const compareItem = {
       collegeId: Object.values(listdata[0])[0].cSno,
       userId: user.userId,
     };
+    setIsActiveCompare(!isActiveCompare);
     if (checkFunction()) {
       toast.success("Compared College Removed");
       dispatch(RemoveToCompare(compareItem));
