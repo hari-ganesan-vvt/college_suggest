@@ -9,7 +9,6 @@ export const compareReducer = (state = INIT_STATE, action) => {
       const exitItem = state.compareItem.find(
         (x) => x.collegeId === item.collegeId
       );
-      console.log("compareItem", state.compareItem);
       if (exitItem) {
         return {
           compareItem: state.compareItem.map((x) =>

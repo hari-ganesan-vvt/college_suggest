@@ -3729,17 +3729,16 @@ footer {
 }
 
 .modal-dialog.comparedialog {
-  margin: 0rem !important;
+  /* margin: 0rem !important; */
   pointer-events: none;
   position: absolute !important;
-  bottom: 0px !important;
+  /* bottom: 0px !important; */
   width: 95% !important;
   max-width: 1000px !important;
-  left: 50% !important;
-  -webkit-transform: translateX(-50%) !important;
-  -ms-transform: translateX(-50%) !important;
-  transform: translateX(-50%) !important;
-  bottom: 12px !important;
+  left: 0 !important;
+  right: 0 !important;
+  top: 80%;
+  transform: translateY(-80%) !important;
 }
 
 .mb_wrap2 {
@@ -3862,6 +3861,15 @@ footer {
   display: block;
   font-weight: 500;
   font-size: 15px;
+}
+.minihintmsg {
+  font-size: 12px !important;
+  display: block;
+  font-family: inherit;
+  font-weight: 400;
+  letter-spacing: 0.4px;
+  color: rgb(141 141 141);
+  margin-top: 5px;
 }
 
 .cmnwbtn2 {

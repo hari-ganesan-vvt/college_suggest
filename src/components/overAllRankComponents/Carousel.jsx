@@ -26,15 +26,8 @@ const Carousel = ({ listdata }) => {
   const [cutOffList, setCutOffList] = useState([]);
   const [isActiveCompare, setIsActiveCompare] = useState(false);
   const [isActiveBookMark, setIsActiveBookMark] = useState(false);
-  const [getCompareStorage, setGetCompareStorage] = useState(
-    JSON.parse(localStorage.getItem("compareItems")) || []
-  );
+  const [getCompareStorage, setGetCompareStorage] = useState();
 
-  const checkFunction = () => {
-    return getCompareStorage.some(
-      (ele) => ele.collegeId === Object.values(listdata[0])[0].cSno
-    );
-  };
   //rankBasedChange Filter
   const rankBasedChange = (college) => {
     const rank_Id = Number(getValueData?.rankId);
@@ -70,35 +63,47 @@ const Carousel = ({ listdata }) => {
       userId: user.userId,
     };
     setIsActiveCompare(!isActiveCompare);
-    if (checkFunction()) {
-      toast.success("Compared College Removed");
-      dispatch(RemoveToCompare(compareItem));
-    } else if (getCompareStorage.length < 3) {
+    if (!isActiveCompare === true) {
       toast.success("Compared College Added");
       dispatch(AddToCompare(compareItem));
+    } else if (!isActiveCompare === false) {
+      toast.success("Compared College Removed");
+      dispatch(RemoveToCompare(compareItem));
     }
   };
 
   //addBookMark
   const addBookMark = async () => {
+    const bookMarkItem = {
+      collegeId: Object.values(listdata[0])[0].cSno,
+      userId: user.userId,
+    };
     setIsActiveBookMark(!isActiveBookMark);
 
     if (!isActiveBookMark === true) {
-      const response = await predictorList.addBookMarkCollege();
+      const response = await predictorList.addBookMarkCollege(bookMarkItem);
       console.log(response.data);
       toast.success("Bookmark Added successfully");
     }
 
     if (!isActiveBookMark === false) {
-      const response = await predictorList.addBookMarkCollege();
+      const response = await predictorList.addBookMarkCollege(bookMarkItem);
       console.log(response.data);
       toast.success("Bookmark Removed successfully");
     }
   };
 
   useEffect(() => {
-    setGetCompareStorage(JSON.parse(localStorage.getItem("compareItems")));
-  }, [isActiveCompare]);
+    const storedCollegeId =
+      JSON.parse(localStorage.getItem("compareItems")) || [];
+    setGetCompareStorage(storedCollegeId);
+
+    const isCollegeIdMatched = storedCollegeId.some(
+      (ele) => ele.collegeId === Object.values(listdata[0])[0].cSno
+    );
+    setIsActiveCompare(isCollegeIdMatched);
+  }, []);
+
   return (
     <div>
       <Swiper
@@ -204,7 +209,7 @@ const Carousel = ({ listdata }) => {
               <div className="d-flex">
                 <button
                   className={`prebtn1 bg-gray me-2 compare_Btn ${
-                    checkFunction() ? "active" : " "
+                    isActiveCompare ? "active" : " "
                   }`}
                   onClick={compareAddCollege}
                 >

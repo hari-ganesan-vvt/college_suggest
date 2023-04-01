@@ -139,13 +139,29 @@ const predictorList = {
     return promise;
   },
 
-  addBookMarkCollege: (userId, collegeId) => {
+  collegeCount: () => {
+    let promise = new Promise((resolve, reject) => {
+      let url = "predictor/compare/predictorCompareCollegeCount";
+      instance()
+        .post(url, {
+          stud_id: 452,
+        })
+        .then((res) => {
+          resolve(res);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+    return promise;
+  },
+  addBookMarkCollege: (bookMarkItem) => {
     let promise = new Promise((resolve, reject) => {
       let url = "/user/bookMark/addBookMark";
       instance()
         .post(url, {
-          studId: 468,
-          collegeId: 10,
+          studId: bookMarkItem.userId,
+          collegeId: bookMarkItem.collegeId,
           collegeType: 1,
           pageType: "predict",
         })

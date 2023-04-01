@@ -1,10 +1,10 @@
 import React from "react";
-import { SyncLoader } from "react-spinners";
+import { BeatLoader } from "react-spinners";
 
 const Loading = () => {
   return (
     <div className="loader_container">
-      <SyncLoader color="#129875" size={14} />
+      <BeatLoader color="#129875" size={16} />
     </div>
   );
 };
