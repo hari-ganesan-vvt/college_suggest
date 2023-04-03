@@ -1,20 +1,24 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  userGoogleLogin,
   userLogin,
   userSignup,
   userVerifyOtp,
 } from "../redux/Action/userAction";
 import { toast } from "react-toastify";
-import Assets from "../imports/assets.imports";
 import { BeatLoader } from "react-spinners";
+import { useGoogleLogin } from "@react-oauth/google";
+import Assets from "../imports/assets.imports";
+import axios from "axios";
+import user from "../models/userModel";
 
 const LoginSidebar = () => {
   const dispatch = useDispatch();
 
   const userLoginInfo = useSelector((state) => state.userLogin);
-
   const { loading } = userLoginInfo;
+
   const [username, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [mobile, setMobile] = useState("");
@@ -63,7 +67,6 @@ const LoginSidebar = () => {
         setOtp("");
       }, 3000);
     }
-
     //else if (parseInt(otp) === userOTP) {
     //   dispatch(userVerifyOtp(otp));
     //
@@ -73,6 +76,29 @@ const LoginSidebar = () => {
     //   toast.error("Invalid OTP");
     // }
   };
+
+  //google Login
+  const googleLogin = useGoogleLogin({
+    onSuccess: (codeResponse) => {
+      axios
+        .get(
+          `https://www.googleapis.com/oauth2/v1/userinfo?access_token=${codeResponse.access_token}`,
+          {
+            headers: {
+              Authorization: `Bearer ${codeResponse.access_token}`,
+              Accept: "application/json",
+            },
+          }
+        )
+        .then((res) => {
+          dispatch(userGoogleLogin(res.data));
+          user.userGoogleSignUp(res.data);
+          window.location.reload(true);
+        })
+        .catch((err) => console.log(err));
+    },
+    onError: (error) => console.log("Login Failed:", error),
+  });
 
   return (
     <div
@@ -198,7 +224,7 @@ const LoginSidebar = () => {
                 </form>
 
                 <div className="d-flex justify-content-center align-items-center mt-2">
-                  <a href="#" className="socialicn-links">
+                  <a className="socialicn-links" onClick={() => googleLogin()}>
                     <img src={Assets.googleIcon} alt="google images" />,
                   </a>
 

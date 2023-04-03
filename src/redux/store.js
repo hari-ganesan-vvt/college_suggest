@@ -2,14 +2,16 @@ import { applyMiddleware, combineReducers, createStore } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";
 import { userLoginReducer, userSignupReducer } from "./reducer/userReducer";
 import { filterChangeReducer } from "./reducer/filterChangeReducer";
-import { compareReducer } from "./reducer/compareReducer";
+import { addRemovecompareReducer } from "./reducer/compareReducer";
+import { addRemoveBookMarkReducer } from "./reducer/bookMarkReducer";
 import thunk from "redux-thunk";
 
 const reducer = combineReducers({
   userLogin: userLoginReducer,
   userSignup: userSignupReducer,
   filterChange: filterChangeReducer,
-  compare: compareReducer,
+  compareList: addRemovecompareReducer,
+  bookMarkList: addRemoveBookMarkReducer,
 });
 
 // login

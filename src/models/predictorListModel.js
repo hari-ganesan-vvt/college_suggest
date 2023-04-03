@@ -139,12 +139,12 @@ const predictorList = {
     return promise;
   },
 
-  collegeCount: () => {
+  collegeCount: (userId) => {
     let promise = new Promise((resolve, reject) => {
       let url = "predictor/compare/predictorCompareCollegeCount";
       instance()
         .post(url, {
-          stud_id: 452,
+          stud_id: userId,
         })
         .then((res) => {
           resolve(res);
@@ -155,7 +155,8 @@ const predictorList = {
     });
     return promise;
   },
-  addBookMarkCollege: (bookMarkItem) => {
+
+  addRemoveBookMarkCollege: (bookMarkItem) => {
     let promise = new Promise((resolve, reject) => {
       let url = "/user/bookMark/addBookMark";
       instance()
@@ -173,6 +174,23 @@ const predictorList = {
         });
     });
 
+    return promise;
+  },
+
+  userBookMarkList: (userId) => {
+    let promise = new Promise((resolve, reject) => {
+      let url = "/user/bookMark/userBookMarkList";
+      instance()
+        .post(url, {
+          studId: userId,
+        })
+        .then((res) => {
+          resolve(res);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
     return promise;
   },
 };

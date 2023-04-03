@@ -381,11 +381,16 @@ const Navbar = () => {
               >
                 <div className="rio-ulogin">
                   <div className="us_img hid">
-                    <img src={Assets.userProfile} alt="user-profile" />
+                    <img
+                      src={userInfo?.picture || Assets.userProfile}
+                      alt="user-profile"
+                    />
                   </div>
                   <div className="pname user-profile hiddenname">
                     <div className="d-flex align-items-center">
-                      <span className="uname">{userDetails[0]?.name}</span>
+                      <span className="uname">
+                        {userDetails[0]?.name || userInfo?.name}
+                      </span>
                       <MdOutlineArrowDropDown className="material-icons" />
                     </div>
                   </div>
@@ -401,11 +406,11 @@ const Navbar = () => {
                       <span className="ipc -in">
                         <div className="us_img">
                           <img
-                            src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=687&amp;q=80"
+                            src={userInfo?.picture || Assets.userProfile}
                             alt=""
                           />
                         </div>
-                        <em>{userDetails[0]?.name}</em>
+                        <em>{userDetails[0]?.name || userInfo?.name}</em>
                       </span>
                     </div>
                     <ul className="dropcontent">

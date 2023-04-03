@@ -275,7 +275,7 @@ const MainSection = ({ getValueData, onChange }) => {
   //   }
   // }, [selectRecommended]);
   useEffect(() => {
-    window.sessionStorage.setItem("_values", JSON.stringify(initialValues));
+    window.sessionStorage.setItem("form_values", JSON.stringify(initialValues));
   }, [initialValues]);
 
   useEffect(() => {

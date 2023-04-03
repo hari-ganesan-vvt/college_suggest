@@ -5,8 +5,8 @@ import Assets from "../../imports/assets.imports";
 import Carousel from "./Carousel";
 
 const MainCard = ({ listdata, stateInfo }) => {
-  const getValueData = sessionStorage.getItem("_values")
-    ? JSON.parse(sessionStorage.getItem("_values"))
+  const getValueData = sessionStorage.getItem("form_values")
+    ? JSON.parse(sessionStorage.getItem("form_values"))
     : null;
 
   const filterChange = useSelector(
@@ -73,7 +73,6 @@ const MainCard = ({ listdata, stateInfo }) => {
     rankFilterBased();
   }, [filterChange, filterData]);
 
-  // console.log(courseList);
   return (
     <>
       {courseList.length !== 0 && (

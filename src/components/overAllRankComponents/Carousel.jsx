@@ -1,10 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper";
-import {
-  AddToCompare,
-  RemoveToCompare,
-} from "../../redux/Action/compareAction";
+import { addRemoveCompare } from "../../redux/Action/compareAction";
+import { addRemoveBookMark } from "../../redux/Action/bookMarkAction";
 import { BiCloudDownload } from "react-icons/bi";
 import { MdOutlineBookmarkAdd } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
@@ -19,14 +17,13 @@ const Carousel = ({ listdata }) => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.userLogin.userInfo);
 
-  const getValueData = sessionStorage.getItem("_values")
-    ? JSON.parse(sessionStorage.getItem("_values"))
+  const getValueData = sessionStorage.getItem("form_values")
+    ? JSON.parse(sessionStorage.getItem("form_values"))
     : null;
 
   const [cutOffList, setCutOffList] = useState([]);
   const [isActiveCompare, setIsActiveCompare] = useState(false);
   const [isActiveBookMark, setIsActiveBookMark] = useState(false);
-  const [getCompareStorage, setGetCompareStorage] = useState();
 
   //rankBasedChange Filter
   const rankBasedChange = (college) => {
@@ -65,10 +62,10 @@ const Carousel = ({ listdata }) => {
     setIsActiveCompare(!isActiveCompare);
     if (!isActiveCompare === true) {
       toast.success("Compared College Added");
-      dispatch(AddToCompare(compareItem));
+      dispatch(addRemoveCompare(compareItem));
     } else if (!isActiveCompare === false) {
       toast.success("Compared College Removed");
-      dispatch(RemoveToCompare(compareItem));
+      dispatch(addRemoveCompare(compareItem));
     }
   };
 
@@ -81,27 +78,34 @@ const Carousel = ({ listdata }) => {
     setIsActiveBookMark(!isActiveBookMark);
 
     if (!isActiveBookMark === true) {
-      const response = await predictorList.addBookMarkCollege(bookMarkItem);
-      console.log(response.data);
+      dispatch(addRemoveBookMark(bookMarkItem));
       toast.success("Bookmark Added successfully");
     }
 
     if (!isActiveBookMark === false) {
-      const response = await predictorList.addBookMarkCollege(bookMarkItem);
-      console.log(response.data);
+      dispatch(addRemoveBookMark(bookMarkItem));
       toast.success("Bookmark Removed successfully");
     }
   };
 
   useEffect(() => {
-    const storedCollegeId =
+    const storedCompared =
       JSON.parse(localStorage.getItem("compareItems")) || [];
-    setGetCompareStorage(storedCollegeId);
 
-    const isCollegeIdMatched = storedCollegeId.some(
+    const isCompareMatched = storedCompared.some(
       (ele) => ele.collegeId === Object.values(listdata[0])[0].cSno
     );
-    setIsActiveCompare(isCollegeIdMatched);
+    setIsActiveCompare(isCompareMatched);
+  }, []);
+
+  useEffect(() => {
+    const storedBookMark =
+      JSON.parse(localStorage.getItem("bookMarkItems")) || [];
+
+    const isBookMarkMached = storedBookMark.some(
+      (ele) => ele.cs_sno === Object.values(listdata[0])[0].cSno
+    );
+    setIsActiveBookMark(isBookMarkMached);
   }, []);
 
   return (

@@ -13,7 +13,7 @@ const OverallRank = () => {
   );
 
   const getSessionValue = sessionStorage.getItem
-    ? JSON.parse(sessionStorage.getItem("_values"))
+    ? JSON.parse(sessionStorage.getItem("form_values"))
     : null;
 
   const [getValueData, setGetValueData] = useState(getSessionValue);
@@ -27,8 +27,8 @@ const OverallRank = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
     setGetValueData(
-      sessionStorage.getItem("_values")
-        ? JSON.parse(sessionStorage.getItem("_values"))
+      sessionStorage.getItem("form_values")
+        ? JSON.parse(sessionStorage.getItem("form_values"))
         : null
     );
   }, [getSessionState]);

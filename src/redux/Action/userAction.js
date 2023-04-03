@@ -1,6 +1,7 @@
 import user from "../../models/userModel";
 import {
   USER_LOGIN_SUCCESS,
+  USER_GOOGLE_LOGIN,
   USER_LOGIN_FAIL,
   USER_LOGOUT,
   USER_OTP_VERIFY,
@@ -28,6 +29,11 @@ export const userLogin = (phoneNumber) => async (dispatch) => {
   }
 };
 
+export const userGoogleLogin = (data) => async (dispatch) => {
+  dispatch({ type: USER_GOOGLE_LOGIN, payload: data });
+  localStorage.setItem("userInfo", JSON.stringify(data));
+};
+
 //otpcheck
 export const userVerifyOtp = (otp) => async (dispatch) => {
   try {
@@ -36,13 +42,6 @@ export const userVerifyOtp = (otp) => async (dispatch) => {
     localStorage.setItem("userInfo", JSON.stringify(data));
   } catch (error) {
     console.log(error);
-    // dispatch({
-    //   type: "USER_OTP_FAIL",
-    //   payload:
-    //     error.response && error.response.data.message
-    //       ? error.response.data.message
-    //       : error.message,
-    // });
   }
 };
 

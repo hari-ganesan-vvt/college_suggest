@@ -1,24 +1,26 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { MdCompareArrows, MdOutlineAddCircle, MdClose } from "react-icons/md";
-import predictorList from "../../models/predictorListModel";
-import { RemoveToCompare } from "../../redux/Action/compareAction";
 import { Link } from "react-router-dom";
+import { MdCompareArrows, MdOutlineAddCircle, MdClose } from "react-icons/md";
+import { addRemoveCompare } from "../../redux/Action/compareAction";
+import predictorList from "../../models/predictorListModel";
 
 const Comparison = () => {
   const dispatch = useDispatch();
-  const compareItem = useSelector((state) => state.compare.compareItem);
   const user = useSelector((state) => state.userLogin.userInfo);
+  const compareItem = useSelector((state) => state.compareList.compareItem);
+  const userBookMark = useSelector((state) => state.bookMarkList.bookMarkItem);
 
   const [comparedValues, setComparedValues] = useState([]);
   const [collegeCount, setCollegeCount] = useState(0);
 
+  console.log("user", user);
   const compareRemove = () => {
     const comparedItem = {
       collegeId: 10,
       userId: 452,
     };
-    dispatch(RemoveToCompare(comparedItem));
+    dispatch(addRemoveCompare(comparedItem));
   };
 
   //collegeCompared
@@ -33,9 +35,22 @@ const Comparison = () => {
 
   //collegeComparedCount
   const getCollegeCount = async () => {
-    const response = await predictorList.collegeCount();
+    const response = await predictorList.collegeCount(user.userId);
     setCollegeCount(response.data.collegecount);
   };
+
+  //bookMarkList
+  const getBookMarkList = async () => {
+    const response = await predictorList.userBookMarkList(user.userId);
+    localStorage.setItem(
+      "bookMarkItems",
+      JSON.stringify(response.data.bookMarkColleges)
+    );
+  };
+
+  useEffect(() => {
+    getBookMarkList();
+  }, [userBookMark]);
 
   useEffect(() => {
     getComparedList();

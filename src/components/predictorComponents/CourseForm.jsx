@@ -36,7 +36,7 @@ const CourseForm = ({ courseList, casteList, stateList }) => {
       if (userInfo === null) {
         toast.warn("Login First");
       } else {
-        sessionStorage.setItem("_values", JSON.stringify(values));
+        sessionStorage.setItem("form_values", JSON.stringify(values));
         navigate("/predictor/overallrank");
       }
     },

@@ -67,9 +67,7 @@ const user = {
       let url = "/user/userLogout";
       instance()
         .post(url, { userId: userId })
-        .then((res) => {
-          resolve(res);
-        })
+        .then((res) => resolve(res))
         .catch((error) => {
           if (error.response) {
             reject(error.response.data.message);
@@ -82,6 +80,27 @@ const user = {
     return promise;
   },
 
+  userGoogleSignUp: (data) => {
+    let promise = new Promise((resolve, reject) => {
+      let url = "/user/userGoogleSignUp";
+      instance()
+        .post(url, {
+          name: data.name,
+          email: data.email,
+        })
+        .then((res) => {
+          resolve(res);
+        })
+        .catch((error) => {
+          if (error.response) {
+            reject(error.response.data.message);
+          } else {
+            reject(error);
+          }
+        });
+    });
+    return promise;
+  },
   userDetails: (userId) => {
     let promise = new Promise((resolve, reject) => {
       let url = "/user/userDetails";
