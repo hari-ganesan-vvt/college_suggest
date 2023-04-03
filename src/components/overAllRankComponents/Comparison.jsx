@@ -14,7 +14,6 @@ const Comparison = () => {
   const [comparedValues, setComparedValues] = useState([]);
   const [collegeCount, setCollegeCount] = useState(0);
 
-  console.log("user", user);
   const compareRemove = () => {
     const comparedItem = {
       collegeId: 10,
@@ -25,7 +24,9 @@ const Comparison = () => {
 
   //collegeCompared
   const getComparedList = async () => {
-    const response = await predictorList.comparisonCollege(user.userId);
+    const response = await predictorList.comparisonCollege(
+      user.userId || user.existUserId
+    );
     setComparedValues(response.data.predictorCompareCollegeDetails);
     window.localStorage.setItem(
       "compareItems",
@@ -35,13 +36,17 @@ const Comparison = () => {
 
   //collegeComparedCount
   const getCollegeCount = async () => {
-    const response = await predictorList.collegeCount(user.userId);
+    const response = await predictorList.collegeCount(
+      user.userId || user.existUserId
+    );
     setCollegeCount(response.data.collegecount);
   };
 
   //bookMarkList
   const getBookMarkList = async () => {
-    const response = await predictorList.userBookMarkList(user.userId);
+    const response = await predictorList.userBookMarkList(
+      user.userId || user.existUserId
+    );
     localStorage.setItem(
       "bookMarkItems",
       JSON.stringify(response.data.bookMarkColleges)

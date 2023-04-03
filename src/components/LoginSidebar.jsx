@@ -26,6 +26,7 @@ const LoginSidebar = () => {
   const [otp, setOtp] = useState("");
   const [showOtp, setShowOtp] = useState(false);
 
+  //signup
   const handleSignup = (e) => {
     e.preventDefault();
     if (username === "" || email === "" || mobile === "") {
@@ -42,6 +43,7 @@ const LoginSidebar = () => {
     }
   };
 
+  //login
   const handleLogin = (e) => {
     e.preventDefault();
     if (phoneNumber === "") {
@@ -56,6 +58,7 @@ const LoginSidebar = () => {
     }
   };
 
+  //verifyOTP
   const handleverifyOTP = (e) => {
     e.preventDefault();
     if (otp === "") {
@@ -67,17 +70,9 @@ const LoginSidebar = () => {
         setOtp("");
       }, 3000);
     }
-    //else if (parseInt(otp) === userOTP) {
-    //   dispatch(userVerifyOtp(otp));
-    //
-    //
-    //   setOtp("");
-    // } else {
-    //   toast.error("Invalid OTP");
-    // }
   };
 
-  //google Login
+  //googleLogin
   const googleLogin = useGoogleLogin({
     onSuccess: (codeResponse) => {
       axios
@@ -92,8 +87,9 @@ const LoginSidebar = () => {
         )
         .then((res) => {
           dispatch(userGoogleLogin(res.data));
-          user.userGoogleSignUp(res.data);
-          window.location.reload(true);
+          setTimeout(() => {
+            window.location.reload(true);
+          }, 1500);
         })
         .catch((err) => console.log(err));
     },

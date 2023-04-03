@@ -57,7 +57,7 @@ const Carousel = ({ listdata }) => {
   const compareAddCollege = async () => {
     const compareItem = {
       collegeId: Object.values(listdata[0])[0].cSno,
-      userId: user.userId,
+      userId: user.userId || user.existUserId,
     };
     setIsActiveCompare(!isActiveCompare);
     if (!isActiveCompare === true) {
@@ -73,7 +73,7 @@ const Carousel = ({ listdata }) => {
   const addBookMark = async () => {
     const bookMarkItem = {
       collegeId: Object.values(listdata[0])[0].cSno,
-      userId: user.userId,
+      userId: user.userId || user.existUserId,
     };
     setIsActiveBookMark(!isActiveBookMark);
 

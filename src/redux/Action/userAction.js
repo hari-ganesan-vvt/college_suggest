@@ -1,4 +1,3 @@
-import user from "../../models/userModel";
 import {
   USER_LOGIN_SUCCESS,
   USER_GOOGLE_LOGIN,
@@ -10,6 +9,7 @@ import {
   USER_LOGIN_REQUEST,
   USER_REGISTER_REQUEST,
 } from "../Constants/UserConstants";
+import user from "../../models/userModel";
 
 //login
 export const userLogin = (phoneNumber) => async (dispatch) => {
@@ -29,7 +29,8 @@ export const userLogin = (phoneNumber) => async (dispatch) => {
   }
 };
 
-export const userGoogleLogin = (data) => async (dispatch) => {
+export const userGoogleLogin = (userInfo) => async (dispatch) => {
+  const { data } = await user.userGoogleSignUp(userInfo);
   dispatch({ type: USER_GOOGLE_LOGIN, payload: data });
   localStorage.setItem("userInfo", JSON.stringify(data));
 };

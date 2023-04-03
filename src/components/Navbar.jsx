@@ -30,7 +30,9 @@ const Navbar = () => {
   //getUserDetails
   const getUserDetails = async () => {
     try {
-      const response = await user.userDetails(userInfo?.userId);
+      const response = await user.userDetails(
+        userInfo?.userId || userInfo?.existUserId
+      );
       setUserDetails(response.data.userDetails);
     } catch (error) {
       console.log(error);
