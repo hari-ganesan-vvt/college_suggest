@@ -25,7 +25,7 @@ const App = () => {
   const { userInfo } = userAuth;
 
   return (
-    <GoogleOAuthProvider clientId="597753245400-qld3s26u0qcjfmtu1lmgks86o5su8fqt.apps.googleusercontent.com">
+    <GoogleOAuthProvider clientId={process.env.REACT_APP_GOOGLE_CLIENT_KEY}>
       <BrowserRouter>
         <Navbar />
         <Routes>
@@ -46,7 +46,7 @@ const App = () => {
         <Footer />
         <ToastContainer
           position="top-center"
-          autoClose={2000}
+          autoClose={1500}
           hideProgressBar
           newestOnTop={false}
           closeOnClick

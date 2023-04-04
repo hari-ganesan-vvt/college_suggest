@@ -11,7 +11,6 @@ import { BeatLoader } from "react-spinners";
 import { useGoogleLogin } from "@react-oauth/google";
 import Assets from "../imports/assets.imports";
 import axios from "axios";
-import user from "../models/userModel";
 
 const LoginSidebar = () => {
   const dispatch = useDispatch();
@@ -89,7 +88,7 @@ const LoginSidebar = () => {
           dispatch(userGoogleLogin(res.data));
           setTimeout(() => {
             window.location.reload(true);
-          }, 1500);
+          }, 2000);
         })
         .catch((err) => console.log(err));
     },
@@ -329,7 +328,7 @@ const LoginSidebar = () => {
             )}
 
             <div className="d-flex justify-content-center align-items-center mt-2">
-              <a href="#" className="socialicn-links">
+              <a className="socialicn-links" onClick={() => googleLogin()}>
                 <img src={Assets.googleIcon} alt="google images" />
               </a>
 

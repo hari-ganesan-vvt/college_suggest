@@ -4,6 +4,7 @@ import useMobileView from "../hooks/useMobileView";
 const Profile = () => {
   //custom hook
   const isMobile = useMobileView();
+
   return (
     <div
       style={{

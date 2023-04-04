@@ -374,7 +374,9 @@ const MainSection = ({ getValueData, onChange }) => {
                             >
                               {initialValues?.genderId === "1"
                                 ? "Male"
-                                : "Female"}
+                                : initialValues?.genderId === "1"
+                                ? "Female"
+                                : null}
                             </div>
                           </div>
                           <div className="catticked" id="">
@@ -836,36 +838,37 @@ const MainSection = ({ getValueData, onChange }) => {
                               <div className="acc_heightbx">
                                 <ul className="acc-list " id="ownershipnew">
                                   {stateList &&
-                                    stateList.map((stateItem, index) => {
+                                    stateList.map((stateItem, i) => {
                                       return (
-                                        <li
-                                          key={index}
-                                          onClick={() =>
-                                            handleFilter(
-                                              "filterStateId",
-                                              stateItem.stateId.toString()
-                                            )
-                                          }
-                                        >
-                                          <label
-                                            htmlFor={stateItem.stateName}
-                                            className="customradio"
-                                          >
-                                            <input
-                                              type="radio"
-                                              className="customradioinput"
-                                              checked={
-                                                filterByCollege.filterStateId ===
+                                        <React.Fragment key={i}>
+                                          <li
+                                            onClick={() =>
+                                              handleFilter(
+                                                "filterStateId",
                                                 stateItem.stateId.toString()
-                                              }
-                                              readOnly
-                                            />
+                                              )
+                                            }
+                                          >
+                                            <label
+                                              htmlFor={stateItem.stateName}
+                                              className="customradio"
+                                            >
+                                              <input
+                                                type="radio"
+                                                className="customradioinput"
+                                                checked={
+                                                  filterByCollege.filterStateId ===
+                                                  stateItem.stateId.toString()
+                                                }
+                                                readOnly
+                                              />
 
-                                            <div className="radiobx">
-                                              {stateItem.stateName}
-                                            </div>
-                                          </label>
-                                        </li>
+                                              <div className="radiobx">
+                                                {stateItem.stateName}
+                                              </div>
+                                            </label>
+                                          </li>
+                                        </React.Fragment>
                                       );
                                     })}
                                 </ul>
@@ -990,7 +993,7 @@ const MainSection = ({ getValueData, onChange }) => {
         </div>
 
         {/* mobile filter modal */}
-        <div>
+        {/* <div>
           <div className={`fiter_Modal ${filterMobileShow ? "active" : " "}`}>
             <div className="fiter_Modal_body">
               <div className="fiter_Modal_head d-flex justify-content-between align-items-center">
@@ -1066,61 +1069,7 @@ const MainSection = ({ getValueData, onChange }) => {
                       {initialValues?.casteId}
                     </div>
                   </div>
-                  {/* <div className="catticked" id="">
-                    <span
-                      className="material-icons cnlbutton"
-                      style={{ color: "#119d78" }}
-                    >
-                      <MdVerified />
-                    </span>
-                    <div className="ticktext" style={{ maxWidth: "100%" }}>
-                      15000
-                    </div>
-                  </div>
-                  <div className="catticked" id="">
-                    <span
-                      className="material-icons cnlbutton"
-                      style={{ color: "#119d78" }}
-                    >
-                      <MdHouse />
-                    </span>
-                    <div className="ticktext" style={{ maxWidth: "100%" }}>
-                      TamilNadu
-                    </div>
-                  </div>
-                  <div className="catticked" id="">
-                    <span
-                      className="material-icons cnlbutton"
-                      style={{ color: "#119d78" }}
-                    >
-                      <MdMale />
-                    </span>
-                    <div className="ticktext" style={{ maxWidth: "100%" }}>
-                      Male
-                    </div>
-                  </div>
-                  <div className="catticked" id="">
-                    <span
-                      className="material-icons cnlbutton"
-                      style={{ color: "#119d78" }}
-                    >
-                      <svg
-                        stroke="currentColor"
-                        fill="currentColor"
-                        strokeWidth="0"
-                        viewBox="0 0 24 24"
-                        height="1em"
-                        width="1em"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path fill="none" d="M0 0h24v24H0z"></path>
-                        <path d="M21 3v2h-2V3h-2v2h-2V3h-2v4l2 2v1H9V9l2-2V3H9v2H7V3H5v2H3V3H1v4l2 2v6l-2 2v4h9v-3c0-1.1.9-2 2-2s2 .9 2 2v3h9v-4l-2-2V9l2-2V3h-2z"></path>
-                      </svg>
-                    </span>
-                    <div className="ticktext" style={{ maxWidth: "100%" }}>
-                      OPEN
-                    </div>
-                  </div> */}
+                  
                 </div>
               </div>
               <div className="f-body-warp">
@@ -1496,36 +1445,37 @@ const MainSection = ({ getValueData, onChange }) => {
                         <div className="acc_heightbx">
                           <ul className="acc-list " id="ownershipnew">
                             {stateList &&
-                              stateList.map((stateItem, index) => {
+                              stateList.map((stateItem, indexValue) => {
                                 return (
-                                  <li
-                                    key={index}
-                                    onClick={() =>
-                                      handleFilter(
-                                        "filterStateId",
-                                        stateItem.stateId.toString()
-                                      )
-                                    }
-                                  >
-                                    <label
-                                      htmlFor={stateItem.stateName}
-                                      className="customradio"
-                                    >
-                                      <input
-                                        type="radio"
-                                        className="customradioinput"
-                                        checked={
-                                          filterByCollege.filterStateId ===
+                                  <React.Fragment key={indexValue}>
+                                    <li
+                                      onClick={() =>
+                                        handleFilter(
+                                          "filterStateId",
                                           stateItem.stateId.toString()
-                                        }
-                                        readOnly
-                                      />
+                                        )
+                                      }
+                                    >
+                                      <label
+                                        htmlFor={stateItem.stateName}
+                                        className="customradio"
+                                      >
+                                        <input
+                                          type="radio"
+                                          className="customradioinput"
+                                          checked={
+                                            filterByCollege.filterStateId ===
+                                            stateItem.stateId.toString()
+                                          }
+                                          readOnly
+                                        />
 
-                                      <div className="radiobx">
-                                        {stateItem.stateName}
-                                      </div>
-                                    </label>
-                                  </li>
+                                        <div className="radiobx">
+                                          {stateItem.stateName}
+                                        </div>
+                                      </label>
+                                    </li>
+                                  </React.Fragment>
                                 );
                               })}
                           </ul>
@@ -2028,7 +1978,7 @@ const MainSection = ({ getValueData, onChange }) => {
               </li>
             </ul>
           </div>
-        </div>
+        </div> */}
       </section>
 
       {/* Edit Modal */}

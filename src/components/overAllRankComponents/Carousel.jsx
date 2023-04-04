@@ -142,9 +142,9 @@ const Carousel = ({ listdata }) => {
           },
         }}
       >
-        {listdata.map((courseList, i) => {
+        {listdata.map((courseList, index) => {
           return (
-            <SwiperSlide key={i}>
+            <SwiperSlide key={index}>
               <div className="slidebx">
                 <a className="linktitle">
                   {courseList[Object.keys(courseList)[0]].j_course_name}
@@ -263,11 +263,7 @@ const Carousel = ({ listdata }) => {
           </div>
         </div>
       </div>
-      <ModalComponent
-        data={cutOffList}
-        ref={modalRef}
-        courseDataList={listdata}
-      />
+      <ModalComponent data={cutOffList} ref={modalRef} />
     </div>
   );
 };
