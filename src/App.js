@@ -30,9 +30,9 @@ const App = () => {
         <Navbar />
         <Routes>
           <Route path="/" element={<Home />} exact />
-          <Route path="/predictor" element={<Predictor />} exact />
+          <Route path="/predictor/jee-mains" element={<Predictor />} exact />
           <Route
-            path="/predictor/overallrank"
+            path="/predictor/jee-mains/overallrank"
             element={userInfo ? <OverallRank /> : <Navigate to="/" exact />}
           />
           <Route

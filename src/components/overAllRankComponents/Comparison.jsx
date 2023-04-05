@@ -227,7 +227,7 @@ const Comparison = () => {
                       </div>
                     </>
                   ) : collegeCount === 2 ? (
-                    <div className="mb_wrap_cols2 sec ">
+                    <div className="mb_wrap_cols2 sec">
                       <div className="mb_wrap_colsinbx2">
                         <a
                           href="#"
@@ -246,10 +246,11 @@ const Comparison = () => {
               </div>
               {comparedValues.length === 3 && (
                 <Link
-                  // href="https://cs.collegesuggest.com/predictors/jee-mains/comparison.php?studId=565"
                   target="_blank"
                   className="cmnwbtn2"
-                  to="/predictor/predictor-main/comparison"
+                  to={`/predictor/predictor-main/comparison?studId=${
+                    user.userId || user.existUserId
+                  }`}
                 >
                   Compare Now
                 </Link>

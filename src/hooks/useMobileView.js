@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 const useMobileView = () => {
-  const [isMobile, setIsMobile] = useState(0);
+  const [isMobile, setIsMobile] = useState(null);
 
   useEffect(() => {
     window.addEventListener("resize", (e) =>

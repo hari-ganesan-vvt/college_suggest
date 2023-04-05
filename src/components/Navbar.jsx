@@ -368,7 +368,7 @@ const Navbar = () => {
                   </Link>
                 </li>
                 <li className="nav_list_block">
-                  <Link to="/predictor" className="nav__link">
+                  <Link to="/predictor/jee-mains" className="nav__link">
                     Predictions
                   </Link>
                 </li>

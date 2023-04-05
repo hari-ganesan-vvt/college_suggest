@@ -42,7 +42,7 @@ const TabForm = () => {
         toast.warn("Login First");
       } else {
         sessionStorage.setItem("form_values", JSON.stringify(values));
-        navigate("/predictor/overallrank");
+        navigate("/predictor/jee-mains/overallrank");
       }
     },
   });

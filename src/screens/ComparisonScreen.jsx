@@ -1,29 +1,22 @@
 import React, { useEffect, useState } from "react";
-import dummyLogo from "../assets/images/clglogos2.png";
-import dummyLogo1 from "../assets/images/clglogos.png";
+import { useLocation } from "react-router-dom";
+import DropStickNav from "../components/comparedComponents/DropStickNav";
+import predictorList from "../models/predictorListModel";
 
 const ComparisonScreen = () => {
-  const [isNavStickVisible, setIsNavStickVisible] = useState(false);
+  const search = useLocation().search;
+  const studId = new URLSearchParams(search).get("studId");
+
+  const [comparedValues, setComparedValues] = useState([]);
   const [isPlacementShow, setIsPlacementShow] = useState(false);
   const [isGraduationsShow, setIsGraduationsShow] = useState(false);
 
-  const scrollSetStick = () => {
-    let stickScroll = 443;
-    const winScroll =
-      document.body.scrollTop || document.documentElement.scrollTop;
-
-    if (winScroll > stickScroll) {
-      setIsNavStickVisible(true);
-    } else {
-      setIsNavStickVisible(false);
-    }
-  };
-
   useEffect(() => {
-    window.scrollTo(0, 0);
-    window.addEventListener("scroll", scrollSetStick);
-
-    return () => window.addEventListener("scroll", scrollSetStick);
+    const getComparedItem = async () => {
+      const response = await predictorList.comparisonCollege(studId);
+      setComparedValues(response.data.predictorCompareCollegeDetails);
+    };
+    getComparedItem();
   }, []);
 
   return (
@@ -41,18 +34,28 @@ const ComparisonScreen = () => {
                 <div className="comparesec">
                   <div className="topcompare-bx">
                     <div className="row">
-                      <div className="col">
-                        <div className="comprecon">
-                          <div className="thum-block">
-                            <div className="colg_thmbs">
-                              <img src={dummyLogo1} alt="" />
+                      {comparedValues &&
+                        comparedValues.map((compare) => {
+                          return (
+                            <div className="col" key={compare.collegeId}>
+                              <div className="comprecon">
+                                <div className="thum-block">
+                                  <div className="colg_thmbs">
+                                    <img
+                                      src={`https://collegesuggest.com/assets/images/${compare.collegeLogo}`}
+                                      alt={compare.collegeShortName}
+                                    />
+                                  </div>
+                                  <span className="clgname">
+                                    {compare.collegeShortName}
+                                  </span>
+                                </div>
+                              </div>
                             </div>
-                            <span className="clgname">IIT Madras</span>
-                          </div>
-                        </div>
-                      </div>
+                          );
+                        })}
 
-                      <div className="col">
+                      {/* <div className="col">
                         <div className="comprecon">
                           <div className="thum-block">
                             <div className="colg_thmbs">
@@ -72,7 +75,7 @@ const ComparisonScreen = () => {
                             <span className="clgname">IIT Madras</span>
                           </div>
                         </div>
-                      </div>
+                      </div> */}
                     </div>
                   </div>
                 </div>
@@ -83,119 +86,7 @@ const ComparisonScreen = () => {
         </div>
       </section>
 
-      <section
-        className={`dropstickblock ${isNavStickVisible ? "sticky" : ""}`}
-        id="stickybox"
-      >
-        <div className="container">
-          <div className="row">
-            <div className="col-xl-12 col-lg-12 col-sm-12">
-              <div className="d-block heroleftcon">
-                {/* <!-- comparison-boxes-here --> */}
-                <div className="comparesec">
-                  <div className="d-block py-3">
-                    <div className="row">
-                      <div className="col">
-                        <div className="comprecon">
-                          <form action="#" className="d-block w-100">
-                            <select
-                              className="form-select compareselectcustom"
-                              aria-label="Default select example"
-                            >
-                              {/* <option selected="" hidden="">
-                                IIT Madras - Indian Institute of Tec...
-                              </option> */}
-                              <option value="1">
-                                Indian Institute Of Technology Bhubaneswar
-                              </option>
-                              <option value="2">
-                                Indian Institute Of Technology Bombay
-                              </option>
-                              <option value="3">
-                                Indian Institute Of Technology Mandi
-                              </option>
-                              <option value="4">
-                                Indian Institute Of Technology Kharagpur
-                              </option>
-                              <option value="5">
-                                Indian Institute Of Technology (Indian School Of
-                                Mines) Dhanbad
-                              </option>
-                            </select>
-                          </form>
-                        </div>
-                      </div>
-
-                      <div className="col">
-                        <div className="comprecon">
-                          <form action="#" className="d-block w-100">
-                            <select
-                              className="form-select compareselectcustom"
-                              aria-label="Default select example"
-                            >
-                              {/* <option selected="" hidden="">
-                                IIT Madras - Indian Institute of Tec...
-                              </option> */}
-                              <option value="1">
-                                Indian Institute Of Technology Bhubaneswar
-                              </option>
-                              <option value="2">
-                                Indian Institute Of Technology Bombay
-                              </option>
-                              <option value="3">
-                                Indian Institute Of Technology Mandi
-                              </option>
-                              <option value="4">
-                                Indian Institute Of Technology Kharagpur
-                              </option>
-                              <option value="5">
-                                Indian Institute Of Technology (Indian School Of
-                                Mines) Dhanbad
-                              </option>
-                            </select>
-                          </form>
-                        </div>
-                      </div>
-
-                      <div className="col mobilehide pe-0">
-                        <div className="comprecon">
-                          <form action="#" className="d-block w-100">
-                            <select
-                              className="form-select compareselectcustom"
-                              aria-label="Default select example"
-                            >
-                              {/* <option selected="" hidden="">
-                                IIT Madras - Indian Institute of Tec...
-                              </option> */}
-                              <option value="1">
-                                Indian Institute Of Technology Bhubaneswar
-                              </option>
-                              <option value="2">
-                                Indian Institute Of Technology Bombay
-                              </option>
-                              <option value="3">
-                                Indian Institute Of Technology Mandi
-                              </option>
-                              <option value="4">
-                                Indian Institute Of Technology Kharagpur
-                              </option>
-                              <option value="5">
-                                Indian Institute Of Technology (Indian School Of
-                                Mines) Dhanbad
-                              </option>
-                            </select>
-                          </form>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                {/* <!-- comparison-ends-here --> */}
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      <DropStickNav data={comparedValues} />
 
       {/* <!-- main-section-start-here --> */}
       <section className="main_sec">
