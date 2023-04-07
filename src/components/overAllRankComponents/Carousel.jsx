@@ -109,7 +109,7 @@ const Carousel = ({ listdata }) => {
   }, []);
 
   return (
-    <div>
+    <React.Fragment>
       <Swiper
         spaceBetween={10}
         modules={[Navigation]}
@@ -264,7 +264,7 @@ const Carousel = ({ listdata }) => {
         </div>
       </div>
       <ModalComponent data={cutOffList} ref={modalRef} />
-    </div>
+    </React.Fragment>
   );
 };
 

@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { MdCompareArrows, MdOutlineAddCircle, MdClose } from "react-icons/md";
 import { addRemoveCompare } from "../../redux/Action/compareAction";
 import predictorList from "../../models/predictorListModel";
+import { toast } from "react-toastify";
 
 const Comparison = () => {
   const dispatch = useDispatch();
@@ -14,12 +15,13 @@ const Comparison = () => {
   const [comparedValues, setComparedValues] = useState([]);
   const [collegeCount, setCollegeCount] = useState(0);
 
-  const compareRemove = () => {
+  const compareRemove = (item) => {
     const comparedItem = {
-      collegeId: 10,
-      userId: 452,
+      collegeId: item.collegeId,
+      userId: user.userId || user.existUserId,
     };
     dispatch(addRemoveCompare(comparedItem));
+    toast.success("college successfully removed");
   };
 
   //collegeCompared
@@ -126,7 +128,7 @@ const Comparison = () => {
                                 <span
                                   className="close_com_img2"
                                   data-boxes="box10"
-                                  onClick={compareRemove}
+                                  onClick={() => compareRemove(compared)}
                                 >
                                   <MdClose />
                                 </span>
@@ -134,7 +136,7 @@ const Comparison = () => {
                                 <div className="added_collegescontent2">
                                   <div className="logobx2">
                                     <img
-                                      src={`https://collegesuggest.com//assets/images/${compared.collegeLogo}`}
+                                      src={`https://collegesuggest.com/assets/images/${compared.collegeLogo}`}
                                       alt=""
                                     />
                                   </div>
@@ -227,7 +229,7 @@ const Comparison = () => {
                       </div>
                     </>
                   ) : collegeCount === 2 ? (
-                    <div className="mb_wrap_cols2 sec">
+                    <div className="mb_wrap_cols2 sec mobilehide">
                       <div className="mb_wrap_colsinbx2">
                         <a
                           href="#"

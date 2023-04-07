@@ -570,8 +570,12 @@ header {
 }
 .more-vert.mob {
   display: none;
+  width: 35px;
 }
 
+.user-profile img {
+  width: 100%;
+}
 @media (max-width: 992px) {
   .more-vert.mob {
     display: block !important;
@@ -848,7 +852,7 @@ tab-content .tab-pane.active {
   color: #757575;
   position: relative;
   cursor: pointer;
-  margin-right: 39px;
+  margin-right: 25px;
 }
 
 .customradio .radiobx {

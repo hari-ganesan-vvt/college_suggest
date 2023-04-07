@@ -993,7 +993,7 @@ const MainSection = ({ getValueData, onChange }) => {
         </div>
 
         {/* mobile filter modal */}
-        {/* <div>
+        <div>
           <div className={`fiter_Modal ${filterMobileShow ? "active" : " "}`}>
             <div className="fiter_Modal_body">
               <div className="fiter_Modal_head d-flex justify-content-between align-items-center">
@@ -1069,7 +1069,6 @@ const MainSection = ({ getValueData, onChange }) => {
                       {initialValues?.casteId}
                     </div>
                   </div>
-                  
                 </div>
               </div>
               <div className="f-body-warp">
@@ -1978,7 +1977,7 @@ const MainSection = ({ getValueData, onChange }) => {
               </li>
             </ul>
           </div>
-        </div> */}
+        </div>
       </section>
 
       {/* Edit Modal */}
@@ -2056,7 +2055,6 @@ const MainSection = ({ getValueData, onChange }) => {
                       <div className="tab_warp">
                         <div className="fromblock d-block">
                           <form
-                            method="POST"
                             id="valueForm"
                             onSubmit={handleSubmit}
                             className="needs-validation"

@@ -13,8 +13,12 @@ const ComparisonScreen = () => {
 
   useEffect(() => {
     const getComparedItem = async () => {
-      const response = await predictorList.comparisonCollege(studId);
-      setComparedValues(response.data.predictorCompareCollegeDetails);
+      try {
+        const response = await predictorList.comparisonCollege(studId);
+        setComparedValues(response.data.predictorCompareCollegeDetails);
+      } catch (error) {
+        console.log(error);
+      }
     };
     getComparedItem();
   }, []);
@@ -22,6 +26,7 @@ const ComparisonScreen = () => {
   return (
     <React.Fragment>
       {/* !-- hero-sec-starts-here --> */}
+
       <section className="hero_sec clg-sugg_green pb-0">
         <div className="container">
           <div className="row">
@@ -54,28 +59,6 @@ const ComparisonScreen = () => {
                             </div>
                           );
                         })}
-
-                      {/* <div className="col">
-                        <div className="comprecon">
-                          <div className="thum-block">
-                            <div className="colg_thmbs">
-                              <img src={dummyLogo} alt="" />
-                            </div>
-                            <span className="clgname">IIT Delhi</span>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className="col mobilehide">
-                        <div className="comprecon">
-                          <div className="thum-block">
-                            <div className="colg_thmbs">
-                              <img src={dummyLogo1} alt="" />
-                            </div>
-                            <span className="clgname">IIT Madras</span>
-                          </div>
-                        </div>
-                      </div> */}
                     </div>
                   </div>
                 </div>

@@ -68,7 +68,10 @@ const OverallRank = () => {
               </Link>
             </li>
             <li className="n_breadcrumbs_items">
-              <Link to="/predictor" className="n_breadcrumbs_items_links">
+              <Link
+                to="/predictor/jee-mains"
+                className="n_breadcrumbs_items_links"
+              >
                 Predictors
               </Link>
             </li>

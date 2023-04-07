@@ -51,7 +51,7 @@ const CourseForm = ({ courseList, casteList, stateList }) => {
     >
       <div className="tab_warp">
         <div className="fromblock d-block">
-          <form method="POST" onSubmit={handleSubmit} id="courseForm">
+          <form onSubmit={handleSubmit} id="courseForm">
             {/* <!-- checkbox-sec-here --> */}
             <div className="form-row">
               <div className="chectop is-invalid">

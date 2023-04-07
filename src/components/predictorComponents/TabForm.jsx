@@ -141,7 +141,6 @@ const TabForm = () => {
                 <div className="tab_warp">
                   <div className="fromblock d-block">
                     <form
-                      method="POST"
                       id="valueForm"
                       onSubmit={handleSubmit}
                       className="needs-validation"

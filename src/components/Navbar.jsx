@@ -475,7 +475,7 @@ const Navbar = () => {
                   </div>
                 </div>
                 <span className="more-vert mob user-profile ms-1">
-                  <MdPerson className="material-icons" />
+                  <img src={Assets.userProfile} />
                 </span>
               </div>
             ) : (
