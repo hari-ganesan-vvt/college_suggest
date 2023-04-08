@@ -121,6 +121,23 @@ const predictorList = {
     return promise;
   },
 
+  compareCollegeStatus: (compareItem) => {
+    let promise = new Promise((resolve, reject) => {
+      let url = "/predictor/compare/compareCollegeListStatus";
+      instance()
+        .post(url, {
+          collegeId: compareItem.collegeId,
+          studId: compareItem.userId,
+        })
+        .then((res) => {
+          resolve(res);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+    return promise;
+  },
   comparisonCollege: (userId) => {
     let promise = new Promise((resolve, reject) => {
       let url = "/predictor/compare/predictorCollegeCompare";

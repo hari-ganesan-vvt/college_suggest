@@ -1,9 +1,12 @@
-export const addRemovecompareReducer = (state = {}, action) => {
+export const addRemovecompareReducer = (
+  state = { comparedItem: [] },
+  action
+) => {
   switch (action.type) {
     case "ADD_REMOVE_COMPARE":
       const item = action.payload;
       return {
-        compareItem: item,
+        comparedItem: item,
       };
     default:
       return state;

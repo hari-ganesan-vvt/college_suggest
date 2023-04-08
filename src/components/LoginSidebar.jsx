@@ -86,9 +86,9 @@ const LoginSidebar = () => {
         )
         .then((res) => {
           dispatch(userGoogleLogin(res.data));
-          setTimeout(() => {
-            window.location.reload(true);
-          }, 2000);
+          // setTimeout(() => {
+          //   // window.location.reload(true);
+          // }, 2000);
         })
         .catch((err) => console.log(err));
     },
@@ -219,8 +219,12 @@ const LoginSidebar = () => {
                 </form>
 
                 <div className="d-flex justify-content-center align-items-center mt-2">
-                  <a className="socialicn-links" onClick={() => googleLogin()}>
-                    <img src={Assets.googleIcon} alt="google images" />,
+                  <a className="socialicn-links">
+                    <img
+                      src={Assets.googleIcon}
+                      alt="google images"
+                      onClick={() => googleLogin()}
+                    />
                   </a>
 
                   <a href="#" className="socialicn-links">

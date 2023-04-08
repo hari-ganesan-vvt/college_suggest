@@ -24,7 +24,7 @@ const Carousel = ({ listdata }) => {
   const [cutOffList, setCutOffList] = useState([]);
   const [isActiveCompare, setIsActiveCompare] = useState(false);
   const [isActiveBookMark, setIsActiveBookMark] = useState(false);
-
+  const [compareStatus, setCompareStatus] = useState([]);
   //rankBasedChange Filter
   const rankBasedChange = (college) => {
     const rank_Id = Number(getValueData?.rankId);
@@ -59,44 +59,48 @@ const Carousel = ({ listdata }) => {
       collegeId: Object.values(listdata[0])[0].cSno,
       userId: user.userId || user.existUserId,
     };
-    setIsActiveCompare(!isActiveCompare);
-    if (!isActiveCompare === true) {
+    const response = await predictorList.compareAddCollege(compareItem);
+    if (response.data.compareAddCollegeStatus === 1) {
+      setIsActiveCompare(true);
+      dispatch(addRemoveCompare(response.data));
       toast.success("Compared College Added");
-      dispatch(addRemoveCompare(compareItem));
-    } else if (!isActiveCompare === false) {
+    } else if (response.data.compareAddCollegeStatus === 2) {
+      setIsActiveCompare(false);
+      dispatch(addRemoveCompare(response.data));
       toast.success("Compared College Removed");
-      dispatch(addRemoveCompare(compareItem));
+    } else if (
+      response.data.compareAddCollegeStatus === 3 ||
+      response.data.compareAddCollegeStatus === 0
+    ) {
+      toast.error("You have already added 3 colleges in compare");
     }
   };
 
   //addBookMark
   const addBookMark = async () => {
+    console.log(Object.values(listdata));
     const bookMarkItem = {
       collegeId: Object.values(listdata[0])[0].cSno,
       userId: user.userId || user.existUserId,
     };
-    setIsActiveBookMark(!isActiveBookMark);
-
-    if (!isActiveBookMark === true) {
-      dispatch(addRemoveBookMark(bookMarkItem));
+    const response = await predictorList.addRemoveBookMarkCollege(bookMarkItem);
+    if (response.data.addRemoveBookMarkStatus === 1) {
+      setIsActiveBookMark(true);
       toast.success("Bookmark Added successfully");
-    }
-
-    if (!isActiveBookMark === false) {
-      dispatch(addRemoveBookMark(bookMarkItem));
+    } else if (response.data.addRemoveBookMarkStatus === 0) {
+      setIsActiveBookMark(false);
       toast.success("Bookmark Removed successfully");
     }
+    // if (!isActiveBookMark === true) {
+    //   dispatch(addRemoveBookMark(bookMarkItem));
+    //   toast.success("Bookmark Added successfully");
+    // }
+
+    // if (!isActiveBookMark === false) {
+    //   dispatch(addRemoveBookMark(bookMarkItem));
+    //   toast.success("Bookmark Removed successfully");
+    // }
   };
-
-  useEffect(() => {
-    const storedCompared =
-      JSON.parse(localStorage.getItem("compareItems")) || [];
-
-    const isCompareMatched = storedCompared.some(
-      (ele) => ele.collegeId === Object.values(listdata[0])[0].cSno
-    );
-    setIsActiveCompare(isCompareMatched);
-  }, []);
 
   useEffect(() => {
     const storedBookMark =

@@ -9,18 +9,20 @@ import { toast } from "react-toastify";
 const Comparison = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.userLogin.userInfo);
-  const compareItem = useSelector((state) => state.compareList.compareItem);
+  const compareItem = useSelector((state) => state.compareList.comparedItem);
   const userBookMark = useSelector((state) => state.bookMarkList.bookMarkItem);
 
   const [comparedValues, setComparedValues] = useState([]);
   const [collegeCount, setCollegeCount] = useState(0);
 
-  const compareRemove = (item) => {
+  const compareRemove = async (item) => {
     const comparedItem = {
       collegeId: item.collegeId,
       userId: user.userId || user.existUserId,
     };
-    dispatch(addRemoveCompare(comparedItem));
+
+    const response = await predictorList.compareAddCollege(comparedItem);
+    dispatch(addRemoveCompare(response.data));
     toast.success("college successfully removed");
   };
 
@@ -30,10 +32,6 @@ const Comparison = () => {
       user.userId || user.existUserId
     );
     setComparedValues(response.data.predictorCompareCollegeDetails);
-    window.localStorage.setItem(
-      "compareItems",
-      JSON.stringify(response.data.predictorCompareCollegeDetails)
-    );
   };
 
   //collegeComparedCount
@@ -55,6 +53,59 @@ const Comparison = () => {
     );
   };
 
+  const compareCollege = () => {
+    if (collegeCount === 1) {
+      return (
+        <>
+          <div className="mb_wrap_cols2 ">
+            <div className="mb_wrap_colsinbx2">
+              <a
+                href="#"
+                className="adderlistbtn"
+                data-bs-toggle="modal"
+                data-bs-target="#exampleModalXl2"
+              >
+                <i className="material-icons c_icn">
+                  <MdOutlineAddCircle />
+                </i>
+              </a>
+            </div>
+          </div>
+          <div className="mb_wrap_cols2 mobilehide">
+            <div className="mb_wrap_colsinbx2">
+              <a
+                href="#"
+                className="adderlistbtn"
+                data-bs-toggle="modal"
+                data-bs-target="#exampleModalXl2"
+              >
+                <i className="material-icons c_icn">
+                  <MdOutlineAddCircle />
+                </i>
+              </a>
+            </div>
+          </div>
+        </>
+      );
+    } else if (collegeCount == 2) {
+      return (
+        <div className="mb_wrap_cols2 sec mobilehide">
+          <div className="mb_wrap_colsinbx2">
+            <a
+              href="#"
+              className="adderlistbtn"
+              data-bs-toggle="modal"
+              data-bs-target="#exampleModalXl2"
+            >
+              <i className="material-icons c_icn">
+                <MdOutlineAddCircle />
+              </i>
+            </a>
+          </div>
+        </div>
+      );
+    }
+  };
   useEffect(() => {
     getBookMarkList();
   }, [userBookMark]);
@@ -80,7 +131,7 @@ const Comparison = () => {
             </span>
 
             <div className="nos2" id="cc_count">
-              {collegeCount}
+              {comparedValues.length}
             </div>
           </div>
         </div>
@@ -196,54 +247,7 @@ const Comparison = () => {
                       </div>
                     </React.Fragment>
                   )}
-
-                  {collegeCount === 1 ? (
-                    <>
-                      <div className="mb_wrap_cols2 ">
-                        <div className="mb_wrap_colsinbx2">
-                          <a
-                            href="#"
-                            className="adderlistbtn"
-                            data-bs-toggle="modal"
-                            data-bs-target="#exampleModalXl2"
-                          >
-                            <i className="material-icons c_icn">
-                              <MdOutlineAddCircle />
-                            </i>
-                          </a>
-                        </div>
-                      </div>
-                      <div className="mb_wrap_cols2 mobilehide">
-                        <div className="mb_wrap_colsinbx2">
-                          <a
-                            href="#"
-                            className="adderlistbtn"
-                            data-bs-toggle="modal"
-                            data-bs-target="#exampleModalXl2"
-                          >
-                            <i className="material-icons c_icn">
-                              <MdOutlineAddCircle />
-                            </i>
-                          </a>
-                        </div>
-                      </div>
-                    </>
-                  ) : collegeCount === 2 ? (
-                    <div className="mb_wrap_cols2 sec mobilehide">
-                      <div className="mb_wrap_colsinbx2">
-                        <a
-                          href="#"
-                          className="adderlistbtn"
-                          data-bs-toggle="modal"
-                          data-bs-target="#exampleModalXl2"
-                        >
-                          <i className="material-icons c_icn">
-                            <MdOutlineAddCircle />
-                          </i>
-                        </a>
-                      </div>
-                    </div>
-                  ) : null}
+                  {compareCollege()}
                 </div>
               </div>
               {comparedValues.length === 3 && (

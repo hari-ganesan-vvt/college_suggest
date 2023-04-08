@@ -36,6 +36,7 @@ const Predictor = () => {
                     height="33"
                     viewBox="0 0 33 33"
                     fill="none"
+                    onClick={openModalHander}
                   >
                     <circle cx="16.5" cy="16.5" r="16.5" fill="white" />
                     <g clipPath="url(#clip0_172_602)">

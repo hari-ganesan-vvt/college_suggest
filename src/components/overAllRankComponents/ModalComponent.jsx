@@ -39,6 +39,7 @@ function ModalComponent(data, ref) {
                 id="cutOffOptions"
                 aria-label="Default select example"
                 fdprocessedid="ysxx7d"
+                onChange={(e) => console.log(e.target.value)}
                 // onchange="cutoffSelect(this)"
               >
                 <option value="118">
